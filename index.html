@@ -113,25 +113,7 @@
       max-width: 660px; line-height: 1.65;
       margin-bottom: 32px;
     }
-    .hero-verdict {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 24px;
-      display: flex; align-items: center; gap: 16px;
-      max-width: 660px;
-    }
-    .verdict-icon {
-      width: 36px; height: 36px; min-width: 36px;
-      background: rgba(62,207,142,0.12);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-    }
-    .verdict-text {
-      font-size: 13px; color: var(--muted); line-height: 1.55;
-    }
-    .verdict-text strong { color: var(--text); font-weight: 600; }
+    
 
     .section {
       padding: 64px 0;
@@ -148,8 +130,8 @@
       letter-spacing: -0.6px; margin-bottom: 8px;
     }
     .section-desc {
-      font-size: 14px; color: var(--muted);
-      max-width: 660px; margin-bottom: 36px; line-height: 1.6;
+      font-size: 13px; color: var(--muted);
+      max-width: 560px; margin-bottom: 28px; line-height: 1.55;
     }
 
     .mismatch-grid,
@@ -170,13 +152,13 @@
     .metric-box {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
     }
     .mismatch-card,
     .state-detail,
     .solana-card,
     .question-card,
-    .metric-box { padding: 18px; }
+    .metric-box { padding: 16px; }
 
     .mismatch-card.critical { border-color: rgba(229,72,77,0.28); }
     .mismatch-num,
@@ -224,8 +206,8 @@
     .table-wrap {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 32px;
+      border-radius: 18px;
+      padding: 24px;
       overflow-x: auto;
     }
 
@@ -500,48 +482,48 @@
     <section class="hero">
       <div class="hero-overline">Product Audit — March 2026</div>
       <h1>Launchpad Redesign<br>Direction</h1>
-      <p class="hero-sub">Structural audit and implementation roadmap for the Blockstreet launchpad. This version reflects vault-based scoring, manual token and refund claims, confirmed pool-state logic, and chain-aware participation flows including Solana.</p>
-    </section>
+      <p class="hero-sub">Focused redesign direction for the Blockstreet launchpad, centered on access logic, pool states, wallet readiness, and a cleaner product system.</p>
+      </section>
 
     <section class="section">
       <div class="section-label">Diagnosis</div>
-      <h2>Six Structural Mismatches</h2>
-      <p class="section-desc">Cross-referenced the current design against confirmed launchpad logic. These need fixing before any polish pass.</p>
+      <h2>Structural Gaps</h2>
+      <p class="section-desc">What needs to change at the product-system level before any detail polish.</p>
       <div class="mismatch-grid">
         <div class="mismatch-card critical">
-          <div class="mismatch-num">Issue 01</div>
-          <h3>Staking language is outdated</h3>
-          <p>The product should speak in terms of vaults, vault duration, vault points, and access status, not old staking/tier language.</p>
+          <div class="mismatch-num">01</div>
+          <h3>Vault language</h3>
+          <p>Replace old staking and tier terminology with vault positions, points, and access status.</p>
           <span class="mismatch-tag tag-remove">Rename</span>
         </div>
         <div class="mismatch-card critical">
-          <div class="mismatch-num">Issue 02</div>
-          <h3>Tier system still appears in profile</h3>
-          <p>The tier card and tier labels should be removed entirely. Access is now determined by total points, rank, and effective multiplier across vault positions.</p>
+          <div class="mismatch-num">02</div>
+          <h3>Tier removal</h3>
+          <p>Remove the legacy tier card and replace it with a concise access-status module.</p>
           <span class="mismatch-tag tag-remove">Remove</span>
         </div>
         <div class="mismatch-card">
-          <div class="mismatch-num">Issue 03</div>
-          <h3>Navigation still mixes product layers</h3>
-          <p>Support content, operating views, and founder actions need a cleaner split. Dashboard should become the authenticated control center.</p>
+          <div class="mismatch-num">03</div>
+          <h3>Navigation split</h3>
+          <p>Separate support content from operating views, and move founder creation inside portfolio.</p>
           <span class="mismatch-tag tag-restructure">Restructure</span>
         </div>
         <div class="mismatch-card">
-          <div class="mismatch-num">Issue 04</div>
-          <h3>Pool states need manual claim logic</h3>
-          <p>Successful pools should lead to manual token claim. Failed pools should lead to manual refund claim. Automatic refund wording should be removed.</p>
+          <div class="mismatch-num">04</div>
+          <h3>End-state clarity</h3>
+          <p>Successful pools lead to manual token claim, failed pools lead to manual refund claim.</p>
           <span class="mismatch-tag tag-expand">Update</span>
         </div>
         <div class="mismatch-card">
-          <div class="mismatch-num">Issue 05</div>
-          <h3>Disabled CTAs still lack direction</h3>
-          <p>Every blocked action must say what is missing, KYC, points, wallet, phase, or chain readiness, and what the user needs to do next.</p>
+          <div class="mismatch-num">05</div>
+          <h3>CTA guidance</h3>
+          <p>Every blocked action should explain the blocker and the next step.</p>
           <span class="mismatch-tag tag-restructure">Restructure</span>
         </div>
         <div class="mismatch-card">
-          <div class="mismatch-num">Issue 06</div>
-          <h3>Wallet readiness is not explicit enough</h3>
-          <p>Main wallet is always the EVM reference wallet. Solana should appear as an optional participation wallet when the pool chain requires it.</p>
+          <div class="mismatch-num">06</div>
+          <h3>Wallet readiness</h3>
+          <p>Main wallet stays EVM-first, while Solana appears only when a pool requires it.</p>
           <span class="mismatch-tag tag-new">Clarify</span>
         </div>
       </div>
@@ -549,8 +531,8 @@
 
     <section class="section">
       <div class="section-label">Information Architecture</div>
-      <h2>Navigation Restructure</h2>
-      <p class="section-desc">The top navigation should separate product action from support content and move founder creation inside the portfolio system.</p>
+      <h2>Navigation</h2>
+      <p class="section-desc">A cleaner top-level split between action, ownership, and support.</p>
       <div class="nav-diagram">
         <div class="nav-row">
           <div class="nav-row-label">Current</div>
@@ -588,8 +570,8 @@
 
     <section class="section">
       <div class="section-label">Core System</div>
-      <h2>Confirmed Pool State System</h2>
-      <p class="section-desc">The target closes as soon as it is met, there is no overflow state. The ending logic then branches into sold-out behavior or manual claim behavior depending on user position and pool outcome.</p>
+      <h2>Pool States</h2>
+      <p class="section-desc">The launch flow reduced to a single readable state model.</p>
       <div class="state-machine">
         <div class="state-flow">
           <div class="state-node state-scheduled">
@@ -668,8 +650,8 @@
 
     <section class="section">
       <div class="section-label">Access System</div>
-      <h2>Vault Logic → Access System</h2>
-      <p class="section-desc">The user can split BLOCK across multiple vaults with different durations. Total points are the sum of all vault positions. The visible multiplier should be treated as an effective multiplier: total points divided by total BLOCK vaulted.</p>
+      <h2>Vault Logic</h2>
+      <p class="section-desc">A cleaner summary of how vault positions translate into access.</p>
       <div class="pipeline">
         <div class="pipeline-flow">
           <div class="pipeline-step">
@@ -737,8 +719,8 @@
 
     <section class="section">
       <div class="section-label">Chain Support</div>
-      <h2>Solana Integration Layer</h2>
-      <p class="section-desc">Keep chain logic as a separate lightweight layer. The main wallet is always the EVM reference wallet. Solana appears only when the user needs an optional Solana participation wallet for a Solana pool.</p>
+      <h2>Solana Layer</h2>
+      <p class="section-desc">A separate, lightweight chain layer without breaking the main product logic.</p>
       <div class="solana-panel">
         <div class="solana-grid">
           <div class="solana-card">
@@ -783,8 +765,8 @@
 
     <section class="section">
       <div class="section-label">UX Precision</div>
-      <h2>Disabled CTA Logic</h2>
-      <p class="section-desc">Every blocked or alternate action should tell the user exactly what is happening and what they need to do next.</p>
+      <h2>CTA Logic</h2>
+      <p class="section-desc">Every action should be explicit, readable, and reasoned.</p>
       <div class="table-wrap">
         <table class="cta-table">
           <thead>
@@ -847,8 +829,8 @@
 
     <section class="section">
       <div class="section-label">Product Map</div>
-      <h2>Dashboard & Portfolio Diagram</h2>
-      <p class="section-desc">This section turns the product split into a sitemap-style diagram. It makes the difference between overview, action, ownership, and account configuration explicit.</p>
+      <h2>Dashboard & Portfolio</h2>
+      <p class="section-desc">The clean split between overview, ownership, and account configuration.</p>
       <div class="nav-diagram" style="display:grid; gap:24px;">
         <div>
           <div style="font-size:10px; font-weight:600; color:var(--muted-2); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px;">Full product map</div>
@@ -1012,10 +994,10 @@
 
     <section class="section">
       <div class="section-label">Implementation</div>
-      <h2>Screen-by-Screen Changes</h2>
-      <p class="section-desc">Expand each screen to see the exact changes needed. Every item is tagged as remove, add, change, or keep.</p>
+      <h2>Screen-by-Screen</h2>
+      <p class="section-desc">A compact view of what changes, what stays, and what gets added.</p>
       <div class="screen-list">
-        <div class="screen-card open">
+        <div class="screen-card">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(229,72,77,0.12);">🏠</div>
@@ -1025,7 +1007,7 @@
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span class="priority-badge p-critical">Critical</span>
+              <span class="priority-badge p-critical">Core</span>
               <span class="chevron">▾</span>
             </div>
           </div>
@@ -1048,7 +1030,7 @@
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span class="priority-badge p-critical">Critical</span>
+              <span class="priority-badge p-critical">Core</span>
               <span class="chevron">▾</span>
             </div>
           </div>
@@ -1072,7 +1054,7 @@
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span class="priority-badge p-high">High</span>
+              <span class="priority-badge p-high">Major</span>
               <span class="chevron">▾</span>
             </div>
           </div>
@@ -1095,7 +1077,7 @@
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span class="priority-badge p-medium">Medium</span>
+              <span class="priority-badge p-medium">Refine</span>
               <span class="chevron">▾</span>
             </div>
           </div>
@@ -1117,7 +1099,7 @@
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span class="priority-badge p-medium">Medium</span>
+              <span class="priority-badge p-medium">Refine</span>
               <span class="chevron">▾</span>
             </div>
           </div>
@@ -1140,7 +1122,7 @@
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span class="priority-badge p-high">High</span>
+              <span class="priority-badge p-high">Major</span>
               <span class="chevron">▾</span>
             </div>
           </div>
@@ -1163,7 +1145,7 @@
               </div>
             </div>
             <div style="display:flex; align-items:center; gap:10px;">
-              <span class="priority-badge p-new">New</span>
+              <span class="priority-badge p-new">Add</span>
               <span class="chevron">▾</span>
             </div>
           </div>
@@ -1181,8 +1163,8 @@
 
     <section class="section">
       <div class="section-label">Execution</div>
-      <h2>Implementation Priority</h2>
-      <p class="section-desc">Ordered by product impact. Phase 1 corrects logic. Phase 2 adds missing system layers. Phase 3 is polish.</p>
+      <h2>Priority</h2>
+      <p class="section-desc">Ordered by structural impact, not visual polish.</p>
       <div class="priority-timeline">
         <div class="priority-item">
           <div class="priority-phase">Phase 1 — Fix Core Logic</div>
@@ -1225,7 +1207,7 @@
     <section class="section">
       <div class="section-label">Decisions Needed</div>
       <h2>Open Questions</h2>
-      <p class="section-desc">These still need stakeholder confirmation before the system is fully locked.</p>
+      <p class="section-desc">The few remaining decisions needed before the system is fully locked.</p>
       <div class="question-card">
         <div class="question-num">Q1</div>
         <h4>What is the final homepage framing for vault logic?</h4>
