@@ -130,6 +130,11 @@
       background: rgba(255,255,255,0.05);
       text-decoration: none;
     }
+    .section-link.active {
+      color: var(--yellow);
+      background: var(--yellow-dim);
+      border-color: var(--yellow-border);
+    }
 
     section[id] {
       scroll-margin-top: 108px;
@@ -138,6 +143,15 @@
     .hero {
       padding: 132px 0 88px;
       border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 60px; left: -120px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,186,0,0.06) 0%, transparent 70%);
+      pointer-events: none;
     }
     .hero-overline {
       font-size: 10px; font-weight: 600;
@@ -201,6 +215,10 @@
     .solana-card,
     .question-card,
     .metric-box { padding: 16px; }
+
+    .question-list {
+      display: flex; flex-direction: column; gap: 12px;
+    }
 
     .mismatch-card.critical { border-color: rgba(229,72,77,0.28); }
     .mismatch-num,
@@ -395,8 +413,16 @@
     .p-high { background: rgba(249,115,22,0.12); color: var(--orange); }
     .p-medium { background: rgba(255,186,0,0.12); color: var(--yellow); }
     .p-new { background: rgba(62,207,142,0.12); color: var(--green); }
-    .screen-card-body { padding: 0 22px 22px; display: none; }
-    .screen-card.open .screen-card-body { display: block; }
+    .screen-card-body {
+      padding: 0 22px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .screen-card.open .screen-card-body {
+      max-height: 600px;
+      padding: 0 22px 22px;
+    }
     .chevron { color: var(--muted-2); transition: transform 0.2s; font-size: 18px; }
     .screen-card.open .chevron { transform: rotate(180deg); }
     .change-list {
@@ -449,38 +475,76 @@
     .cta-success { background: rgba(62,207,142,0.12); color: var(--green); }
 
     .priority-timeline {
-      display: flex; flex-direction: column; position: relative; padding-left: 24px;
+      display: flex; flex-direction: column; position: relative; padding-left: 32px;
     }
     .priority-timeline::before {
       content: '';
       position: absolute;
-      left: 7px; top: 8px; bottom: 8px;
+      left: 5px; top: 8px; bottom: 8px;
       width: 2px; background: var(--border);
     }
-    .priority-item { position: relative; padding: 16px 0 16px 24px; }
+    .priority-item { position: relative; padding: 16px 0 16px 16px; cursor: pointer; border-radius: 10px; transition: background 0.15s; }
+    .priority-item:hover { background: rgba(255,255,255,0.02); }
     .priority-item::before {
       content: '';
       position: absolute;
-      left: -20px; top: 22px;
-      width: 10px; height: 10px;
+      left: -32px; top: 22px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       background: var(--yellow);
-      border: 2px solid var(--bg);
+      border: 3px solid var(--bg);
+      transition: background 0.2s;
     }
     .priority-item.upcoming::before { background: var(--muted-2); }
-    .priority-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-    .priority-item p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+    .priority-item.done::before { background: var(--green); }
+    .priority-item.done h4 { text-decoration: line-through; color: var(--muted); }
+    .priority-item.done p { opacity: 0.5; }
+    .priority-item.done .priority-phase { opacity: 0.5; }
+    .priority-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; transition: color 0.2s; }
+    .priority-item p { font-size: 12px; color: var(--muted); line-height: 1.55; transition: opacity 0.2s; }
     .priority-phase {
       font-size: 10px; font-weight: 600;
       color: var(--yellow); letter-spacing: 1.5px;
       text-transform: uppercase; margin-bottom: 4px;
     }
 
+    /* Strikethrough for related items elsewhere on the page */
+    .completed-item { text-decoration: line-through; color: var(--muted-2) !important; opacity: 0.5; transition: all 0.3s; }
+
+    /* Resolved questions */
+    .question-card.resolved { border-color: rgba(62,207,142,0.2); }
+    .question-card.resolved .question-num { color: var(--green); }
+    .question-answer {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: rgba(62,207,142,0.06);
+      border: 1px solid rgba(62,207,142,0.15);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .question-answer strong { color: var(--green); font-weight: 600; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .question-card.deferred { border-color: rgba(255,186,0,0.15); }
+    .question-card.deferred .question-num { color: var(--muted-2); }
+    .question-defer {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: rgba(255,186,0,0.04);
+      border: 1px solid rgba(255,186,0,0.12);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .question-defer strong { color: var(--yellow); font-weight: 600; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+
     pre.diagram {
       margin: 0;
       white-space: pre-wrap;
       color: var(--text);
-      font: 12px/1.65 'TT Firs Neue', sans-serif;
+      font: 12px/1.75 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+      letter-spacing: 0.2px;
     }
 
     .page-footer {
@@ -548,37 +612,37 @@
       <h2>Structural Gaps</h2>
       <p class="section-desc">What needs to change at the product-system level before any detail polish.</p>
       <div class="mismatch-grid">
-        <div class="mismatch-card critical">
+        <div class="mismatch-card critical" data-related="vault-language">
           <div class="mismatch-num">01</div>
           <h3>Vault language</h3>
           <p>Replace old staking and tier terminology with vault positions, points, and access status.</p>
           <span class="mismatch-tag tag-remove">Rename</span>
         </div>
-        <div class="mismatch-card critical">
+        <div class="mismatch-card critical" data-related="tier-removal">
           <div class="mismatch-num">02</div>
           <h3>Tier removal</h3>
           <p>Remove the legacy tier card and replace it with a concise access-status module.</p>
           <span class="mismatch-tag tag-remove">Remove</span>
         </div>
-        <div class="mismatch-card">
+        <div class="mismatch-card" data-related="navigation">
           <div class="mismatch-num">03</div>
           <h3>Navigation split</h3>
           <p>Separate support content from operating views, and move founder creation inside portfolio.</p>
           <span class="mismatch-tag tag-restructure">Restructure</span>
         </div>
-        <div class="mismatch-card">
+        <div class="mismatch-card" data-related="pool-states">
           <div class="mismatch-num">04</div>
           <h3>End-state clarity</h3>
           <p>Successful pools lead to manual token claim, failed pools lead to manual refund claim.</p>
           <span class="mismatch-tag tag-expand">Update</span>
         </div>
-        <div class="mismatch-card">
+        <div class="mismatch-card" data-related="cta-guidance">
           <div class="mismatch-num">05</div>
           <h3>CTA guidance</h3>
           <p>Every blocked action should explain the blocker and the next step.</p>
           <span class="mismatch-tag tag-restructure">Restructure</span>
         </div>
-        <div class="mismatch-card">
+        <div class="mismatch-card" data-related="wallet-readiness">
           <div class="mismatch-num">06</div>
           <h3>Wallet readiness</h3>
           <p>Main wallet stays EVM-first, while Solana appears only when a pool requires it.</p>
@@ -1055,7 +1119,7 @@
       <h2>Screen-by-Screen</h2>
       <p class="section-desc">A compact view of what changes, what stays, and what gets added.</p>
       <div class="screen-list">
-        <div class="screen-card">
+        <div class="screen-card" data-related="vault-language">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(229,72,77,0.12);">🏠</div>
@@ -1078,7 +1142,7 @@
           </div>
         </div>
 
-        <div class="screen-card">
+        <div class="screen-card" data-related="pool-states cta-guidance">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(255,186,0,0.12);">📋</div>
@@ -1102,7 +1166,7 @@
           </div>
         </div>
 
-        <div class="screen-card">
+        <div class="screen-card" data-related="tier-removal wallet-readiness">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(155,138,251,0.12);">👤</div>
@@ -1125,7 +1189,7 @@
           </div>
         </div>
 
-        <div class="screen-card">
+        <div class="screen-card" data-related="claim-messaging">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(62,207,142,0.12);">🎫</div>
@@ -1147,7 +1211,7 @@
           </div>
         </div>
 
-        <div class="screen-card">
+        <div class="screen-card" data-related="pool-states">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(59,130,246,0.12);">📊</div>
@@ -1170,7 +1234,7 @@
           </div>
         </div>
 
-        <div class="screen-card">
+        <div class="screen-card" data-related="navigation">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(249,115,22,0.12);">🔧</div>
@@ -1193,7 +1257,7 @@
           </div>
         </div>
 
-        <div class="screen-card">
+        <div class="screen-card" data-related="dashboard">
           <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
             <div class="screen-card-left">
               <div class="screen-icon" style="background: rgba(62,207,142,0.12);">⚡</div>
@@ -1224,37 +1288,37 @@
       <h2>Priority</h2>
       <p class="section-desc">Ordered by structural impact, not visual polish.</p>
       <div class="priority-timeline">
-        <div class="priority-item">
+        <div class="priority-item" data-action="vault-language">
           <div class="priority-phase">Phase 1 — Fix Core Logic</div>
           <h4>Replace staking and tier language with vault logic</h4>
           <p>Update homepage, profile, and supporting product copy to reflect vault positions, points, and access status.</p>
         </div>
-        <div class="priority-item">
+        <div class="priority-item" data-action="tier-removal">
           <h4>Remove tier card from profile</h4>
           <p>Replace it with an Access Status module based on vault totals, points, effective multiplier, rank, and access status.</p>
         </div>
-        <div class="priority-item">
+        <div class="priority-item" data-action="pool-states">
           <h4>Implement manual-claim pool states</h4>
           <p>Support notify, active invest states, sold-out branches, manual token claim, and manual refund claim.</p>
         </div>
-        <div class="priority-item">
+        <div class="priority-item" data-action="cta-guidance">
           <h4>Fix CTA guidance everywhere</h4>
           <p>Every blocked action should explain the exact blocker, KYC, points, phase, or wallet readiness.</p>
         </div>
-        <div class="priority-item upcoming">
+        <div class="priority-item upcoming" data-action="dashboard">
           <div class="priority-phase">Phase 2 — Add Missing Product Layers</div>
           <h4>Build dashboard page</h4>
           <p>Create the authenticated overview for access status, open pools, wallet readiness, and recent activity.</p>
         </div>
-        <div class="priority-item upcoming">
+        <div class="priority-item upcoming" data-action="wallet-readiness">
           <h4>Add chain-aware wallet readiness</h4>
           <p>Make the EVM main-wallet model explicit and add optional Solana wallet flows where required.</p>
         </div>
-        <div class="priority-item upcoming">
+        <div class="priority-item upcoming" data-action="navigation">
           <h4>Restructure navigation</h4>
           <p>Merge Pools, rename Vaults, and move founder creation into Portfolio.</p>
         </div>
-        <div class="priority-item upcoming">
+        <div class="priority-item upcoming" data-action="claim-messaging">
           <div class="priority-phase">Phase 3 — Polish</div>
           <h4>Refine claim messaging</h4>
           <p>Make Token Claims and investment-end states more contextual with better labels, timing, and next-action wording.</p>
@@ -1263,37 +1327,118 @@
     </section>
 
     <section class="section" id="questions">
-      <div class="section-label">Decisions Needed</div>
+      <div class="section-label">Decisions</div>
       <h2>Open Questions</h2>
-      <p class="section-desc">The few remaining decisions needed before the system is fully locked.</p>
-      <div class="question-card">
-        <div class="question-num">Q1</div>
-        <h4>What is the final homepage framing for vault logic?</h4>
-        <p>Should the front-end message emphasize vault rewards, points-based access, or a broader launch access system?</p>
-      </div>
-      <div class="question-card">
-        <div class="question-num">Q2</div>
-        <h4>Can we confirm that effective multiplier should be shown as total points divided by total BLOCK vaulted?</h4>
-        <p>This seems like the strongest summary metric for users with multiple vault positions, but it should be formally locked.</p>
-      </div>
-      <div class="question-card">
-        <div class="question-num">Q3</div>
-        <h4>How visible should per-vault breakdowns be outside the Vaults page?</h4>
-        <p>Dashboard should likely stay summary-level, but Profile or Vaults may expose each vault row and multiplier in detail.</p>
-      </div>
-      <div class="question-card">
-        <div class="question-num">Q4</div>
-        <h4>Should dashboard replace homepage for authenticated users?</h4>
-        <p>This will define the default post-login landing behavior and may affect the whole navigation model.</p>
-      </div>
-      <div class="question-card">
-        <div class="question-num">Q5</div>
-        <h4>How should the chain-aware DEX CTA be labeled at launch?</h4>
-        <p>Generic Buy on DEX is clean, but exact routing labels for Solana and EVM can be finalized later.</p>
+      <p class="section-desc">Resolved decisions and remaining items before the system is fully locked.</p>
+      <div class="question-list">
+        <div class="question-card resolved">
+          <div class="question-num">Q1 — Resolved</div>
+          <h4>What is the final homepage framing for vault logic?</h4>
+          <p>Should the front-end message emphasize vault rewards, points-based access, or a broader launch access system?</p>
+          <div class="question-answer">
+            <strong>Decision:</strong> Frame it as a broader launch access system. The homepage should position Blockstreet as a unified launch access platform — not a vault product or a points game. Vault positions, points, and rank are the mechanics underneath, but the top-level message is about getting early, priority access to vetted launches across chains. Lead with the outcome (access to launches), not the input (vault your tokens). Suggested framing: <em>"Priority access to launches. Vault BLOCK, earn points, rise in rank — and unlock early access to curated token launches before they go public."</em>
+          </div>
+        </div>
+        <div class="question-card resolved">
+          <div class="question-num">Q2 — Resolved</div>
+          <h4>Can we confirm that effective multiplier should be shown as total points divided by total BLOCK vaulted?</h4>
+          <p>This seems like the strongest summary metric for users with multiple vault positions, but it should be formally locked.</p>
+          <div class="question-answer">
+            <strong>Decision:</strong> Confirmed. Effective multiplier = total points / total BLOCK vaulted. This is the clearest single metric for users managing multiple vault positions with different durations.
+          </div>
+        </div>
+        <div class="question-card resolved">
+          <div class="question-num">Q3 — Resolved</div>
+          <h4>How visible should per-vault breakdowns be outside the Vaults page?</h4>
+          <p>Dashboard should likely stay summary-level, but Profile or Vaults may expose each vault row and multiplier in detail.</p>
+          <div class="question-answer">
+            <strong>Decision:</strong> Summary only outside the Vaults page. Dashboard and Profile show a small, muted label with the vault count and total points — no per-vault rows. For the full breakdown (individual positions, multipliers, durations), route the user to the Vaults page. Keep all surface-level references concise and link through to detail.
+          </div>
+        </div>
+        <div class="question-card resolved">
+          <div class="question-num">Q4 — Resolved</div>
+          <h4>Should dashboard replace homepage for authenticated users?</h4>
+          <p>This will define the default post-login landing behavior and may affect the whole navigation model.</p>
+          <div class="question-answer">
+            <strong>Decision:</strong> Yes. Authenticated users land on Dashboard. The public homepage remains the entry point for unauthenticated visitors and handles the marketing pitch. Once signed in, the default view is the Dashboard — access overview, open pools, wallet readiness, and actions required.
+          </div>
+        </div>
+        <div class="question-card deferred">
+          <div class="question-num">Q5 — Deferred</div>
+          <h4>How should the chain-aware DEX CTA be labeled at launch?</h4>
+          <p>Generic Buy on DEX is clean, but exact routing labels for Solana and EVM can be finalized later.</p>
+          <div class="question-defer">
+            <strong>Deferred:</strong> Skipping for now. Generic "Buy on DEX" is sufficient at launch. Exact chain-specific routing labels (e.g., "Buy on Jupiter" vs "Buy on Uniswap") can be finalized closer to implementation once we know which DEX integrations are confirmed.
+          </div>
+        </div>
       </div>
     </section>
 
     <div class="page-footer">Blockstreet Launchpad Redesign Direction — March 2026 — Internal Document</div>
   </div>
+  <script>
+    // Active section nav highlighting on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.section-link');
+
+    const observerOpts = { rootMargin: '-120px 0px -60% 0px', threshold: 0 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const link = document.querySelector(`.section-link[href="#${entry.target.id}"]`);
+          if (link) link.classList.add('active');
+        }
+      });
+    }, observerOpts);
+    sections.forEach(s => observer.observe(s));
+
+    // Priority items: click to toggle done + strikethrough related items
+    const STORAGE_KEY = 'blockstreet-done-actions';
+
+    function loadDone() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch { return []; }
+    }
+
+    function saveDone(list) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    }
+
+    function applyDoneState(action, isDone) {
+      // Toggle the priority item itself
+      const item = document.querySelector(`.priority-item[data-action="${action}"]`);
+      if (item) item.classList.toggle('done', isDone);
+
+      // Toggle related items elsewhere on the page
+      document.querySelectorAll(`[data-related]`).forEach(el => {
+        const related = el.getAttribute('data-related').split(' ');
+        if (related.includes(action)) {
+          el.classList.toggle('completed-item', isDone);
+        }
+      });
+    }
+
+    // Init from localStorage
+    const doneActions = loadDone();
+    doneActions.forEach(a => applyDoneState(a, true));
+
+    // Click handlers on priority items
+    document.querySelectorAll('.priority-item[data-action]').forEach(item => {
+      item.addEventListener('click', () => {
+        const action = item.dataset.action;
+        const done = loadDone();
+        const idx = done.indexOf(action);
+        if (idx === -1) {
+          done.push(action);
+          applyDoneState(action, true);
+        } else {
+          done.splice(idx, 1);
+          applyDoneState(action, false);
+        }
+        saveDone(done);
+      });
+    });
+  </script>
 </body>
 </html>
