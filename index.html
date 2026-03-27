@@ -537,12 +537,29 @@
       text-transform: uppercase; margin-bottom: 6px;
     }
 
-    /* — Strikethrough for related items — */
+    /* — Connection highlights — */
     .completed-item {
-      text-decoration: line-through;
-      color: var(--muted-2) !important;
-      opacity: 0.4;
+      opacity: 0.3;
       transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .completed-item h3,
+    .completed-item h4 { text-decoration: line-through; color: var(--muted-2); }
+
+    .highlight-related {
+      border-color: rgba(232,173,42,0.3) !important;
+      box-shadow: 0 0 0 1px rgba(232,173,42,0.1);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .priority-item .connection-count {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--muted-2);
+      margin-left: 6px;
+      letter-spacing: 0;
+      text-transform: none;
+      vertical-align: middle;
     }
 
     /* — Resolved questions — */
@@ -1438,7 +1455,7 @@
     }, observerOpts);
     sections.forEach(s => observer.observe(s));
 
-    // Priority items: click to toggle done + strikethrough related items
+    // Priority items: click to toggle done, hover to show connections
     const STORAGE_KEY = 'blockstreet-done-actions';
 
     function loadDone() {
@@ -1450,25 +1467,63 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
     }
 
-    function applyDoneState(action, isDone) {
-      // Toggle the priority item itself
-      const item = document.querySelector(`.priority-item[data-action="${action}"]`);
-      if (item) item.classList.toggle('done', isDone);
+    // Get all related elements for a given action
+    function getRelated(action) {
+      return [...document.querySelectorAll('[data-related]')].filter(el =>
+        el.getAttribute('data-related').split(' ').includes(action)
+      );
+    }
 
-      // Toggle related items elsewhere on the page
-      document.querySelectorAll(`[data-related]`).forEach(el => {
-        const related = el.getAttribute('data-related').split(' ');
-        if (related.includes(action)) {
-          el.classList.toggle('completed-item', isDone);
-        }
+    // A card is only fully completed when ALL its related actions are done
+    function refreshRelatedCards() {
+      const done = loadDone();
+      document.querySelectorAll('[data-related]').forEach(el => {
+        const deps = el.getAttribute('data-related').split(' ');
+        const allDone = deps.every(d => done.includes(d));
+        el.classList.toggle('completed-item', allDone);
       });
     }
 
+    function applyDoneState(action, isDone) {
+      const item = document.querySelector(`.priority-item[data-action="${action}"]`);
+      if (item) item.classList.toggle('done', isDone);
+      refreshRelatedCards();
+    }
+
+    // Add connection counts to priority items
+    document.querySelectorAll('.priority-item[data-action]').forEach(item => {
+      const action = item.dataset.action;
+      const count = getRelated(action).length;
+      if (count > 0) {
+        const h4 = item.querySelector('h4');
+        if (h4) {
+          const badge = document.createElement('span');
+          badge.className = 'connection-count';
+          badge.textContent = count === 1 ? '1 linked' : count + ' linked';
+          h4.appendChild(badge);
+        }
+      }
+    });
+
+    // Hover: highlight connected items
+    document.querySelectorAll('.priority-item[data-action]').forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        getRelated(item.dataset.action).forEach(el => el.classList.add('highlight-related'));
+      });
+      item.addEventListener('mouseleave', () => {
+        document.querySelectorAll('.highlight-related').forEach(el => el.classList.remove('highlight-related'));
+      });
+    });
+
     // Init from localStorage
     const doneActions = loadDone();
-    doneActions.forEach(a => applyDoneState(a, true));
+    doneActions.forEach(a => {
+      const item = document.querySelector(`.priority-item[data-action="${a}"]`);
+      if (item) item.classList.add('done');
+    });
+    refreshRelatedCards();
 
-    // Click handlers on priority items
+    // Click handlers
     document.querySelectorAll('.priority-item[data-action]').forEach(item => {
       item.addEventListener('click', () => {
         const action = item.dataset.action;
