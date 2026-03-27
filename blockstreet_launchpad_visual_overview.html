@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockstreet — Launchpad Redesign Direction</title>
+  <style>
+    @font-face {
+      font-family: 'TT Firs Neue';
+      src: url('TT_Firs_Neue_Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'TT Firs Neue';
+      src: url('TT_Firs_Neue_Medium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'TT Firs Neue';
+      src: url('TT_Firs_Neue_DemiBold.woff') format('woff');
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --yellow: #FFBA00;
+      --yellow-dim: rgba(255,186,0,0.12);
+      --yellow-border: rgba(255,186,0,0.25);
+      --bg: #111213;
+      --bg-elevated: #18191B;
+      --bg-card: #1B1D1F;
+      --bg-card-2: #202224;
+      --border: rgba(255,255,255,0.07);
+      --border-2: rgba(255,255,255,0.12);
+      --text: #F0F0F0;
+      --muted: #888;
+      --muted-2: #555;
+      --green: #3ECF8E;
+      --red: #E5484D;
+      --blue: #3B82F6;
+      --purple: #9B8AFB;
+      --orange: #F97316;
+      --cyan: #22D3EE;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'TT Firs Neue', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--yellow); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(17,18,19,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      max-width: 960px; margin: 0 auto; padding: 12px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .topbar-left {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .logo-icon {
+      width: 26px; height: 26px;
+      background: var(--yellow); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: #111; font-weight: 700; font-size: 14px;
+    }
+    .topbar-title {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .topbar-title span { color: var(--text); font-weight: 600; }
+    .topbar-sep { color: var(--muted-2); }
+    .topbar-badge {
+      padding: 3px 10px;
+      background: var(--yellow-dim);
+      border: 1px solid var(--yellow-border);
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--yellow);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      padding: 120px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-overline {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--yellow); margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: 52px; font-weight: 600;
+      line-height: 1.05; letter-spacing: -1.5px;
+      color: var(--text); margin-bottom: 20px;
+      max-width: 760px;
+    }
+    .hero-sub {
+      font-size: 16px; color: var(--muted);
+      max-width: 620px; line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .hero-verdict {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex; align-items: center; gap: 16px;
+      max-width: 620px;
+    }
+    .verdict-icon {
+      width: 36px; height: 36px; min-width: 36px;
+      background: rgba(62,207,142,0.12);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .verdict-text {
+      font-size: 13px; color: var(--muted); line-height: 1.55;
+    }
+    .verdict-text strong { color: var(--text); font-weight: 600; }
+
+    .section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-of-type { border-bottom: none; }
+    .section-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted-2); margin-bottom: 12px;
+    }
+    .section h2 {
+      font-size: 28px; font-weight: 600;
+      letter-spacing: -0.6px; margin-bottom: 8px;
+    }
+    .section-desc {
+      font-size: 14px; color: var(--muted);
+      max-width: 620px; margin-bottom: 36px; line-height: 1.6;
+    }
+
+    .mismatch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .mismatch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .mismatch-card.critical {
+      border-color: rgba(229,72,77,0.3);
+    }
+    .mismatch-num {
+      font-size: 10px; font-weight: 600;
+      color: var(--muted-2); letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .mismatch-card h3 {
+      font-size: 15px; font-weight: 600;
+      color: var(--text); margin-bottom: 6px;
+      letter-spacing: -0.2px;
+    }
+    .mismatch-card p {
+      font-size: 12px; color: var(--muted);
+      line-height: 1.55;
+    }
+    .mismatch-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+    .tag-remove { background: rgba(229,72,77,0.12); color: var(--red); }
+    .tag-restructure { background: rgba(255,186,0,0.12); color: var(--yellow); }
+    .tag-new { background: rgba(62,207,142,0.12); color: var(--green); }
+    .tag-expand { background: rgba(59,130,246,0.12); color: var(--blue); }
+
+    .nav-diagram,
+    .state-machine,
+    .pipeline,
+    .solana-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px;
+      overflow-x: auto;
+    }
+    .nav-row {
+      display: flex; align-items: center; gap: 6px;
+      padding: 10px 0;
+    }
+    .nav-row-label {
+      font-size: 10px; font-weight: 600;
+      color: var(--muted-2); letter-spacing: 1px;
+      text-transform: uppercase; width: 80px; min-width: 80px;
+    }
+    .nav-item {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px; font-weight: 500;
+      white-space: nowrap;
+    }
+    .nav-keep { background: rgba(255,255,255,0.06); color: var(--text); }
+    .nav-new { background: rgba(62,207,142,0.1); color: var(--green); border: 1px solid rgba(62,207,142,0.2); }
+    .nav-remove { background: rgba(229,72,77,0.08); color: var(--red); text-decoration: line-through; opacity: 0.6; }
+    .nav-merge { background: rgba(155,138,251,0.1); color: var(--purple); border: 1px solid rgba(155,138,251,0.2); }
+    .flow-arrow { color: var(--muted-2); font-size: 18px; display: flex; align-items: center; }
+    .nav-legend {
+      display: flex; gap: 16px; margin-top: 20px;
+      padding-top: 16px; border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; color: var(--muted);
+    }
+    .legend-dot {
+      width: 8px; height: 8px; border-radius: 2px;
+    }
+
+    .state-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .state-node {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      position: relative;
+      min-width: 120px;
+      text-align: center;
+    }
+    .state-node .state-num {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      opacity: 0.5;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .state-scheduled { background: rgba(255,186,0,0.1); color: var(--yellow); border: 1px solid rgba(255,186,0,0.2); }
+    .state-phase1 { background: rgba(155,138,251,0.1); color: var(--purple); border: 1px solid rgba(155,138,251,0.2); }
+    .state-phase2 { background: rgba(59,130,246,0.1); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
+    .state-sold-invested { background: rgba(62,207,142,0.1); color: var(--green); border: 1px solid rgba(62,207,142,0.2); }
+    .state-sold-not { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border); }
+    .state-failed { background: rgba(229,72,77,0.1); color: var(--red); border: 1px solid rgba(229,72,77,0.2); }
+    .state-claim { background: rgba(34,211,238,0.1); color: var(--cyan); border: 1px solid rgba(34,211,238,0.2); }
+    .state-cta {
+      margin-top: 6px;
+      font-size: 9px;
+      font-weight: 500;
+      opacity: 0.65;
+      letter-spacing: 0.3px;
+    }
+    .flow-branch {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      gap: 8px;
+      padding: 10px;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+    }
+    .state-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .state-detail,
+    .solana-card {
+      padding: 14px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+    }
+    .state-detail-label,
+    .solana-card-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .state-detail-cta,
+    .solana-card p {
+      font-size: 11px; color: var(--muted); line-height: 1.5;
+    }
+
+    .pipeline-flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      align-items: stretch;
+      gap: 0;
+    }
+    .pipeline-step {
+      padding: 20px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .pipeline-step:last-child { border-right: none; }
+    .pipeline-step-num {
+      width: 28px; height: 28px;
+      background: var(--yellow-dim);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: var(--yellow);
+      margin: 0 auto 10px;
+    }
+    .pipeline-step h4 {
+      font-size: 13px; font-weight: 600;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .pipeline-step p {
+      font-size: 11px; color: var(--muted); line-height: 1.5;
+    }
+    .access-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .metric-box {
+      padding: 14px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+    }
+    .metric-box .val {
+      font-size: 22px; font-weight: 600; color: var(--yellow);
+      letter-spacing: -0.5px;
+    }
+    .metric-box .lbl {
+      font-size: 10px; color: var(--muted);
+      letter-spacing: 0.5px; text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .solana-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 12px;
+    }
+    .solana-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .chain-tag,
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+    }
+    .chain-tag.solana { color: var(--cyan); border-color: rgba(34,211,238,0.2); background: rgba(34,211,238,0.08); }
+    .status-pill.invested { color: var(--green); border-color: rgba(62,207,142,0.2); background: rgba(62,207,142,0.08); }
+    .status-pill.not-invested { color: var(--muted); }
+
+    .screen-list {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .screen-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .screen-card-header {
+      padding: 18px 22px;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+    .screen-card-header:hover { background: rgba(255,255,255,0.02); }
+    .screen-card-left {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .screen-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .screen-card h3 {
+      font-size: 15px; font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+    .screen-card .screen-sub {
+      font-size: 11px; color: var(--muted);
+    }
+    .priority-badge {
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .p-critical { background: rgba(229,72,77,0.12); color: var(--red); }
+    .p-high { background: rgba(249,115,22,0.12); color: var(--orange); }
+    .p-medium { background: rgba(255,186,0,0.12); color: var(--yellow); }
+    .p-new { background: rgba(62,207,142,0.12); color: var(--green); }
+    .screen-card-body {
+      padding: 0 22px 22px;
+      display: none;
+    }
+    .screen-card.open .screen-card-body { display: block; }
+    .screen-card .chevron {
+      color: var(--muted-2);
+      transition: transform 0.2s;
+      font-size: 18px;
+    }
+    .screen-card.open .chevron { transform: rotate(180deg); }
+    .change-list {
+      display: flex; flex-direction: column; gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .change-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: var(--muted); line-height: 1.55;
+    }
+    .change-icon {
+      width: 20px; height: 20px; min-width: 20px;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; margin-top: 2px;
+    }
+    .ci-remove { background: rgba(229,72,77,0.12); color: var(--red); }
+    .ci-add { background: rgba(62,207,142,0.12); color: var(--green); }
+    .ci-change { background: rgba(255,186,0,0.12); color: var(--yellow); }
+    .ci-keep { background: rgba(255,255,255,0.06); color: var(--muted); }
+
+    .cta-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .cta-table th {
+      text-align: left;
+      font-size: 10px; font-weight: 600;
+      color: var(--muted-2); letter-spacing: 1px;
+      text-transform: uppercase; padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-table td {
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .cta-table tr:last-child td { border-bottom: none; }
+    .cta-table .state-col { color: var(--text); font-weight: 500; }
+    .cta-btn-sample {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .cta-active { background: var(--yellow); color: #111; }
+    .cta-disabled { background: rgba(255,255,255,0.06); color: var(--muted-2); }
+    .cta-danger { background: rgba(229,72,77,0.12); color: var(--red); }
+    .cta-info { background: rgba(59,130,246,0.12); color: var(--blue); }
+
+    .priority-timeline {
+      display: flex; flex-direction: column; gap: 0;
+      position: relative;
+      padding-left: 24px;
+    }
+    .priority-timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+    .priority-item {
+      position: relative;
+      padding: 16px 0 16px 24px;
+    }
+    .priority-item::before {
+      content: '';
+      position: absolute;
+      left: -20px; top: 22px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+      border: 2px solid var(--bg);
+    }
+    .priority-item.done::before { background: var(--green); }
+    .priority-item.upcoming::before { background: var(--muted-2); }
+    .priority-item h4 {
+      font-size: 14px; font-weight: 600; margin-bottom: 4px;
+    }
+    .priority-item p {
+      font-size: 12px; color: var(--muted); line-height: 1.55;
+    }
+    .priority-phase {
+      font-size: 10px; font-weight: 600;
+      color: var(--yellow); letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--yellow-border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 10px;
+    }
+    .question-card h4 {
+      font-size: 14px; font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .question-card p {
+      font-size: 12px; color: var(--muted); line-height: 1.55;
+    }
+    .question-num {
+      font-size: 10px; font-weight: 600;
+      color: var(--yellow); letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .page-footer {
+      padding: 48px 0 32px;
+      text-align: center;
+    }
+    .page-footer p {
+      font-size: 12px; color: var(--muted-2);
+    }
+
+    @media (max-width: 900px) {
+      .pipeline-flow { grid-template-columns: repeat(3, 1fr); }
+      .solana-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 { font-size: 36px; }
+      .mismatch-grid { grid-template-columns: 1fr; }
+      .pipeline-flow { grid-template-columns: 1fr; }
+      .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); }
+      .access-metrics { grid-template-columns: 1fr 1fr; }
+      .state-flow { flex-direction: column; align-items: stretch; }
+      .flow-branch { grid-template-columns: 1fr; width: 100%; }
+      .state-detail-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <div class="logo-icon">B</div>
+        <div class="topbar-title">
+          <span>Blockstreet</span>
+          <span class="topbar-sep">/</span>
+          Launchpad Redesign Direction
+        </div>
+      </div>
+      <span class="topbar-badge">Internal</span>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <section class="hero">
+      <div class="hero-overline">Product Audit — March 2026</div>
+      <h1>Launchpad Redesign<br>Direction</h1>
+      <p class="hero-sub">Structural audit and implementation roadmap for the Blockstreet launchpad. Six core mismatches identified, confirmed pool states mapped, screen-by-screen changes documented, and Solana support planned as a separate system layer.</p>
+      <div class="hero-verdict">
+        <div class="verdict-icon">✓</div>
+        <div class="verdict-text">
+          <strong>Visual system is premium and worth keeping.</strong> Dark theme, gold accents, card system, and general layout quality are solid. The problems are structural, not aesthetic.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Diagnosis</div>
+      <h2>Six Structural Mismatches</h2>
+      <p class="section-desc">Cross-referenced every screenshot against confirmed product logic. These need resolution before any visual polish.</p>
+
+      <div class="mismatch-grid">
+        <div class="mismatch-card critical">
+          <div class="mismatch-num">Issue 01</div>
+          <h3>Dual staking references everywhere</h3>
+          <p>Homepage hero pillars, How It Works, and stats still reference a system that has already been replaced by single staking and points-based access.</p>
+          <span class="mismatch-tag tag-remove">Remove</span>
+        </div>
+        <div class="mismatch-card critical">
+          <div class="mismatch-num">Issue 02</div>
+          <h3>Tier system still appears in profile</h3>
+          <p>The old tier badge still appears in profile and wallet views. Tiers have been removed in favor of lock duration, multiplier, points, rank, and access status.</p>
+          <span class="mismatch-tag tag-remove">Remove</span>
+        </div>
+        <div class="mismatch-card">
+          <div class="mismatch-num">Issue 03</div>
+          <h3>Navigation mixes marketing and app logic</h3>
+          <p>How It Works, Pools, Portfolio, and founder actions currently sit too close together. The structure needs clearer separation between support pages and operational product views.</p>
+          <span class="mismatch-tag tag-restructure">Restructure</span>
+        </div>
+        <div class="mismatch-card">
+          <div class="mismatch-num">Issue 04</div>
+          <h3>Pool states are incomplete</h3>
+          <p>Current design lacks distinct handling for Sold Out (not invested), Failed / Refund, and post-invest claim states. It also does not differentiate invested sold-out from generic sold-out.</p>
+          <span class="mismatch-tag tag-expand">Expand</span>
+        </div>
+        <div class="mismatch-card">
+          <div class="mismatch-num">Issue 05</div>
+          <h3>Disabled CTAs are dead ends</h3>
+          <p>The current design often grays out buttons without explaining what is blocked. Every disabled CTA should tell the user why access is blocked and what action unlocks it.</p>
+          <span class="mismatch-tag tag-restructure">Restructure</span>
+        </div>
+        <div class="mismatch-card">
+          <div class="mismatch-num">Issue 06</div>
+          <h3>Missing authenticated dashboard</h3>
+          <p>After login, there is no true control center showing access overview, open pools, wallet readiness, chain coverage, and recent activity. This is the highest-impact missing page.</p>
+          <span class="mismatch-tag tag-new">New</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Information Architecture</div>
+      <h2>Navigation Restructure</h2>
+      <p class="section-desc">Current nav mixes concerns and creates ambiguity. New structure separates support content from the core operating product.</p>
+
+      <div class="nav-diagram">
+        <div class="nav-row">
+          <div class="nav-row-label">Current</div>
+          <span class="nav-item nav-keep">How It Works</span>
+          <span class="nav-item nav-remove">Deals</span>
+          <span class="nav-item nav-remove">Launch Pools</span>
+          <span class="nav-item nav-keep">Staking</span>
+          <span class="nav-item nav-keep">Portfolio</span>
+          <span class="nav-item nav-remove">Submit Project</span>
+        </div>
+        <div style="padding: 8px 0; display: flex; align-items: center; gap: 8px; padding-left: 80px;">
+          <span class="flow-arrow">↓</span>
+          <span style="font-size: 11px; color: var(--muted);">becomes</span>
+        </div>
+        <div class="nav-row">
+          <div class="nav-row-label">New</div>
+          <span class="nav-item nav-new">Dashboard</span>
+          <span class="nav-item nav-merge">Pools</span>
+          <span class="nav-item nav-keep">Staking</span>
+          <span class="nav-item nav-keep">Portfolio</span>
+          <span class="nav-item nav-keep">How It Works</span>
+        </div>
+
+        <div class="nav-legend">
+          <div class="legend-item"><div class="legend-dot" style="background: rgba(62,207,142,0.5);"></div> New page</div>
+          <div class="legend-item"><div class="legend-dot" style="background: rgba(155,138,251,0.5);"></div> Merged from two</div>
+          <div class="legend-item"><div class="legend-dot" style="background: rgba(255,255,255,0.15);"></div> Kept</div>
+          <div class="legend-item"><div class="legend-dot" style="background: rgba(229,72,77,0.4);"></div> Removed</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; padding: 16px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;">
+        <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">
+          <strong style="color: var(--text);">Key changes:</strong> Deals and Launch Pools merge into a single <strong style="color: var(--purple);">Pools</strong> section. Submit Project moves into the founder area within Portfolio. <strong style="color: var(--green);">Dashboard</strong> becomes the new top-level destination for authenticated users. <strong style="color: var(--text);">How It Works</strong> remains as a support and educational layer rather than a core operating view.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Core System</div>
+      <h2>Confirmed Pool State System</h2>
+      <p class="section-desc">Every pool card, detail page, and CTA should map to a clearly defined state. The states below represent the confirmed core system, plus the post-invest experience.</p>
+
+      <div class="state-machine">
+        <div class="state-flow">
+          <div class="state-node state-scheduled">
+            <span class="state-num">State 1</span>
+            Scheduled
+            <div class="state-cta">Notify me / waitlist</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="state-node state-phase1">
+            <span class="state-num">State 2</span>
+            Phase 1
+            <div class="state-cta">Ranked access</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="state-node state-phase2">
+            <span class="state-num">State 3</span>
+            Phase 2
+            <div class="state-cta">Public FCFS</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-branch">
+            <div class="state-node state-sold-invested">
+              <span class="state-num">State 4</span>
+              Sold Out (invested)
+              <div class="state-cta">Track position</div>
+            </div>
+            <div class="state-node state-sold-not">
+              <span class="state-num">State 5</span>
+              Sold Out (not invested)
+              <div class="state-cta">Chain-aware DEX CTA</div>
+            </div>
+            <div class="state-node state-failed">
+              <span class="state-num">State 6</span>
+              Failed / Refund
+              <div class="state-cta">Refund issued automatically</div>
+            </div>
+            <div class="state-node state-claim">
+              <span class="state-num">State 7</span>
+              Claim Live
+              <div class="state-cta">Claim / vesting / unlocks</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="state-detail-grid">
+          <div class="state-detail">
+            <div class="state-detail-label" style="color: var(--yellow);">Scheduled</div>
+            <div class="state-detail-cta">Show countdown, launch date, and project summary. Primary CTA is Notify Me / Join waitlist. No capital commitment.</div>
+          </div>
+          <div class="state-detail">
+            <div class="state-detail-label" style="color: var(--purple);">Phase 1</div>
+            <div class="state-detail-cta">Ranked access for eligible users. Access depends on points, rank, wallet setup, region, and KYC status.</div>
+          </div>
+          <div class="state-detail">
+            <div class="state-detail-label" style="color: var(--blue);">Phase 2</div>
+            <div class="state-detail-cta">Public FCFS for all eligible users. Open more broadly than Phase 1, but still subject to eligibility checks.</div>
+          </div>
+          <div class="state-detail">
+            <div class="state-detail-label" style="color: var(--green);">Sold Out (invested)</div>
+            <div class="state-detail-cta">Show invested amount, position status, and route the user toward claim and vesting detail.</div>
+          </div>
+          <div class="state-detail">
+            <div class="state-detail-label" style="color: var(--muted);">Sold Out (not invested)</div>
+            <div class="state-detail-cta">Show chain-aware Buy on DEX route instead of invest actions. Keep it distinct from invested sold out.</div>
+          </div>
+          <div class="state-detail">
+            <div class="state-detail-label" style="color: var(--red);">Failed / Refund</div>
+            <div class="state-detail-cta">Show failed status clearly. Default behavior assumes refund is issued automatically to the participation wallet.</div>
+          </div>
+          <div class="state-detail">
+            <div class="state-detail-label" style="color: var(--cyan);">Claim Live</div>
+            <div class="state-detail-cta">Show claimable token state, vesting context, next unlock details, and entry into the detailed claim flow.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Access System</div>
+      <h2>Staking Logic → Access System</h2>
+      <p class="section-desc">Replaces the old tier system. Users should understand access through staking amount, lock duration, multiplier, points, rank, and eligibility, not through a tier badge.</p>
+
+      <div class="pipeline">
+        <div class="pipeline-flow">
+          <div class="pipeline-step">
+            <div class="pipeline-step-num">1</div>
+            <h4>Stake Amount</h4>
+            <p>How much BLOCK the user locks into the system.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-num">2</div>
+            <h4>Lock Duration</h4>
+            <p>Longer lock periods increase the multiplier applied to the stake.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-num">3</div>
+            <h4>Multiplier</h4>
+            <p>Duration-based multiplier converts stake commitment into stronger point value.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-num">4</div>
+            <h4>Points</h4>
+            <p>Stake amount and multiplier combine into the user’s total points.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-num">5</div>
+            <h4>Leaderboard Rank</h4>
+            <p>Points influence rank, which helps determine access strength.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-step-num">6</div>
+            <h4>Pool Access</h4>
+            <p>Rank, points, wallet setup, region, and KYC together shape participation eligibility.</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border);">
+          <div style="font-size: 10px; font-weight: 600; color: var(--muted-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px;">Access Overview Module — replaces tier logic</div>
+          <div class="access-metrics">
+            <div class="metric-box">
+              <div class="val">2,435</div>
+              <div class="lbl">BLOCK Staked</div>
+            </div>
+            <div class="metric-box">
+              <div class="val">180d</div>
+              <div class="lbl">Lock Duration</div>
+            </div>
+            <div class="metric-box">
+              <div class="val">5x</div>
+              <div class="lbl">Staking Multiplier</div>
+            </div>
+            <div class="metric-box">
+              <div class="val">12,175</div>
+              <div class="lbl">Points</div>
+            </div>
+            <div class="metric-box">
+              <div class="val">#126</div>
+              <div class="lbl">Rank</div>
+            </div>
+            <div class="metric-box">
+              <div class="val">KYC Complete</div>
+              <div class="lbl">Access Status</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Chain Support</div>
+      <h2>Solana Integration Layer</h2>
+      <p class="section-desc">Keep chain logic as a lightweight separate layer. The platform remains unified, but users should clearly understand when a pool is Solana-native, which wallet is required, and what action follows once the pool is closed or sold out.</p>
+
+      <div class="solana-panel">
+        <div class="solana-grid">
+          <div class="solana-card">
+            <div class="solana-card-label" style="color: var(--cyan);">User flow</div>
+            <p>Main wallet remains the staking reference wallet. If a pool is Solana-based, the user adds a Solana wallet as an optional participation wallet. The UI should make it explicit that the main wallet is for identity and staking reference, while the Solana wallet is required for participation on that chain.</p>
+            <div class="solana-tags">
+              <span class="chain-tag solana">Solana Pool</span>
+              <span class="chain-tag">Main wallet = staking reference</span>
+              <span class="chain-tag">Optional wallet = participation</span>
+            </div>
+          </div>
+          <div class="solana-card">
+            <div class="solana-card-label" style="color: var(--yellow);">UI tags and actions</div>
+            <p>Every pool card should expose a clear chain tag. When sold out, the pool should show different actions depending on whether the user invested or not, and route to the right chain-aware destination.</p>
+            <div class="solana-tags">
+              <span class="status-pill invested">Sold Out • Invested</span>
+              <span class="status-pill not-invested">Sold Out • Not Invested</span>
+              <span class="chain-tag solana">Requires Solana wallet</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="state-detail-grid" style="margin-top: 16px; padding-top: 16px;">
+          <div class="solana-card">
+            <div class="solana-card-label" style="color: var(--cyan);">Pool tag</div>
+            <p>Use a small visible chain tag on cards and detail pages, for example Solana, EVM, or Base, so users immediately know which wallet and settlement path apply.</p>
+          </div>
+          <div class="solana-card">
+            <div class="solana-card-label" style="color: var(--green);">If invested</div>
+            <p>Show a status like Sold Out • Invested, then route the user to claim tracking, vesting details, and the participation wallet used for that Solana pool.</p>
+          </div>
+          <div class="solana-card">
+            <div class="solana-card-label" style="color: var(--muted);">If not invested</div>
+            <p>Show Sold Out • Not Invested, then replace invest actions with a chain-aware CTA such as Buy on DEX. For Solana, the final label can later resolve to a specific destination like Jupiter or Meteora.</p>
+          </div>
+          <div class="solana-card">
+            <div class="solana-card-label" style="color: var(--yellow);">Wallet readiness</div>
+            <p>If the user is viewing a Solana pool without a connected Solana wallet, the CTA should clearly say Add Solana Wallet instead of failing silently.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">UX Precision</div>
+      <h2>Disabled CTA Logic</h2>
+      <p class="section-desc">Every blocked action should tell the user what is missing and what to do next. No more dead-end grayed-out buttons.</p>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;">
+        <table class="cta-table">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Button</th>
+              <th>Helper Text</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="state-col">Wallet not connected</td>
+              <td><span class="cta-btn-sample cta-active">Connect Wallet</span></td>
+              <td>Required before participation</td>
+            </tr>
+            <tr>
+              <td class="state-col">KYC not completed</td>
+              <td><span class="cta-btn-sample cta-danger">Complete KYC</span></td>
+              <td>Identity verification required to invest</td>
+            </tr>
+            <tr>
+              <td class="state-col">Phase 1 not unlocked</td>
+              <td><span class="cta-btn-sample cta-disabled">Access Locked</span></td>
+              <td>Increase points to improve access</td>
+            </tr>
+            <tr>
+              <td class="state-col">Scheduled</td>
+              <td><span class="cta-btn-sample cta-info">Notify Me</span></td>
+              <td>Pool opens March 28</td>
+            </tr>
+            <tr>
+              <td class="state-col">Missing Solana wallet</td>
+              <td><span class="cta-btn-sample cta-info">Add Solana Wallet</span></td>
+              <td>Required for participation in this pool</td>
+            </tr>
+            <tr>
+              <td class="state-col">Already invested (max)</td>
+              <td><span class="cta-btn-sample cta-info">View Position</span></td>
+              <td>Maximum allocation reached</td>
+            </tr>
+            <tr>
+              <td class="state-col">Pool sold out (not invested)</td>
+              <td><span class="cta-btn-sample cta-info">Buy on DEX</span></td>
+              <td>Routing depends on project chain</td>
+            </tr>
+            <tr>
+              <td class="state-col">Pool failed</td>
+              <td><span class="cta-btn-sample cta-disabled">Refund Processing</span></td>
+              <td>Funds return automatically to the participation wallet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Implementation</div>
+      <h2>Screen-by-Screen Changes</h2>
+      <p class="section-desc">Expand each screen to see exact changes. Every item is tagged as remove, add, change, or keep.</p>
+
+      <div class="screen-list">
+
+        <div class="screen-card open">
+          <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="screen-card-left">
+              <div class="screen-icon" style="background: rgba(229,72,77,0.12);">🏠</div>
+              <div>
+                <h3>Homepage</h3>
+                <div class="screen-sub">Hero, features, stats, How It Works</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="priority-badge p-critical">Critical</span>
+              <span class="chevron">▾</span>
+            </div>
+          </div>
+          <div class="screen-card-body">
+            <div class="change-list">
+              <div class="change-item">
+                <div class="change-icon ci-remove">✕</div>
+                <div><strong style="color: var(--text);">Remove dual staking references</strong> from feature pillars, supporting stats, and explanatory copy.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-change">~</div>
+                <div><strong style="color: var(--text);">Replace old staking framing</strong> with updated single-staking logic and points-based access language.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-remove">✕</div>
+                <div><strong style="color: var(--text);">Remove tier-based explanation</strong> from How It Works. Access should be explained through points, rank, and eligibility instead.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-keep">—</div>
+                <div>Hero layout, overall visual system, CTA composition, and project card direction can remain. The problem is messaging and structure, not the aesthetic base.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="screen-card-left">
+              <div class="screen-icon" style="background: rgba(255,186,0,0.12);">📋</div>
+              <div>
+                <h3>Pool Detail Page</h3>
+                <div class="screen-sub">Project info, timeline, participation CTA</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="priority-badge p-critical">Critical</span>
+              <span class="chevron">▾</span>
+            </div>
+          </div>
+          <div class="screen-card-body">
+            <div class="change-list">
+              <div class="change-item">
+                <div class="change-icon ci-change">~</div>
+                <div><strong style="color: var(--text);">Timeline component</strong> should become Scheduled → Phase 1 → Phase 2 → Closed, instead of older VIP and early access naming.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-change">~</div>
+                <div><strong style="color: var(--text);">Primary CTA must be state-aware</strong> and map cleanly to scheduled, active, sold out, failed, and claim-ready behavior.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Scheduled</strong> shows dates, project summary, and Notify Me / Join Waitlist only. No allocation or commit behavior.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Pool detail should expose chain tags</strong> so the user immediately understands whether EVM or Solana participation logic applies.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-keep">—</div>
+                <div>Funding sidebar, project tabs, and general page composition can stay. The main update is state logic and CTA behavior.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="screen-card-left">
+              <div class="screen-icon" style="background: rgba(155,138,251,0.12);">👤</div>
+              <div>
+                <h3>Profile Page</h3>
+                <div class="screen-sub">Account info, wallet setup, KYC, staking</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="priority-badge p-high">High</span>
+              <span class="chevron">▾</span>
+            </div>
+          </div>
+          <div class="screen-card-body">
+            <div class="change-list">
+              <div class="change-item">
+                <div class="change-icon ci-remove">✕</div>
+                <div><strong style="color: var(--text);">Remove tier badge entirely</strong> from profile and wallet-related UI.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Replace with compact access overview</strong> showing stake, lock duration, multiplier, points, rank, and access status.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Clarify wallet roles</strong>, main wallet = staking reference, optional wallets = chain-specific participation wallets.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-keep">—</div>
+                <div>Wallet dropdown structure, KYC warnings, and general account architecture can remain, with clearer labels and access context.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="screen-card-left">
+              <div class="screen-icon" style="background: rgba(62,207,142,0.12);">🎫</div>
+              <div>
+                <h3>Token Claims</h3>
+                <div class="screen-sub">Claim list, vesting, unlock status</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="priority-badge p-medium">Medium</span>
+              <span class="chevron">▾</span>
+            </div>
+          </div>
+          <div class="screen-card-body">
+            <div class="change-list">
+              <div class="change-item">
+                <div class="change-icon ci-change">~</div>
+                <div><strong style="color: var(--text);">Not Ready to Claim</strong> should explain why. Use contextual messaging like TGE in 14 days or Next unlock: Apr 15.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-keep">—</div>
+                <div>Keep claims overview minimal. Richer vesting, unlock, and schedule detail belongs in the project-level claim detail view.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="screen-card-left">
+              <div class="screen-icon" style="background: rgba(59,130,246,0.12);">📊</div>
+              <div>
+                <h3>Active Investments</h3>
+                <div class="screen-sub">Filters, card states, post-invest status</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="priority-badge p-medium">Medium</span>
+              <span class="chevron">▾</span>
+            </div>
+          </div>
+          <div class="screen-card-body">
+            <div class="change-list">
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Failed</strong> should exist as its own filter or visible status state where relevant.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Failed pool cards</strong> should show refund status clearly. Sold-out pools where the user did not participate should show a chain-aware external DEX route.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-keep">—</div>
+                <div>General card layout, grouping, and investment summary patterns can remain, with expanded state handling.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="screen-card-left">
+              <div class="screen-icon" style="background: rgba(249,115,22,0.12);">🔧</div>
+              <div>
+                <h3>My Projects (Founder)</h3>
+                <div class="screen-sub">Submission lifecycle and founder visibility</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="priority-badge p-high">High</span>
+              <span class="chevron">▾</span>
+            </div>
+          </div>
+          <div class="screen-card-body">
+            <div class="change-list">
+              <div class="change-item">
+                <div class="change-icon ci-change">~</div>
+                <div><strong style="color: var(--text);">Expand status model</strong> from a narrow set of founder states into Draft, Under Review, Approved, Pre-Launch, Live, Failed, and Completed.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Add matching filters and badges</strong> so the founder area behaves like a lifecycle dashboard, not a static list.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-keep">—</div>
+                <div>Submit Project can remain, but it should live inside the founder area rather than as a standalone top-level navigation action.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-card">
+          <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+            <div class="screen-card-left">
+              <div class="screen-icon" style="background: rgba(62,207,142,0.12);">⚡</div>
+              <div>
+                <h3>Dashboard (New Page)</h3>
+                <div class="screen-sub">Authenticated landing and operating center</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="priority-badge p-new">New</span>
+              <span class="chevron">▾</span>
+            </div>
+          </div>
+          <div class="screen-card-body">
+            <div class="change-list">
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Access overview module</strong> showing BLOCK staked, lock duration, multiplier, points, rank, and access status.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Open pools module</strong> for currently active opportunities, prioritized by urgency or close date.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Wallet readiness module</strong> showing connected chains, missing wallets, and whether the user is ready for EVM and Solana participation.</div>
+              </div>
+              <div class="change-item">
+                <div class="change-icon ci-add">+</div>
+                <div><strong style="color: var(--text);">Recent activity feed</strong> for investments, claims, staking changes, and pool status updates.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Execution</div>
+      <h2>Implementation Priority</h2>
+      <p class="section-desc">Ordered by structural impact. Phase 1 fixes broken logic. Phase 2 adds missing product layers. Phase 3 is polish.</p>
+
+      <div class="priority-timeline">
+        <div class="priority-item">
+          <div class="priority-phase">Phase 1 — Fix Core Logic</div>
+          <h4>Remove dual staking references</h4>
+          <p>Update homepage, explanatory content, and supporting stats to reflect single staking and points-based access.</p>
+        </div>
+        <div class="priority-item">
+          <h4>Remove tier system from profile</h4>
+          <p>Replace old tier badges with an access overview based on lock duration, multiplier, points, and rank.</p>
+        </div>
+        <div class="priority-item">
+          <h4>Implement confirmed pool state system</h4>
+          <p>Map cards and detail views to scheduled, phase 1, phase 2, sold out, failed, and claim-ready behavior.</p>
+        </div>
+        <div class="priority-item">
+          <h4>Fix disabled CTA patterns</h4>
+          <p>Every blocked action needs a reason and a next step. No silent dead ends.</p>
+        </div>
+        <div class="priority-item upcoming">
+          <div class="priority-phase">Phase 2 — Add Missing Product Layers</div>
+          <h4>Build dashboard page</h4>
+          <p>Create the authenticated operating center with access overview, open pools, wallet readiness, and recent activity.</p>
+        </div>
+        <div class="priority-item upcoming">
+          <h4>Restructure navigation</h4>
+          <p>Merge Deals and Launch Pools into Pools, move Submit Project into founder area, and clarify support vs app navigation.</p>
+        </div>
+        <div class="priority-item upcoming">
+          <h4>Add Solana support layer</h4>
+          <p>Introduce chain tags, wallet readiness logic, and sold-out routing that adapts to Solana-specific participation flows.</p>
+        </div>
+        <div class="priority-item upcoming">
+          <h4>Expand founder lifecycle</h4>
+          <p>Grow the founder area into a full lifecycle system with filters, badges, and visibility across all project states.</p>
+        </div>
+        <div class="priority-item upcoming">
+          <div class="priority-phase">Phase 3 — Polish</div>
+          <h4>Token Claims contextual reasons</h4>
+          <p>Replace generic not ready text with contextual TGE, unlock, or next claim timing.</p>
+        </div>
+        <div class="priority-item upcoming">
+          <h4>Refine post-pool routing</h4>
+          <p>Improve sold-out, failed, and claim-ready states with chain-aware messaging and smoother detail handoff.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-label">Decisions Needed</div>
+      <h2>Open Questions</h2>
+      <p class="section-desc">These need stakeholder input before the design system can fully lock.</p>
+
+      <div class="question-card">
+        <div class="question-num">Q1</div>
+        <h4>What is the final homepage framing for staking now that dual staking is removed?</h4>
+        <p>Should staking be presented as single staking, points-based access, staking rewards, or a broader access system?</p>
+      </div>
+      <div class="question-card">
+        <div class="question-num">Q2</div>
+        <h4>What is the exact logic connecting stake amount, lock duration, multiplier, points, and leaderboard rank?</h4>
+        <p>The access overview module should only expose relationships that are actually confirmed.</p>
+      </div>
+      <div class="question-card">
+        <div class="question-num">Q3</div>
+        <h4>If overflow becomes part of the allocation model, how should it be handled visually and operationally?</h4>
+        <p>Possible directions include pro-rata reduction, waitlist logic, lottery, or another allocation mechanism, but this is not yet a confirmed core state.</p>
+      </div>
+      <div class="question-card">
+        <div class="question-num">Q4</div>
+        <h4>Can we confirm failed pools default to automatic refund back to the participation wallet?</h4>
+        <p>If manual claim exists, it should be treated as an exception, not the primary flow.</p>
+      </div>
+      <div class="question-card">
+        <div class="question-num">Q5</div>
+        <h4>Should dashboard replace homepage for authenticated users, or remain a separate destination?</h4>
+        <p>This changes the default landing experience after login.</p>
+      </div>
+      <div class="question-card">
+        <div class="question-num">Q6</div>
+        <h4>How should the main wallet vs optional wallet system be surfaced in the UI?</h4>
+        <p>The product needs to explain clearly that the main wallet is the staking reference wallet, while optional wallets are used for chain-specific participation, including Solana.</p>
+      </div>
+    </section>
+
+    <div class="page-footer">
+      <p>Blockstreet Launchpad Redesign Direction — March 2026 — Internal Document</p>
+    </div>
+
+  </div>
+
+</body>
+</html>
