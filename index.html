@@ -93,8 +93,50 @@
       text-transform: uppercase;
     }
 
+    .section-nav {
+      position: sticky;
+      top: 51px;
+      z-index: 90;
+      background: rgba(17,18,19,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .section-nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .section-nav-inner::-webkit-scrollbar { display: none; }
+    .section-link {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .section-link:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+      text-decoration: none;
+    }
+
+    section[id] {
+      scroll-margin-top: 108px;
+    }
+
     .hero {
-      padding: 120px 0 64px;
+      padding: 132px 0 88px;
       border-bottom: 1px solid var(--border);
     }
     .hero-overline {
@@ -104,14 +146,14 @@
     }
     .hero h1 {
       font-size: 52px; font-weight: 600;
-      line-height: 1.05; letter-spacing: -1.5px;
-      margin-bottom: 20px;
+      line-height: 1.02; letter-spacing: -1.6px;
+      margin-bottom: 16px;
       max-width: 760px;
     }
     .hero-sub {
-      font-size: 16px; color: var(--muted);
-      max-width: 660px; line-height: 1.65;
-      margin-bottom: 32px;
+      font-size: 14px; color: var(--muted);
+      max-width: 520px; line-height: 1.58;
+      margin-bottom: 0;
     }
     
 
@@ -453,6 +495,7 @@
       .solana-grid, .mismatch-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 700px) {
+      .hero { padding: 116px 0 72px; }
       .hero h1 { font-size: 36px; }
       .pipeline-flow { grid-template-columns: 1fr; }
       .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); }
@@ -485,7 +528,22 @@
       <p class="hero-sub">Focused redesign direction for the Blockstreet launchpad, centered on access logic, pool states, wallet readiness, and a cleaner product system.</p>
       </section>
 
-    <section class="section">
+    <div class="section-nav">
+      <div class="section-nav-inner">
+        <a class="section-link" href="#gaps">Gaps</a>
+        <a class="section-link" href="#navigation">Navigation</a>
+        <a class="section-link" href="#states">States</a>
+        <a class="section-link" href="#vault-logic">Vault Logic</a>
+        <a class="section-link" href="#solana">Solana</a>
+        <a class="section-link" href="#cta-logic">CTA Logic</a>
+        <a class="section-link" href="#product-map">Product Map</a>
+        <a class="section-link" href="#screens">Screens</a>
+        <a class="section-link" href="#priority">Priority</a>
+        <a class="section-link" href="#questions">Questions</a>
+      </div>
+    </div>
+
+    <section class="section" id="gaps">
       <div class="section-label">Diagnosis</div>
       <h2>Structural Gaps</h2>
       <p class="section-desc">What needs to change at the product-system level before any detail polish.</p>
@@ -529,7 +587,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="navigation">
       <div class="section-label">Information Architecture</div>
       <h2>Navigation</h2>
       <p class="section-desc">A cleaner top-level split between action, ownership, and support.</p>
@@ -568,7 +626,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="states">
       <div class="section-label">Core System</div>
       <h2>Pool States</h2>
       <p class="section-desc">The launch flow reduced to a single readable state model.</p>
@@ -648,7 +706,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="vault-logic">
       <div class="section-label">Access System</div>
       <h2>Vault Logic</h2>
       <p class="section-desc">A cleaner summary of how vault positions translate into access.</p>
@@ -717,7 +775,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="solana">
       <div class="section-label">Chain Support</div>
       <h2>Solana Layer</h2>
       <p class="section-desc">A separate, lightweight chain layer without breaking the main product logic.</p>
@@ -763,7 +821,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="cta-logic">
       <div class="section-label">UX Precision</div>
       <h2>CTA Logic</h2>
       <p class="section-desc">Every action should be explicit, readable, and reasoned.</p>
@@ -827,7 +885,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="product-map">
       <div class="section-label">Product Map</div>
       <h2>Dashboard & Portfolio</h2>
       <p class="section-desc">The clean split between overview, ownership, and account configuration.</p>
@@ -992,7 +1050,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="screens">
       <div class="section-label">Implementation</div>
       <h2>Screen-by-Screen</h2>
       <p class="section-desc">A compact view of what changes, what stays, and what gets added.</p>
@@ -1161,7 +1219,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="priority">
       <div class="section-label">Execution</div>
       <h2>Priority</h2>
       <p class="section-desc">Ordered by structural impact, not visual polish.</p>
@@ -1204,7 +1262,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="questions">
       <div class="section-label">Decisions Needed</div>
       <h2>Open Questions</h2>
       <p class="section-desc">The few remaining decisions needed before the system is fully locked.</p>
