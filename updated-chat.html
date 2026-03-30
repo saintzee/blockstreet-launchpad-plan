@@ -196,50 +196,6 @@
     .deferred-item p { font-size: 12px; color: var(--muted); }
     .deferred-item .deferred-source { font-size: 10px; color: var(--muted-2); margin-top: 8px; }
 
-    /* Deliverables map */
-    .deliverables { padding: 48px 0 0; }
-    .deliverables-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 24px; }
-    .deliverables-header h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.6px; }
-    .deliverables-range { font-size: 11px; color: var(--muted-2); }
-    .week-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-    .week-col { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .week-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .week-title { font-size: 12px; font-weight: 600; }
-    .week-dates { font-size: 10px; color: var(--muted-2); }
-    .week-items { padding: 8px; display: flex; flex-direction: column; gap: 2px; }
-    .del-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 500; color: var(--text); gap: 8px; cursor: pointer; transition: background 0.15s; user-select: none; }
-    .del-item:hover { background: rgba(255,255,255,0.02); }
-    .del-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    .del-dot { width: 6px; height: 6px; min-width: 6px; border-radius: 6px; background: var(--muted-2); transition: background 0.2s; }
-    .del-dot.done { background: var(--green); }
-    .del-dot.active { background: var(--yellow); }
-    .del-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s, text-decoration 0.2s; }
-    .del-item.checked .del-name { text-decoration: line-through; color: var(--muted-2); }
-    .del-item.checked .del-dot { background: var(--green) !important; }
-    .del-tag { font-size: 9px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
-    .del-tag-lang { color: var(--red); background: rgba(209,70,75,0.08); }
-    .del-tag-profile { color: var(--purple); background: rgba(139,124,246,0.08); }
-    .del-tag-pools { color: var(--blue); background: rgba(91,141,239,0.08); }
-    .del-tag-ux { color: var(--yellow); background: rgba(232,173,42,0.08); }
-    .del-tag-page { color: var(--green); background: rgba(52,178,123,0.08); }
-    .del-tag-founder { color: var(--orange); background: rgba(224,129,42,0.08); }
-    .del-tag-wallets { color: var(--cyan); background: rgba(62,191,218,0.08); }
-    .del-tag-arch { color: var(--text); background: rgba(255,255,255,0.05); }
-    .del-tag-chains { color: var(--cyan); background: rgba(62,191,218,0.08); }
-    .del-tag-qa { color: var(--muted); background: rgba(255,255,255,0.04); }
-    .week-col.current { border-color: rgba(232,173,42,0.2); }
-    .week-col.current .week-header { background: rgba(232,173,42,0.03); }
-    .week-col.current .week-title { color: var(--yellow); }
-    .week-progress { height: 2px; background: var(--border); margin: 0 16px 8px; border-radius: 1px; overflow: hidden; }
-    .week-progress-bar { height: 100%; background: var(--green); border-radius: 1px; transition: width 0.3s; }
-
-    /* Priority done + hover */
-    .priority-item.done .priority-phase { opacity: 0.35; }
-    .highlight-related { border-color: rgba(232,173,42,0.3) !important; box-shadow: 0 0 0 1px rgba(232,173,42,0.1); transition: border-color 0.2s, box-shadow 0.2s; }
-    .completed-item { opacity: 0.3; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
-    .completed-item h3, .completed-item h4 { text-decoration: line-through; color: var(--muted-2); }
-    .priority-item .connection-count { display: inline-block; font-size: 9px; font-weight: 500; color: var(--muted-2); margin-left: 6px; }
-
     /* Diagram */
     pre.diagram { margin: 0; white-space: pre-wrap; color: var(--muted); font: 12px/1.8 'SF Mono', 'Fira Code', 'Consolas', monospace; }
 
@@ -251,7 +207,7 @@
     .page-footer { padding: 64px 0 40px; text-align: center; color: var(--muted-2); font-size: 11px; letter-spacing: 0.3px; }
 
     @media (max-width: 900px) { .pipeline-flow { grid-template-columns: repeat(3, 1fr); } .grid-2, .deferred-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 700px) { .container { padding: 0 20px; } .hero { padding: 128px 0 72px; } .hero h1 { font-size: 32px; letter-spacing: -1.2px; } .section { padding: 60px 0; } .pipeline-flow { grid-template-columns: 1fr; } .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); } .metric-grid { grid-template-columns: 1fr 1fr; } .state-flow { flex-direction: column; align-items: stretch; } .flow-branch { grid-template-columns: 1fr; width: 100%; } .grid-auto { grid-template-columns: 1fr 1fr; } .grid-3 { grid-template-columns: 1fr; } .week-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .container { padding: 0 20px; } .hero { padding: 128px 0 72px; } .hero h1 { font-size: 32px; letter-spacing: -1.2px; } .section { padding: 60px 0; } .pipeline-flow { grid-template-columns: 1fr; } .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); } .metric-grid { grid-template-columns: 1fr 1fr; } .state-flow { flex-direction: column; align-items: stretch; } .flow-branch { grid-template-columns: 1fr; width: 100%; } .grid-auto { grid-template-columns: 1fr 1fr; } .grid-3 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -270,49 +226,6 @@
       <div class="hero-overline">Product Direction — March 2026</div>
       <h1>Launchpad<br>Redesign</h1>
       <p class="hero-sub">Access logic, pool states, allocation model, founder workflow, and the full decision trail.</p>
-
-      <div class="deliverables">
-        <div class="deliverables-header">
-          <h2>Deliverables</h2>
-          <span class="deliverables-range">Functioning design protype by 13 Apr</span>
-        </div>
-        <div class="week-grid">
-          <div class="week-col current" data-week="1">
-            <div class="week-header"><span class="week-title">Priority 1</span><span class="week-dates">Started 30 Mar</span></div>
-            <div class="week-progress"><div class="week-progress-bar" style="width:0%"></div></div>
-            <div class="week-items">
-              <div class="del-item" data-del="vault-language"><div class="del-left"><div class="del-dot active"></div><span class="del-name">Vault language cleanup</span></div><span class="del-tag del-tag-lang">Language</span></div>
-              <div class="del-item" data-del="tier-removal"><div class="del-left"><div class="del-dot active"></div><span class="del-name">Remove tier system</span></div><span class="del-tag del-tag-profile">Profile</span></div>
-              <div class="del-item" data-del="pool-states"><div class="del-left"><div class="del-dot"></div><span class="del-name">7 pool states in cards</span></div><span class="del-tag del-tag-pools">Pools</span></div>
-              <div class="del-item" data-del="phase-labels"><div class="del-left"><div class="del-dot"></div><span class="del-name">Phase label rename</span></div><span class="del-tag del-tag-pools">Pools</span></div>
-              <div class="del-item" data-del="cta-guidance"><div class="del-left"><div class="del-dot"></div><span class="del-name">CTA disabled states</span></div><span class="del-tag del-tag-ux">UX</span></div>
-              <div class="del-item" data-del="scheduled-cta"><div class="del-left"><div class="del-dot"></div><span class="del-name">Scheduled pool CTA fix</span></div><span class="del-tag del-tag-ux">UX</span></div>
-            </div>
-          </div>
-          <div class="week-col" data-week="2">
-            <div class="week-header"><span class="week-title">Priority 2</span><span class="week-dates">WIP</span></div>
-            <div class="week-progress"><div class="week-progress-bar" style="width:0%"></div></div>
-            <div class="week-items">
-              <div class="del-item" data-del="dashboard"><div class="del-left"><div class="del-dot"></div><span class="del-name">Dashboard page</span></div><span class="del-tag del-tag-page">New Page</span></div>
-              <div class="del-item" data-del="founder-flow"><div class="del-left"><div class="del-dot"></div><span class="del-name">Founder 7-step workflow</span></div><span class="del-tag del-tag-founder">Founder</span></div>
-              <div class="del-item" data-del="allocation-ui"><div class="del-left"><div class="del-dot"></div><span class="del-name">Allocation model UI</span></div><span class="del-tag del-tag-pools">Pools</span></div>
-              <div class="del-item" data-del="wallet-readiness"><div class="del-left"><div class="del-dot"></div><span class="del-name">Chain-aware wallets</span></div><span class="del-tag del-tag-wallets">Wallets</span></div>
-              <div class="del-item" data-del="navigation"><div class="del-left"><div class="del-dot"></div><span class="del-name">Navigation restructure</span></div><span class="del-tag del-tag-arch">Architecture</span></div>
-            </div>
-          </div>
-          <div class="week-col" data-week="3">
-            <div class="week-header"><span class="week-title">Priority 3</span><span class="week-dates">WIP</span></div>
-            <div class="week-progress"><div class="week-progress-bar" style="width:0%"></div></div>
-            <div class="week-items">
-              <div class="del-item" data-del="claim-messaging"><div class="del-left"><div class="del-dot"></div><span class="del-name">Claim & end-state messaging</span></div><span class="del-tag del-tag-ux">UX</span></div>
-              <div class="del-item" data-del="solana-flow"><div class="del-left"><div class="del-dot"></div><span class="del-name">Solana wallet flow</span></div><span class="del-tag del-tag-chains">Chains</span></div>
-              <div class="del-item" data-del="access-module"><div class="del-left"><div class="del-dot"></div><span class="del-name">Access overview module</span></div><span class="del-tag del-tag-profile">Profile</span></div>
-              <div class="del-item" data-del="open-questions"><div class="del-left"><div class="del-dot"></div><span class="del-name">Open questions resolution</span></div><span class="del-tag del-tag-qa">Planning</span></div>
-              <div class="del-item" data-del="cta-validation"><div class="del-left"><div class="del-dot"></div><span class="del-name">Final CTA validation</span></div><span class="del-tag del-tag-qa">QA</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <div class="section-nav">
@@ -334,12 +247,12 @@
       <h2>Structural Gaps</h2>
       <p class="section-desc">Six mismatches between the current design and confirmed product direction.</p>
       <div class="grid-2">
-        <div class="card" data-related="vault-language"><div class="card-label">01</div><h3>Vault language</h3><p>Staking and dual staking references still appear on the homepage, How It Works, and nav. Replace with vault logic and single staking.</p><div class="tag tag-remove">Remove</div></div>
-        <div class="card" data-related="tier-removal"><div class="card-label">02</div><h3>Tier system</h3><p>Profile sidebar shows TRADER 301–500. Remove all tier labels. Access is now points + rank.</p><div class="tag tag-remove">Remove</div></div>
-        <div class="card" data-related="phase-labels pool-states"><div class="card-label">03</div><h3>Phase labels</h3><p>Detail page shows VIP Round / Early Access. Replace with Phase 1 (ranked) and Phase 2 (FCFS).</p><div class="tag tag-change">Rename</div></div>
-        <div class="card" data-related="dashboard"><div class="card-label">04</div><h3>No dashboard</h3><p>No unified authenticated entry point. Build Dashboard as the primary post-login landing page.</p><div class="tag tag-new">New</div></div>
-        <div class="card" data-related="founder-flow"><div class="card-label">05</div><h3>Founder lifecycle</h3><p>My Projects only supports 2 states. Expand to full 7-state lifecycle: Draft through Completed.</p><div class="tag tag-expand">Expand</div></div>
-        <div class="card" data-related="scheduled-cta cta-guidance"><div class="card-label">06</div><h3>Scheduled CTA</h3><p>Scheduled pools show an Invest button. Replace with Notify Me / Join Waitlist. No capital lock pre-launch.</p><div class="tag tag-change">Fix</div></div>
+        <div class="card"><div class="card-label">01</div><h3>Vault language</h3><p>Staking and dual staking references still appear on the homepage, How It Works, and nav. Replace with vault logic and single staking.</p><div class="tag tag-remove">Remove</div></div>
+        <div class="card"><div class="card-label">02</div><h3>Tier system</h3><p>Profile sidebar shows TRADER 301–500. Remove all tier labels. Access is now points + rank.</p><div class="tag tag-remove">Remove</div></div>
+        <div class="card"><div class="card-label">03</div><h3>Phase labels</h3><p>Detail page shows VIP Round / Early Access. Replace with Phase 1 (ranked) and Phase 2 (FCFS).</p><div class="tag tag-change">Rename</div></div>
+        <div class="card"><div class="card-label">04</div><h3>No dashboard</h3><p>No unified authenticated entry point. Build Dashboard as the primary post-login landing page.</p><div class="tag tag-new">New</div></div>
+        <div class="card"><div class="card-label">05</div><h3>Founder lifecycle</h3><p>My Projects only supports 2 states. Expand to full 7-state lifecycle: Draft through Completed.</p><div class="tag tag-expand">Expand</div></div>
+        <div class="card"><div class="card-label">06</div><h3>Scheduled CTA</h3><p>Scheduled pools show an Invest button. Replace with Notify Me / Join Waitlist. No capital lock pre-launch.</p><div class="tag tag-change">Fix</div></div>
       </div>
     </section>
 
@@ -394,7 +307,7 @@
         <div class="section-label">Implementation</div>
         <h2 style="font-size:22px; margin-bottom:24px;">Screen-by-Screen</h2>
         <div class="screen-list">
-          <div class="screen-card" data-related="vault-language">
+          <div class="screen-card">
             <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
               <div class="screen-card-left"><div class="screen-icon">🏠</div><div><h3>Homepage</h3><div class="screen-sub">Hero, features, stats</div></div></div>
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-critical">Core</span><span class="chevron">▾</span></div>
@@ -405,7 +318,7 @@
               <div class="change-item"><div class="change-icon ci-keep">—</div><div>Visual direction can remain. The problem is structural language, not aesthetic.</div></div>
             </div></div>
           </div>
-          <div class="screen-card" data-related="pool-states cta-guidance phase-labels">
+          <div class="screen-card">
             <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
               <div class="screen-card-left"><div class="screen-icon">📋</div><div><h3>Pool Detail Page</h3><div class="screen-sub">Project info, timeline, CTA</div></div></div>
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-critical">Core</span><span class="chevron">▾</span></div>
@@ -417,7 +330,7 @@
               <div class="change-item"><div class="change-icon ci-keep">—</div><div>Funding sidebar and project tabs can stay with better state handling.</div></div>
             </div></div>
           </div>
-          <div class="screen-card" data-related="tier-removal wallet-readiness access-module">
+          <div class="screen-card">
             <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
               <div class="screen-card-left"><div class="screen-icon">👤</div><div><h3>Profile Page</h3><div class="screen-sub">Account, wallet, KYC</div></div></div>
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-high">Major</span><span class="chevron">▾</span></div>
@@ -428,7 +341,7 @@
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Clarify wallet roles</strong> — main = EVM reference, optional = chain-specific.</div></div>
             </div></div>
           </div>
-          <div class="screen-card" data-related="claim-messaging">
+          <div class="screen-card">
             <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
               <div class="screen-card-left"><div class="screen-icon">🎫</div><div><h3>Token Claims</h3><div class="screen-sub">Claims, vesting, unlock</div></div></div>
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-medium">Refine</span><span class="chevron">▾</span></div>
@@ -438,7 +351,7 @@
               <div class="change-item"><div class="change-icon ci-keep">—</div><div>Claims overview stays minimal. Vesting details live in detail views.</div></div>
             </div></div>
           </div>
-          <div class="screen-card" data-related="pool-states">
+          <div class="screen-card">
             <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
               <div class="screen-card-left"><div class="screen-icon">📊</div><div><h3>Active Investments</h3><div class="screen-sub">Filters, states, routing</div></div></div>
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-medium">Refine</span><span class="chevron">▾</span></div>
@@ -448,7 +361,7 @@
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Sold-out pools</strong> (not invested) show chain-aware DEX link.</div></div>
             </div></div>
           </div>
-          <div class="screen-card" data-related="dashboard">
+          <div class="screen-card">
             <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
               <div class="screen-card-left"><div class="screen-icon">⚡</div><div><h3>Dashboard (New)</h3><div class="screen-sub">Authenticated overview</div></div></div>
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-new">Add</span><span class="chevron">▾</span></div>
@@ -795,7 +708,6 @@
   </div>
 
   <script>
-    // Active section nav
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.section-link');
     const observer = new IntersectionObserver((entries) => {
@@ -809,104 +721,10 @@
     }, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
     sections.forEach(s => observer.observe(s));
 
-    // Deliverables + Priority: unified check system
-    const STORAGE_KEY = 'blockstreet-checked';
-
-    function loadChecked() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-      catch { return []; }
-    }
-    function saveChecked(list) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    }
-
-    function getRelated(action) {
-      return [...document.querySelectorAll('[data-related]')].filter(el =>
-        el.getAttribute('data-related').split(' ').includes(action)
-      );
-    }
-
-    function refreshAll() {
-      const checked = loadChecked();
-
-      // Deliverable items
-      document.querySelectorAll('.del-item[data-del]').forEach(el => {
-        const isDone = checked.includes(el.dataset.del);
-        el.classList.toggle('checked', isDone);
-        const dot = el.querySelector('.del-dot');
-        if (dot) {
-          dot.classList.toggle('done', isDone);
-          if (isDone) dot.classList.remove('active');
-        }
-      });
-
-      // Priority items (sync with deliverables where data-action matches data-del)
-      document.querySelectorAll('.priority-item[data-action]').forEach(el => {
-        el.classList.toggle('done', checked.includes(el.dataset.action));
-      });
-
-      // Related cards: only mark completed when ALL deps are done
-      document.querySelectorAll('[data-related]').forEach(el => {
-        const deps = el.getAttribute('data-related').split(' ');
-        const allDone = deps.every(d => checked.includes(d));
-        el.classList.toggle('completed-item', allDone);
-      });
-
-      // Week progress bars
-      document.querySelectorAll('.week-col').forEach(col => {
-        const items = col.querySelectorAll('.del-item[data-del]');
-        const total = items.length;
-        const done = [...items].filter(i => checked.includes(i.dataset.del)).length;
-        const bar = col.querySelector('.week-progress-bar');
-        if (bar && total) bar.style.width = Math.round((done / total) * 100) + '%';
-      });
-    }
-
-    function toggleItem(key) {
-      const checked = loadChecked();
-      const idx = checked.indexOf(key);
-      if (idx === -1) checked.push(key);
-      else checked.splice(idx, 1);
-      saveChecked(checked);
-      refreshAll();
-    }
-
-    // Deliverable click handlers
-    document.querySelectorAll('.del-item[data-del]').forEach(el => {
-      el.addEventListener('click', () => toggleItem(el.dataset.del));
-    });
-
-    // Priority click handlers
+    // Priority click-to-complete
     document.querySelectorAll('.priority-item[data-action]').forEach(item => {
-      item.addEventListener('click', () => toggleItem(item.dataset.action));
+      item.addEventListener('click', () => item.classList.toggle('done'));
     });
-
-    // Hover highlights on priority items
-    document.querySelectorAll('.priority-item[data-action]').forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        getRelated(item.dataset.action).forEach(el => el.classList.add('highlight-related'));
-      });
-      item.addEventListener('mouseleave', () => {
-        document.querySelectorAll('.highlight-related').forEach(el => el.classList.remove('highlight-related'));
-      });
-    });
-
-    // Connection counts on priority items
-    document.querySelectorAll('.priority-item[data-action]').forEach(item => {
-      const count = getRelated(item.dataset.action).length;
-      if (count > 0) {
-        const h4 = item.querySelector('h4');
-        if (h4) {
-          const badge = document.createElement('span');
-          badge.className = 'connection-count';
-          badge.textContent = count === 1 ? '1 linked' : count + ' linked';
-          h4.appendChild(badge);
-        }
-      }
-    });
-
-    // Init
-    refreshAll();
   </script>
 </body>
 </html>
