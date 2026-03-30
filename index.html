@@ -12,7 +12,7 @@
     :root {
       --yellow: #E8AD2A; --yellow-dim: rgba(232,173,42,0.08); --yellow-border: rgba(232,173,42,0.18);
       --bg: #0C0C0D; --bg-card: rgba(255,255,255,0.026); --border: rgba(255,255,255,0.055);
-      --text: #E8E8E8; --muted: #737373; --muted-2: #454545;
+      --text: #E8E8E8; --muted: #a2a3ad; --muted-2: #8f919e;
       --green: #34B27B; --red: #D1464B; --blue: #5B8DEF; --purple: #8B7CF6; --orange: #E0812A; --cyan: #3EBFDA;
     }
     html { scroll-behavior: smooth; }
@@ -686,11 +686,11 @@
 
         <div class="decision-card confirmed"><div class="decision-id">D-02 · Confirmed</div><h4>Top-500 leaderboard for guaranteed allocation, remainder enters FCFS</h4><div class="decision-rationale">Hybrid model: top N users by points get guaranteed slots, everyone else competes in FCFS (~20%). Balances rewarding committed stakers with accessibility. Cutoff is configurable per launch.</div><div class="decision-source">Mar 19, refined from Jan 26 three-stage model</div></div>
 
-        <div class="decision-card confirmed"><div class="decision-id">D-04 · Confirmed</div><h4>VIP deposits committed 3 days before public sale (100%)</h4><div class="decision-rationale">Kyle C insisted on 100% commitment (not David's 20%). Knowing exact VIP participation enables clean reallocation of unused funds. Prevents over-allocation and early sell-offs.</div><div class="decision-source">Jan 29</div></div>
+        <div class="decision-card deferred"><div class="decision-id">D-04 · Open</div><h4>VIP deposits committed 3 days before public sale (100%)</h4><div class="decision-rationale">Kyle C insisted on 100% commitment (not David's 20%). Knowing exact VIP participation enables clean reallocation of unused funds. Prevents over-allocation and early sell-offs. To be confirmed due to VIP state definition.</div><div class="decision-source">Jan 29</div></div>
 
         <div class="decision-card confirmed"><div class="decision-id">D-06 · Confirmed</div><h4>Positive multipliers only — no penalties for selling</h4><div class="decision-rationale">Penalizing users for selling resembles "meme token" mechanics, damages public perception, and adds complexity. Wallet analysis identifies and rewards positive behaviors. Only early unstaking incurs a penalty.</div><div class="decision-source">Mar 19, reinforced by Jan 29 no-tax decision</div></div>
 
-        <div class="decision-card confirmed"><div class="decision-id">D-07 · Confirmed</div><h4>Wallet quality, social, sector-fit multipliers deferred to post-V1</h4><div class="decision-rationale">Kyle C: "Don't show features until fully functional." The allocation model works with zero soft multipliers. Hide these from UI until ready.</div><div class="decision-source">Most recent call, echoes Mar 24</div></div>
+        <div class="decision-card deferred"><div class="decision-id">D-07 · Postponed</div><h4>Wallet quality, social, sector-fit multipliers deferred to post-V1</h4><div class="decision-rationale">Kyle C: "Don't show features until fully functional." The allocation model works with zero soft multipliers. Hide these from UI until ready.</div><div class="decision-source">Most recent call, echoes Mar 24</div></div>
 
         <div class="decision-card confirmed"><div class="decision-id">D-08 · Confirmed</div><h4>All model variables must be dynamic, never hard-coded</h4><div class="decision-rationale">Prior incidents where hard-coded values caused system failures. UI must read from configurable parameters. Matheus and Sagar coordinate which inputs remain dynamic.</div><div class="decision-source">Mar 24</div></div>
 
