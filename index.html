@@ -27,6 +27,9 @@
     .topbar-title { font-size: 13px; font-weight: 400; color: var(--muted); display: flex; align-items: center; gap: 8px; }
     .topbar-title span { color: var(--text); font-weight: 500; }
     .topbar-badge { padding: 3px 9px; border: 1px solid var(--border); border-radius: 100px; font-size: 9px; font-weight: 600; color: var(--muted); letter-spacing: 0.8px; text-transform: uppercase; }
+    #save-btn { padding: 5px 14px; border-radius: 6px; border: 1px solid rgba(232,173,42,0.35); background: rgba(232,173,42,0.08); color: var(--yellow); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.15s, opacity 0.15s; letter-spacing: 0.3px; }
+    #save-btn:hover { background: rgba(232,173,42,0.14); }
+    #save-btn:disabled { opacity: 0.45; cursor: default; }
 
     /* Nav */
     .section-nav { position: sticky; top: 53px; z-index: 90; background: rgba(12,12,13,0.85); backdrop-filter: blur(20px) saturate(1.2); border-bottom: 1px solid var(--border); }
@@ -261,7 +264,10 @@
         <div class="logo-icon">B</div>
         <div class="topbar-title"><span>Blockstreet</span> <span style="color:var(--muted-2)">/</span> Launchpad Redesign</div>
       </div>
-      <span class="topbar-badge">Internal</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="topbar-badge">Internal</span>
+        <button id="save-btn" style="display:none;" onclick="saveState()">Save</button>
+      </div>
     </div>
   </div>
   <div class="container">
@@ -795,7 +801,61 @@
   </div>
 
   <script>
-    // Active section nav
+    // ── JSONBin config — fill these in ──────────────────────────────────────
+    const JSONBIN_KEY = '$2a$10$Leu4AjoKHHJPjPOofKQn5O9NajuoK./QDELs6aytwmOZjg06lkcb6';
+    const JSONBIN_BIN = '69cb8e9036566621a8658fcf';
+    // ────────────────────────────────────────────────────────────────────────
+
+    const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN}`;
+
+    let localChecked = [];   // current in-memory state (may differ from remote)
+    let savedChecked = [];   // last state that was successfully saved remotely
+
+    function arraysEqual(a, b) {
+      return JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+    }
+
+    function updateSaveBtn() {
+      const btn = document.getElementById('save-btn');
+      if (!btn) return;
+      const dirty = !arraysEqual(localChecked, savedChecked);
+      btn.style.display = dirty ? 'inline-block' : 'none';
+    }
+
+    async function fetchRemoteState() {
+      try {
+        const res = await fetch(`${JSONBIN_URL}/latest`, {
+          headers: { 'X-Master-Key': JSONBIN_KEY }
+        });
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        return Array.isArray(data.record?.checked) ? data.record.checked : [];
+      } catch (e) {
+        console.warn('JSONBin fetch failed, state may be stale:', e);
+        return [];
+      }
+    }
+
+    async function saveState() {
+      const btn = document.getElementById('save-btn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+      try {
+        const res = await fetch(JSONBIN_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
+          body: JSON.stringify({ checked: localChecked })
+        });
+        if (!res.ok) throw new Error(res.status);
+        savedChecked = [...localChecked];
+        if (btn) { btn.textContent = 'Saved'; setTimeout(() => { btn.disabled = false; updateSaveBtn(); }, 900); }
+      } catch (e) {
+        console.error('JSONBin save failed:', e);
+        if (btn) { btn.disabled = false; btn.textContent = 'Save'; }
+        alert('Save failed — check your JSONBin key/ID in the script.');
+      }
+    }
+
+    // ── Active section nav ──────────────────────────────────────────────────
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.section-link');
     const observer = new IntersectionObserver((entries) => {
@@ -809,17 +869,7 @@
     }, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
     sections.forEach(s => observer.observe(s));
 
-    // Deliverables + Priority: unified check system
-    const STORAGE_KEY = 'blockstreet-checked';
-
-    function loadChecked() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-      catch { return []; }
-    }
-    function saveChecked(list) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    }
-
+    // ── Render ──────────────────────────────────────────────────────────────
     function getRelated(action) {
       return [...document.querySelectorAll('[data-related]')].filter(el =>
         el.getAttribute('data-related').split(' ').includes(action)
@@ -827,32 +877,24 @@
     }
 
     function refreshAll() {
-      const checked = loadChecked();
+      const checked = localChecked;
 
-      // Deliverable items
       document.querySelectorAll('.del-item[data-del]').forEach(el => {
         const isDone = checked.includes(el.dataset.del);
         el.classList.toggle('checked', isDone);
         const dot = el.querySelector('.del-dot');
-        if (dot) {
-          dot.classList.toggle('done', isDone);
-          if (isDone) dot.classList.remove('active');
-        }
+        if (dot) { dot.classList.toggle('done', isDone); if (isDone) dot.classList.remove('active'); }
       });
 
-      // Priority items (sync with deliverables where data-action matches data-del)
       document.querySelectorAll('.priority-item[data-action]').forEach(el => {
         el.classList.toggle('done', checked.includes(el.dataset.action));
       });
 
-      // Related cards: only mark completed when ALL deps are done
       document.querySelectorAll('[data-related]').forEach(el => {
         const deps = el.getAttribute('data-related').split(' ');
-        const allDone = deps.every(d => checked.includes(d));
-        el.classList.toggle('completed-item', allDone);
+        el.classList.toggle('completed-item', deps.every(d => checked.includes(d)));
       });
 
-      // Week progress bars
       document.querySelectorAll('.week-col').forEach(col => {
         const items = col.querySelectorAll('.del-item[data-del]');
         const total = items.length;
@@ -860,28 +902,27 @@
         const bar = col.querySelector('.week-progress-bar');
         if (bar && total) bar.style.width = Math.round((done / total) * 100) + '%';
       });
+
+      updateSaveBtn();
     }
 
     function toggleItem(key) {
-      const checked = loadChecked();
-      const idx = checked.indexOf(key);
-      if (idx === -1) checked.push(key);
-      else checked.splice(idx, 1);
-      saveChecked(checked);
+      const idx = localChecked.indexOf(key);
+      if (idx === -1) localChecked.push(key);
+      else localChecked.splice(idx, 1);
       refreshAll();
     }
 
-    // Deliverable click handlers
+    // ── Click handlers ──────────────────────────────────────────────────────
     document.querySelectorAll('.del-item[data-del]').forEach(el => {
       el.addEventListener('click', () => toggleItem(el.dataset.del));
     });
 
-    // Priority click handlers
     document.querySelectorAll('.priority-item[data-action]').forEach(item => {
       item.addEventListener('click', () => toggleItem(item.dataset.action));
     });
 
-    // Hover highlights on priority items
+    // ── Hover highlights ────────────────────────────────────────────────────
     document.querySelectorAll('.priority-item[data-action]').forEach(item => {
       item.addEventListener('mouseenter', () => {
         getRelated(item.dataset.action).forEach(el => el.classList.add('highlight-related'));
@@ -891,7 +932,7 @@
       });
     });
 
-    // Connection counts on priority items
+    // ── Connection counts ───────────────────────────────────────────────────
     document.querySelectorAll('.priority-item[data-action]').forEach(item => {
       const count = getRelated(item.dataset.action).length;
       if (count > 0) {
@@ -905,8 +946,13 @@
       }
     });
 
-    // Init
-    refreshAll();
+    // ── Init: load state from JSONBin ───────────────────────────────────────
+    (async () => {
+      const remote = await fetchRemoteState();
+      localChecked = remote;
+      savedChecked = [...remote];
+      refreshAll();
+    })();
   </script>
 </body>
 </html>
