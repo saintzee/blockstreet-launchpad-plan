@@ -403,13 +403,15 @@
         <div style="padding: 6px 0 6px 72px;"><span style="font-size: 14px; color: var(--muted-2);">↓</span></div>
         <div class="nav-row">
           <div class="nav-row-label">New</div>
-          <span class="nav-item nav-new">Dashboard</span>
           <span class="nav-item nav-merge">Pools</span>
+          <span class="nav-item nav-new">Best Performers</span>
+          <span class="nav-item nav-keep">How It Works</span>
+          <span class="nav-item nav-new" style="border-left:1px solid rgba(255,255,255,0.06);margin-left:8px;padding-left:12px;">Dashboard</span>
           <span class="nav-item nav-keep">Vaults</span>
           <span class="nav-item nav-keep">Portfolio</span>
-          <span class="nav-item nav-keep">How It Works</span>
           <span class="nav-item nav-keep">Profile</span>
         </div>
+        <div style="padding:6px 0 0 72px;font-size:11px;color:var(--muted-2);">Public ← · → Authenticated</div>
         <div class="nav-legend">
           <div class="legend-item"><div class="legend-dot" style="background: var(--green);"></div> New</div>
           <div class="legend-item"><div class="legend-dot" style="background: var(--purple);"></div> Merged</div>
@@ -420,7 +422,12 @@
 
       <div class="panel" style="margin-top:16px;">
         <div style="font-size:10px; font-weight:500; color:var(--muted-2); letter-spacing:0.8px; text-transform:uppercase; margin-bottom:16px;">Product map</div>
-        <pre class="diagram">BLOCKSTREET
+        <pre class="diagram">PUBLIC (no login required)
+├─ Pools ──────── All · Scheduled · Phase 1 · Phase 2 · Closed → Pool Detail
+├─ Best Performers ── Completed pools ranked by ATH multiplier (rotating, highest only)
+└─ How It Works
+
+AUTHENTICATED APP
 ├─ Dashboard ──── [Left] Access Overview · Wallet Readiness
 │                 [Main] Pools (All · Scheduled · Phase 1 · Phase 2 · Closed → Pool Detail)
 │                 [Right sidebar] Notifications
@@ -500,6 +507,19 @@
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Left column — Wallet Readiness:</strong> main wallet status, chain readiness, Solana requirement. Inline below access — surfaces only what needs attention.</div></div>
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Main area — Pools:</strong> replaces standalone Pools nav. All · Scheduled · Phase 1 · Phase 2 · Closed. Pool Detail opens from here.</div></div>
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Right sidebar — Notifications:</strong> vault expiry alerts, phase open/close events, claim ready, KYC reminders. Bell-style feed, dismissible.</div></div>
+            </div></div>
+          </div>
+          <div class="screen-card">
+            <div class="screen-card-header" onclick="this.parentElement.classList.toggle('open')">
+              <div class="screen-card-left"><div class="screen-icon">🏆</div><div><h3>Best Performers (New)</h3><div class="screen-sub">Track record · public page</div></div></div>
+              <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-new">Add</span><span class="chevron">▾</span></div>
+            </div>
+            <div class="screen-card-body"><div class="change-list">
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">One card per completed pool</strong> — project name, chain, close date, and the single highest multiplier ever recorded for that token post-TGE.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Only ATH multiplier shown</strong> — not current price, not average. "10,000 USDT invested → 14.2× peak." Honest, specific, one number.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Auto-expires</strong> — cards rotate out after a set threshold (e.g. 12 months post-TGE or when token goes inactive). Never stale.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Public, no login.</strong> Pure social proof. Converts browsing visitors — shows the upside without a pitch.</div></div>
+              <div class="change-item"><div class="change-icon ci-change">~</div><div>Data source TBD — see Q10. Sorted by highest multiplier descending, capped at top 10–12 visible at once.</div></div>
             </div></div>
           </div>
         </div>
@@ -831,6 +851,7 @@
           <div class="question-card"><div class="card-label" style="color:var(--blue)">Q7</div><h3 style="font-size:14px;">Smart contract ownership: Blockstreet or the project?</h3><p>Affects compliance posture. Legal counsel hasn't responded.</p></div>
           <div class="question-card"><div class="card-label" style="color:var(--blue)">Q8</div><h3 style="font-size:14px;">Privy wallet: keep embedded wallet or allow external wallets?</h3><p>Keeping Privy simplifies onboarding but locks users into a custodied wallet. Supporting external wallets (MetaMask, Phantom, etc.) gives full user custody but adds connection and multi-chain complexity.</p></div>
           <div class="question-card"><div class="card-label" style="color:var(--blue)">Q9</div><h3 style="font-size:14px;">Vesting timeline: how long after soft cap is reached until the token is available on DEX?</h3><p>Affects how we communicate post-investment expectations — TGE date, cliff, unlock schedule. Also determines what the Token Claims screen shows and when the DEX CTA becomes relevant on sold-out pools.</p></div>
+          <div class="question-card"><div class="card-label" style="color:var(--blue)">Q10</div><h3 style="font-size:14px;">Best Performers: where does the ATH multiplier data come from?</h3><p>Options: (a) pulled on-chain via price oracle at a snapshot date, (b) manually entered by Blockstreet team post-TGE, (c) sourced from a third-party API (CoinGecko, DEX Screener). Determines build complexity and data reliability. Also: who decides when a card expires and gets removed?</p></div>
         </div>
       </div>
     </section>
@@ -1040,6 +1061,7 @@
 
     // ── Wireframe modal ─────────────────────────────────────────────────────
     const WF_TITLES = {
+      'screen-best-performers':'Best Performers Page',
       'vault-language':'Vault Language Fix','tier-removal':'Access Status (replaces Tier)',
       'phase-labels':'Phase Timeline','dashboard':'Dashboard Layout',
       'founder-flow':'Founder 7-State Lifecycle','scheduled-cta':'Scheduled Pool CTA',
@@ -1397,6 +1419,39 @@
     </div>
   </div>
 </div>`,
+
+'screen-best-performers': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Pools</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Best Performers</span><span style="font-size:11px;color:#555;">How It Works</span></div><div style="padding:6px 14px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;">Launch app</div></div>
+  <div style="padding:28px 28px 16px;border-bottom:1px solid rgba(255,255,255,0.06);">
+    <div style="font-size:10px;font-weight:600;color:#E8AD2A;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">Track Record</div>
+    <div style="font-size:22px;font-weight:800;letter-spacing:-0.8px;margin-bottom:6px;">What investors made.</div>
+    <div style="font-size:12px;color:#555;line-height:1.6;">Completed pools only. Peak multiplier from TGE. No current prices, no speculation.</div>
+  </div>
+  <div style="padding:16px 28px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+    <div style="padding:16px;background:#141414;border:1px solid rgba(232,173,42,0.2);border-radius:10px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;"><div style="width:28px;height:28px;background:#1E1A0E;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#E8AD2A;">A</div><div><div style="font-size:11px;font-weight:600;">Alpha Protocol</div><div style="font-size:9px;color:#555;">EVM · Mar 2025</div></div></div></div>
+      <div style="margin-bottom:8px;"><div style="font-size:9px;color:#555;margin-bottom:3px;">Peak multiplier</div><div style="font-size:26px;font-weight:800;color:#E8AD2A;letter-spacing:-1px;">14.2×</div></div>
+      <div style="font-size:10px;color:#666;">$10,000 invested → $142,000 peak</div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);font-size:9px;color:#333;">Expires Mar 2026</div>
+    </div>
+    <div style="padding:16px;background:#141414;border:1px solid rgba(52,178,123,0.15);border-radius:10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="width:28px;height:28px;background:#0D1A14;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#34B27B;">B</div><div><div style="font-size:11px;font-weight:600;">Beta Finance</div><div style="font-size:9px;color:#555;">Solana · Jan 2025</div></div></div>
+      <div style="margin-bottom:8px;"><div style="font-size:9px;color:#555;margin-bottom:3px;">Peak multiplier</div><div style="font-size:26px;font-weight:800;color:#34B27B;letter-spacing:-1px;">8.7×</div></div>
+      <div style="font-size:10px;color:#666;">$10,000 invested → $87,000 peak</div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);font-size:9px;color:#333;">Expires Jan 2026</div>
+    </div>
+    <div style="padding:16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="width:28px;height:28px;background:#14141A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#8B7CF6;">G</div><div><div style="font-size:11px;font-weight:600;">Gamma AI</div><div style="font-size:9px;color:#555;">EVM · Dec 2024</div></div></div>
+      <div style="margin-bottom:8px;"><div style="font-size:9px;color:#555;margin-bottom:3px;">Peak multiplier</div><div style="font-size:26px;font-weight:800;letter-spacing:-1px;">6.1×</div></div>
+      <div style="font-size:10px;color:#666;">$10,000 invested → $61,000 peak</div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);font-size:9px;color:#333;">Expires Dec 2025</div>
+    </div>
+  </div>
+  <div style="padding:12px 28px 20px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="font-size:10px;color:#333;">Showing 3 of 9 completed pools · sorted by peak multiplier · auto-expires 12mo post-TGE</div>
+    <div style="font-size:11px;color:#555;">View all →</div>
+  </div>
+</div>`,
     };
 
     const AUDIT_WF_MAP = {
@@ -1453,6 +1508,18 @@
       if (!rightDiv) return;
       const chevron = rightDiv.querySelector('.chevron');
       const btn = createExampleBtn(wfId);
+      if (chevron) rightDiv.insertBefore(btn, chevron);
+      else rightDiv.appendChild(btn);
+    });
+
+    // Inject into Best Performers card (no data-related)
+    document.querySelectorAll('.screen-card').forEach(card => {
+      const h3 = card.querySelector('h3');
+      if (!h3 || !h3.textContent.includes('Best Performers')) return;
+      const rightDiv = card.querySelector('.screen-card-header > div:last-child');
+      if (!rightDiv) return;
+      const chevron = rightDiv.querySelector('.chevron');
+      const btn = createExampleBtn('screen-best-performers');
       if (chevron) rightDiv.insertBefore(btn, chevron);
       else rightDiv.appendChild(btn);
     });
