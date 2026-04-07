@@ -390,13 +390,13 @@
       <div class="panel" style="margin-top:16px;">
         <div style="font-size:10px; font-weight:500; color:var(--muted-2); letter-spacing:0.8px; text-transform:uppercase; margin-bottom:16px;">Product map</div>
         <pre class="diagram">BLOCKSTREET
-├─ Dashboard ─── Access Overview · Wallet Readiness · Open Pools · Actions · Activity
+├─ Dashboard ─── Access Overview · Wallet Readiness · Open Pools · Actions
 ├─ Pools ──────── All · Scheduled · Phase 1 · Phase 2 · Closed → Pool Detail
 ├─ Vaults ─────── Create · Duration · Multiplier · Points · History
 ├─ Portfolio
 │  ├─ Investor ── Active Investments · Token Claims
 │  └─ Founder ─── My Projects (Draft → Review → Approved → Pre-Launch → Live → End)
-└─ Profile ────── KYC · Wallets (Main + Optional) · Settings</pre>
+└─ Profile ────── KYC · Wallets (Main + Optional) · Activity · Settings</pre>
       </div>
 
       <!-- Screens accordion -->
@@ -467,7 +467,6 @@
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Access overview</strong> — vault totals, points, multiplier, rank, access status.</div></div>
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Wallet readiness</strong> — main wallet, chain readiness, Solana requirement.</div></div>
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Open pools + actions required</strong> — what can the user do now.</div></div>
-              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Recent activity</strong> — vault updates, investments, claims.</div></div>
             </div></div>
           </div>
         </div>
@@ -798,6 +797,7 @@
           <div class="question-card"><div class="card-label" style="color:var(--blue)">Q6</div><h3 style="font-size:14px;">Leaderboard: global visibility or personal-only?</h3><p>Affects dashboard module and gamification direction.</p></div>
           <div class="question-card"><div class="card-label" style="color:var(--blue)">Q7</div><h3 style="font-size:14px;">Smart contract ownership: Blockstreet or the project?</h3><p>Affects compliance posture. Legal counsel hasn't responded.</p></div>
           <div class="question-card"><div class="card-label" style="color:var(--blue)">Q8</div><h3 style="font-size:14px;">Privy wallet: keep embedded wallet or allow external wallets?</h3><p>Keeping Privy simplifies onboarding but locks users into a custodied wallet. Supporting external wallets (MetaMask, Phantom, etc.) gives full user custody but adds connection and multi-chain complexity.</p></div>
+          <div class="question-card"><div class="card-label" style="color:var(--blue)">Q9</div><h3 style="font-size:14px;">Vesting timeline: how long after soft cap is reached until the token is available on DEX?</h3><p>Affects how we communicate post-investment expectations — TGE date, cliff, unlock schedule. Also determines what the Token Claims screen shows and when the DEX CTA becomes relevant on sold-out pools.</p></div>
         </div>
       </div>
     </section>
