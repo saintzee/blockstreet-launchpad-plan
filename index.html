@@ -247,6 +247,26 @@
     @keyframes flash-ref { 0%,100% { box-shadow: none; } 20%,60% { box-shadow: 0 0 0 3px rgba(232,173,42,0.35); } }
     .flash-ref { animation: flash-ref 1.2s ease; }
 
+    /* Example button */
+    .example-btn { display:inline-flex; align-items:center; gap:4px; padding:4px 9px; border-radius:5px; border:1px solid rgba(232,173,42,0.2); background:rgba(232,173,42,0.04); color:var(--yellow); font-size:9px; font-weight:600; letter-spacing:0.3px; text-transform:uppercase; cursor:pointer; user-select:none; position:relative; overflow:hidden; transition:border-color 0.15s,background 0.15s; flex-shrink:0; }
+    .example-btn:hover { border-color:rgba(232,173,42,0.4); background:rgba(232,173,42,0.08); }
+    .example-btn .ebf { position:absolute; left:0; top:0; bottom:0; width:0%; background:rgba(232,173,42,0.18); pointer-events:none; }
+    .example-btn.pressing .ebf { width:100%; transition:width 0.6s linear; }
+    .card-bottom { display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
+    .card-bottom .tag { margin-top:0; }
+    /* Wireframe overlay */
+    .wf-overlay { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.78); backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+    .wf-overlay.wf-open { opacity:1; pointer-events:all; }
+    .wf-modal { background:#0C0C0D; border:1px solid rgba(255,255,255,0.09); border-radius:14px; width:min(820px,92vw); max-height:88vh; display:flex; flex-direction:column; overflow:hidden; transform:scale(0.96) translateY(10px); transition:transform 0.22s cubic-bezier(0.4,0,0.2,1); box-shadow:0 32px 80px rgba(0,0,0,0.6); }
+    .wf-overlay.wf-open .wf-modal { transform:scale(1) translateY(0); }
+    .wf-modal-hdr { display:flex; align-items:center; justify-content:space-between; padding:13px 18px; border-bottom:1px solid rgba(255,255,255,0.06); flex-shrink:0; }
+    .wf-modal-tag { font-size:9px; font-weight:600; color:var(--muted-2); letter-spacing:0.6px; text-transform:uppercase; margin-right:8px; }
+    .wf-modal-name { font-size:12px; font-weight:600; color:var(--text); }
+    .wf-modal-close { width:24px; height:24px; border-radius:50%; border:1px solid rgba(255,255,255,0.08); background:transparent; color:var(--muted); font-size:11px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color 0.15s,color 0.15s; }
+    .wf-modal-close:hover { border-color:rgba(255,255,255,0.2); color:var(--text); }
+    .wf-modal-body { padding:20px; overflow-y:auto; flex:1; }
+    .wf-hint { font-size:10px; color:var(--muted-2); text-align:center; margin-top:14px; }
+
     /* Diagram */
     pre.diagram { margin: 0; white-space: pre-wrap; color: var(--muted); font: 12px/1.8 'SF Mono', 'Fira Code', 'Consolas', monospace; }
 
@@ -274,6 +294,17 @@
       </div>
     </div>
   </div>
+  <!-- Wireframe modal -->
+  <div id="wf-overlay" class="wf-overlay" onclick="if(event.target===this)closeWF()">
+    <div class="wf-modal">
+      <div class="wf-modal-hdr">
+        <div><span class="wf-modal-tag" id="wf-section"></span><span class="wf-modal-name" id="wf-title"></span></div>
+        <button class="wf-modal-close" onclick="closeWF()">✕</button>
+      </div>
+      <div class="wf-modal-body" id="wf-body"></div>
+    </div>
+  </div>
+
   <div class="container">
 
     <section class="hero">
@@ -1006,6 +1037,442 @@
       });
       nameEl.after(btn);
     });
+
+    // ── Wireframe modal ─────────────────────────────────────────────────────
+    const WF_TITLES = {
+      'vault-language':'Vault Language Fix','tier-removal':'Access Status (replaces Tier)',
+      'phase-labels':'Phase Timeline','dashboard':'Dashboard Layout',
+      'founder-flow':'Founder 7-State Lifecycle','scheduled-cta':'Scheduled Pool CTA',
+      'screen-homepage':'Homepage','screen-pool-detail':'Pool Detail Page',
+      'screen-profile':'Profile Page','screen-token-claims':'Token Claims',
+      'screen-investments':'Active Investments','screen-dashboard':'Dashboard',
+    };
+
+    const WF = {
+'vault-language': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="padding:32px 28px 24px;border-bottom:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg,rgba(232,173,42,0.05) 0%,transparent 100%);">
+    <div style="font-size:10px;font-weight:600;color:#E8AD2A;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Vault Access System</div>
+    <div style="font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:12px;">Lock. Earn.<br>Rank. Access.</div>
+    <div style="font-size:12px;color:#888;line-height:1.65;max-width:420px;margin-bottom:22px;">Lock BLOCK for 90–365 days. Duration multiplies your points. Points set your rank. Top stakers get Phase 1 access on every launch.</div>
+    <div style="display:flex;gap:10px;">
+      <div style="padding:9px 20px;background:#E8AD2A;color:#0A0A0A;border-radius:8px;font-size:12px;font-weight:700;">Lock BLOCK</div>
+      <div style="padding:9px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12px;">How it works</div>
+    </div>
+  </div>
+  <div style="padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.06);">
+    <div style="font-size:10px;color:#555;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:12px;">Language change — everywhere on site</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="padding:14px 16px;background:#141414;border:1px solid rgba(229,57,57,0.12);border-radius:8px;">
+        <div style="font-size:9px;font-weight:600;color:#E05555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Remove</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="font-size:12px;color:#555;text-decoration:line-through;">"Stake BLOCK"</div>
+          <div style="font-size:12px;color:#555;text-decoration:line-through;">"Dual Staking"</div>
+          <div style="font-size:12px;color:#555;text-decoration:line-through;">"Staking Rewards"</div>
+          <div style="font-size:12px;color:#555;text-decoration:line-through;">"Tier Access"</div>
+        </div>
+      </div>
+      <div style="padding:14px 16px;background:#141414;border:1px solid rgba(52,178,123,0.12);border-radius:8px;">
+        <div style="font-size:9px;font-weight:600;color:#34B27B;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Replace with</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="font-size:12px;color:#E8E8E8;">"Lock BLOCK"</div>
+          <div style="font-size:12px;color:#E8E8E8;">"Vault Position"</div>
+          <div style="font-size:12px;color:#E8E8E8;">"Vault Points"</div>
+          <div style="font-size:12px;color:#E8E8E8;">"Phase 1 Access"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'tier-removal': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;font-size:12px;font-weight:600;">Profile — Sidebar</div>
+  <div style="padding:20px 28px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;font-weight:600;color:#E05555;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px;">Before — Remove</div>
+      <div style="background:#141414;border:1px solid rgba(229,57,57,0.15);border-radius:10px;padding:16px;opacity:0.65;">
+        <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Tier Status</div>
+        <div style="font-size:18px;font-weight:700;color:#666;text-decoration:line-through;margin-bottom:4px;">TRADER</div>
+        <div style="font-size:12px;color:#555;text-decoration:line-through;margin-bottom:10px;">Rank 301–500 · Tier 3</div>
+        <div style="padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);">
+          <div style="font-size:11px;color:#444;text-decoration:line-through;">Tier benefits</div>
+          <div style="font-size:11px;color:#444;text-decoration:line-through;margin-top:4px;">Phase 1 access: No</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:600;color:#34B27B;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px;">After — Access Status</div>
+      <div style="background:#141414;border:1px solid rgba(52,178,123,0.15);border-radius:10px;padding:16px;">
+        <div style="font-size:9px;color:#34B27B;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:12px;">Access Status</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+          <div><div style="font-size:9px;color:#555;margin-bottom:2px;">Vault total</div><div style="font-size:14px;font-weight:700;">12,500</div><div style="font-size:9px;color:#555;">BLOCK</div></div>
+          <div><div style="font-size:9px;color:#555;margin-bottom:2px;">Points</div><div style="font-size:14px;font-weight:700;">80,000</div><div style="font-size:9px;color:#555;">vault pts</div></div>
+          <div><div style="font-size:9px;color:#555;margin-bottom:2px;">Multiplier</div><div style="font-size:14px;font-weight:700;color:#E8AD2A;">6.4×</div><div style="font-size:9px;color:#555;">365 days</div></div>
+          <div><div style="font-size:9px;color:#555;margin-bottom:2px;">Rank</div><div style="font-size:14px;font-weight:700;">#124</div><div style="font-size:9px;color:#555;">global</div></div>
+        </div>
+        <div style="padding:8px 12px;background:rgba(52,178,123,0.07);border:1px solid rgba(52,178,123,0.15);border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:11px;color:#34B27B;font-weight:600;">Phase 1 eligible</span>
+          <span style="color:#34B27B;">✓</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'phase-labels': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;font-size:12px;font-weight:600;">Pool Detail — Phase timeline</div>
+  <div style="padding:24px 28px;">
+    <div style="margin-bottom:22px;">
+      <div style="font-size:9px;font-weight:600;color:#E05555;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px;">Before</div>
+      <div style="display:flex;gap:0;opacity:0.5;">
+        <div style="padding:8px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:6px 0 0 6px;font-size:11px;color:#555;text-decoration:line-through;">VIP Round</div>
+        <div style="width:24px;background:#1A1A1B;display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;">→</div>
+        <div style="padding:8px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);font-size:11px;color:#555;text-decoration:line-through;">Early Access</div>
+        <div style="width:24px;background:#1A1A1B;display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;">→</div>
+        <div style="padding:8px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:0 6px 6px 0;font-size:11px;color:#555;text-decoration:line-through;">Public</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:600;color:#34B27B;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:12px;">After</div>
+      <div style="display:flex;gap:0;margin-bottom:14px;">
+        <div style="padding:12px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:8px 0 0 8px;min-width:90px;"><div style="font-size:9px;color:#555;margin-bottom:3px;">Status</div><div style="font-size:11px;font-weight:600;color:#666;">Scheduled</div><div style="font-size:10px;color:#444;margin-top:3px;">Apr 22 14:00</div></div>
+        <div style="padding:12px 16px;background:#1A1811;border:1px solid rgba(232,173,42,0.2);min-width:120px;position:relative;"><div style="position:absolute;top:6px;right:8px;font-size:8px;font-weight:600;color:#E8AD2A;background:rgba(232,173,42,0.1);padding:2px 6px;border-radius:3px;">ACTIVE</div><div style="font-size:9px;color:#E8AD2A;margin-bottom:3px;">Phase 1</div><div style="font-size:11px;font-weight:600;">24 hours</div><div style="font-size:10px;color:#888;margin-top:3px;">Ranked · Guaranteed</div></div>
+        <div style="padding:12px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);min-width:100px;"><div style="font-size:9px;color:#555;margin-bottom:3px;">Phase 2</div><div style="font-size:11px;font-weight:600;color:#888;">FCFS</div><div style="font-size:10px;color:#444;margin-top:3px;">Open to all</div></div>
+        <div style="padding:12px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:0 8px 8px 0;min-width:80px;"><div style="font-size:9px;color:#555;margin-bottom:3px;">End</div><div style="font-size:11px;font-weight:600;color:#666;">Closed</div></div>
+      </div>
+      <div style="padding:14px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:8px;display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-size:12px;font-weight:600;margin-bottom:2px;">You are eligible</div><div style="font-size:11px;color:#888;">Max allocation: 1,200 USDT · Phase 1 closes in 14h 22m</div></div>
+        <div style="padding:9px 18px;background:#E8AD2A;color:#0A0A0A;border-radius:7px;font-size:12px;font-weight:700;white-space:nowrap;">Invest now</div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'dashboard': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;">
+    <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Dashboard</span><span style="font-size:11px;color:#555;">Vaults</span><span style="font-size:11px;color:#555;">Portfolio</span><span style="font-size:11px;color:#555;">Profile</span></div>
+    <span style="font-size:11px;color:#555;">0xAF3...C49</span>
+  </div>
+  <div style="display:grid;grid-template-columns:185px 1fr 155px;min-height:310px;">
+    <div style="border-right:1px solid rgba(255,255,255,0.05);padding:14px 12px;">
+      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Access Overview</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
+        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Points</div><div style="font-size:13px;font-weight:700;">80K</div></div>
+        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Rank</div><div style="font-size:13px;font-weight:700;">#124</div></div>
+        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Multi</div><div style="font-size:13px;font-weight:700;color:#E8AD2A;">6.4×</div></div>
+        <div style="padding:8px;background:#141414;border:1px solid rgba(52,178,123,0.12);border-radius:6px;"><div style="font-size:9px;color:#34B27B;margin-bottom:2px;">Phase 1</div><div style="font-size:12px;font-weight:700;color:#34B27B;">✓</div></div>
+      </div>
+      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Wallet</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;font-size:10px;border:1px solid rgba(255,255,255,0.04);"><span style="color:#888;">EVM</span><span style="color:#34B27B;font-weight:600;">✓ Ready</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;font-size:10px;border:1px solid rgba(232,173,42,0.08);"><span style="color:#888;">Solana</span><span style="color:#E8AD2A;font-weight:600;">+ Add</span></div>
+      </div>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font-size:11px;font-weight:600;">Pools</span><div style="display:flex;gap:5px;"><span style="padding:3px 8px;background:rgba(232,173,42,0.1);color:#E8AD2A;border-radius:4px;font-size:9px;font-weight:600;">Phase 1</span><span style="padding:3px 8px;background:#141414;color:#555;border-radius:4px;font-size:9px;">All</span><span style="padding:3px 8px;background:#141414;color:#555;border-radius:4px;font-size:9px;">Scheduled</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(232,173,42,0.15);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;">Project Alpha</div><div style="font-size:10px;color:#888;margin-top:1px;">Phase 1 · EVM · 8h left</div></div><div style="padding:5px 12px;background:#E8AD2A;color:#0A0A0A;border-radius:5px;font-size:11px;font-weight:700;">Invest</div></div>
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;">Project Beta</div><div style="font-size:10px;color:#888;margin-top:1px;">Phase 2 · Solana</div></div><div style="padding:5px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.08);color:#E8E8E8;border-radius:5px;font-size:11px;">Invest</div></div>
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;color:#888;">Project Gamma</div><div style="font-size:10px;color:#555;margin-top:1px;">Scheduled · Apr 28</div></div><div style="padding:5px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.05);color:#555;border-radius:5px;font-size:11px;">Notify</div></div>
+      </div>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,0.05);padding:12px 11px;">
+      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Notifications</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:8px;background:#141414;border-radius:6px;border-left:2px solid #E8AD2A;"><div style="font-size:10px;font-weight:600;margin-bottom:2px;">Phase 1 open</div><div style="font-size:9px;color:#555;">Project Alpha · now</div></div>
+        <div style="padding:8px;background:#141414;border-radius:6px;border-left:2px solid #34B27B;"><div style="font-size:10px;font-weight:600;margin-bottom:2px;">Claim ready</div><div style="font-size:9px;color:#555;">Project Delta · 2d ago</div></div>
+        <div style="padding:8px;background:#141414;border-radius:6px;border-left:2px solid #444;"><div style="font-size:10px;font-weight:600;color:#888;margin-bottom:2px;">Vault expiring</div><div style="font-size:9px;color:#444;">12,500 BLOCK · 14d</div></div>
+        <div style="padding:8px;background:#141414;border-radius:6px;border-left:2px solid #4A9EFF;"><div style="font-size:10px;font-weight:600;margin-bottom:2px;">KYC required</div><div style="font-size:9px;color:#555;">Complete to invest</div></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'founder-flow': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;font-size:12px;font-weight:600;">My Projects — Founder lifecycle</div>
+  <div style="padding:22px 28px;">
+    <div style="margin-bottom:20px;">
+      <div style="font-size:9px;font-weight:600;color:#E05555;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px;">Before — 2 states only</div>
+      <div style="display:flex;gap:8px;opacity:0.5;">
+        <div style="padding:8px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:6px;font-size:11px;color:#555;text-decoration:line-through;">Draft</div>
+        <div style="display:flex;align-items:center;color:#333;font-size:12px;">→</div>
+        <div style="padding:8px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:6px;font-size:11px;color:#555;text-decoration:line-through;">Live</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:600;color:#34B27B;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:12px;">After — Full 7-state lifecycle</div>
+      <div style="display:flex;gap:0;margin-bottom:16px;overflow-x:auto;">
+        <div style="flex:1;min-width:80px;padding:10px 8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:7px 0 0 7px;border-right:none;text-align:center;"><div style="font-size:10px;font-weight:600;color:#666;margin-bottom:3px;">Draft</div><div style="font-size:9px;color:#444;">Editing</div></div>
+        <div style="flex:1;min-width:80px;padding:10px 8px;background:rgba(74,158,255,0.05);border:1px solid rgba(255,255,255,0.05);border-right:none;text-align:center;"><div style="font-size:10px;font-weight:600;color:#4A9EFF;margin-bottom:3px;">Review</div><div style="font-size:9px;color:#444;">Submitted</div></div>
+        <div style="flex:1;min-width:80px;padding:10px 8px;background:rgba(232,173,42,0.04);border:1px solid rgba(255,255,255,0.05);border-right:none;text-align:center;"><div style="font-size:10px;font-weight:600;color:#E8AD2A;margin-bottom:3px;">Approved</div><div style="font-size:9px;color:#444;">KYB done</div></div>
+        <div style="flex:1;min-width:80px;padding:10px 8px;background:rgba(232,173,42,0.07);border:1px solid rgba(232,173,42,0.18);border-right:none;text-align:center;position:relative;"><div style="position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:#E8AD2A;"></div><div style="font-size:10px;font-weight:600;color:#E8AD2A;margin-bottom:3px;">Pre-Launch</div><div style="font-size:9px;color:#888;">Contract set</div></div>
+        <div style="flex:1;min-width:80px;padding:10px 8px;background:rgba(52,178,123,0.07);border:1px solid rgba(52,178,123,0.15);border-right:none;text-align:center;"><div style="font-size:10px;font-weight:600;color:#34B27B;margin-bottom:3px;">Live</div><div style="font-size:9px;color:#888;">Pools active</div></div>
+        <div style="flex:1;min-width:80px;padding:10px 8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-right:none;text-align:center;"><div style="font-size:10px;font-weight:600;color:#666;margin-bottom:3px;">Ended</div><div style="font-size:9px;color:#444;">Pools closed</div></div>
+        <div style="flex:1;min-width:80px;padding:10px 8px;background:rgba(52,178,123,0.04);border:1px solid rgba(255,255,255,0.05);border-radius:0 7px 7px 0;text-align:center;"><div style="font-size:10px;font-weight:600;color:#34B27B;margin-bottom:3px;">Completed</div><div style="font-size:9px;color:#555;">Tokens sent</div></div>
+      </div>
+      <div style="padding:14px 16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:8px;display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;"><span style="font-size:13px;font-weight:600;">My Project</span><span style="padding:2px 8px;background:rgba(232,173,42,0.1);color:#E8AD2A;border-radius:4px;font-size:9px;font-weight:600;">Pre-Launch</span></div><div style="font-size:11px;color:#666;">Contract deployed · Pool opens Apr 22 14:00 UTC</div></div>
+        <div style="font-size:11px;color:#888;">Manage →</div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'scheduled-cta': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;font-size:12px;font-weight:600;">Pool Card — Scheduled state CTA</div>
+  <div style="padding:22px 28px;display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+    <div>
+      <div style="font-size:9px;font-weight:600;color:#E05555;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px;">Before — Wrong</div>
+      <div style="background:#141414;border:1px solid rgba(229,57,57,0.15);border-radius:10px;padding:16px;opacity:0.7;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="width:28px;height:28px;background:#1A1A1B;border-radius:6px;"></div><span style="font-size:9px;color:#555;background:#1A1A1B;padding:3px 7px;border-radius:4px;">Scheduled</span></div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:3px;">Project Name</div>
+        <div style="font-size:10px;color:#555;margin-bottom:14px;">Opens Apr 22 · EVM</div>
+        <div style="padding:9px;background:rgba(229,57,57,0.08);border:1px solid rgba(229,57,57,0.15);border-radius:6px;text-align:center;font-size:11px;font-weight:600;color:#E05555;text-decoration:line-through;">Invest</div>
+        <div style="font-size:9px;color:#444;text-align:center;margin-top:6px;">Locks capital before pool is live</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:600;color:#34B27B;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:10px;">After — Correct</div>
+      <div style="background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="width:28px;height:28px;background:#1A1A1B;border-radius:6px;"></div><span style="font-size:9px;color:#888;background:rgba(255,255,255,0.05);padding:3px 7px;border-radius:4px;">Scheduled</span></div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:3px;">Project Name</div>
+        <div style="font-size:10px;color:#666;margin-bottom:14px;">Opens Apr 22 · 14:00 UTC · EVM</div>
+        <div style="display:flex;gap:7px;">
+          <div style="flex:1;padding:8px;background:rgba(232,173,42,0.07);border:1px solid rgba(232,173,42,0.2);border-radius:6px;text-align:center;font-size:11px;font-weight:600;color:#E8AD2A;">🔔 Notify Me</div>
+          <div style="flex:1;padding:8px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.07);border-radius:6px;text-align:center;font-size:11px;color:#888;">Waitlist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'screen-homepage': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Dashboard</span><span style="font-size:11px;color:#555;">Vaults</span><span style="font-size:11px;color:#555;">How It Works</span></div><div style="padding:6px 14px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;">Launch app</div></div>
+  <div style="padding:36px 28px 24px;border-bottom:1px solid rgba(255,255,255,0.06);">
+    <div style="font-size:10px;font-weight:600;color:#E8AD2A;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Token Launchpad</div>
+    <div style="font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:12px;">No lottery.<br>No tiers.<br>Just rank.</div>
+    <div style="font-size:12px;color:#888;line-height:1.65;max-width:440px;margin-bottom:22px;">Lock BLOCK for 90–365 days. Duration multiplies your points. Points set your rank. Top stakers get Phase 1 allocation.</div>
+    <div style="display:flex;gap:10px;margin-bottom:24px;"><div style="padding:9px 20px;background:#E8AD2A;color:#0A0A0A;border-radius:8px;font-size:12px;font-weight:700;">Start locking</div><div style="padding:9px 20px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12px;">How it works</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div style="padding:12px;background:#141414;border:1px solid rgba(232,173,42,0.15);border-radius:8px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="width:20px;height:20px;background:#1A1A1B;border-radius:4px;"></div><span style="font-size:9px;color:#E8AD2A;">Phase 1</span></div><div style="font-size:11px;font-weight:600;margin-bottom:5px;">Alpha Protocol</div><div style="height:3px;background:rgba(255,255,255,0.06);border-radius:2px;"><div style="height:100%;width:72%;background:#E8AD2A;border-radius:2px;"></div></div></div>
+      <div style="padding:12px;background:#141414;border:1px solid rgba(52,178,123,0.12);border-radius:8px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="width:20px;height:20px;background:#1A1A1B;border-radius:4px;"></div><span style="font-size:9px;color:#34B27B;">Phase 2</span></div><div style="font-size:11px;font-weight:600;margin-bottom:5px;">Beta Finance</div><div style="height:3px;background:rgba(255,255,255,0.06);border-radius:2px;"><div style="height:100%;width:45%;background:#34B27B;border-radius:2px;"></div></div></div>
+      <div style="padding:12px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:8px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div style="width:20px;height:20px;background:#1A1A1B;border-radius:4px;"></div><span style="font-size:9px;color:#555;">Scheduled</span></div><div style="font-size:11px;font-weight:600;color:#888;margin-bottom:5px;">Gamma AI</div><div style="font-size:9px;color:#555;">Opens Apr 28</div></div>
+    </div>
+  </div>
+  <div style="padding:18px 28px;border-bottom:1px solid rgba(255,255,255,0.06);display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+    <div style="padding:14px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:8px;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;">Vault Points</div><div style="font-size:10px;color:#666;">Lock duration × BLOCK = rank</div></div>
+    <div style="padding:14px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:8px;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;">Two-phase model</div><div style="font-size:10px;color:#666;">Phase 1 ranked · Phase 2 open</div></div>
+    <div style="padding:14px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:8px;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;">Multi-chain</div><div style="font-size:10px;color:#666;">EVM + Solana · USDT / USDC</div></div>
+  </div>
+  <div style="padding:16px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+    <div style="text-align:center;"><div style="font-size:16px;font-weight:700;margin-bottom:2px;">7</div><div style="font-size:10px;color:#555;">Pool states</div></div>
+    <div style="text-align:center;"><div style="font-size:16px;font-weight:700;margin-bottom:2px;">500</div><div style="font-size:10px;color:#555;">Top stakers</div></div>
+    <div style="text-align:center;"><div style="font-size:16px;font-weight:700;margin-bottom:2px;">2</div><div style="font-size:10px;color:#555;">Chains V1</div></div>
+    <div style="text-align:center;"><div style="font-size:16px;font-weight:700;margin-bottom:2px;">Halborn</div><div style="font-size:10px;color:#555;">Audited</div></div>
+  </div>
+</div>`,
+
+'screen-pool-detail': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;gap:8px;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><span style="font-size:11px;color:#555;">← Pools</span><span style="color:#333;">/</span><span style="font-size:11px;">Project Alpha</span><span style="margin-left:auto;font-size:9px;color:#E8AD2A;background:rgba(232,173,42,0.1);padding:2px 8px;border-radius:4px;font-weight:600;">PHASE 1 ACTIVE</span></div>
+  <div style="display:grid;grid-template-columns:1fr 210px;">
+    <div style="padding:18px 20px;border-right:1px solid rgba(255,255,255,0.05);">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><div style="width:40px;height:40px;background:#1A1A1B;border-radius:8px;"></div><div><div style="font-size:16px;font-weight:700;margin-bottom:4px;">Project Alpha</div><div style="display:flex;gap:6px;"><span style="font-size:9px;color:#888;background:rgba(255,255,255,0.05);padding:2px 7px;border-radius:3px;">EVM</span><span style="font-size:9px;color:#888;background:rgba(255,255,255,0.05);padding:2px 7px;border-radius:3px;">DeFi</span></div></div></div>
+      <div style="display:flex;gap:0;margin-bottom:16px;">
+        <div style="flex:1;padding:9px 8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px 0 0 6px;text-align:center;"><div style="font-size:9px;color:#444;">Scheduled</div></div>
+        <div style="flex:1;padding:9px 8px;background:#1A1811;border:1px solid rgba(232,173,42,0.2);text-align:center;"><div style="font-size:9px;font-weight:600;color:#E8AD2A;">Phase 1 ◉</div></div>
+        <div style="flex:1;padding:9px 8px;background:#141414;border:1px solid rgba(255,255,255,0.04);text-align:center;"><div style="font-size:9px;color:#444;">Phase 2</div></div>
+        <div style="flex:1;padding:9px 8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:0 6px 6px 0;text-align:center;"><div style="font-size:9px;color:#444;">Closed</div></div>
+      </div>
+      <div style="display:flex;gap:16px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:12px;padding-bottom:8px;"><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Overview</span><span style="font-size:11px;color:#555;">Tokenomics</span><span style="font-size:11px;color:#555;">Team</span><span style="font-size:11px;color:#555;">Roadmap</span></div>
+      <div style="display:flex;flex-direction:column;gap:7px;"><div style="height:9px;background:rgba(255,255,255,0.04);border-radius:3px;width:90%;"></div><div style="height:9px;background:rgba(255,255,255,0.04);border-radius:3px;width:76%;"></div><div style="height:9px;background:rgba(255,255,255,0.04);border-radius:3px;width:83%;"></div><div style="height:9px;background:rgba(255,255,255,0.04);border-radius:3px;width:60%;"></div></div>
+    </div>
+    <div style="padding:14px 14px;">
+      <div style="margin-bottom:14px;"><div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-bottom:5px;"><span>Raised</span><span>72%</span></div><div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px;"><div style="height:100%;width:72%;background:#E8AD2A;border-radius:2px;"></div></div><div style="display:flex;justify-content:space-between;margin-top:4px;font-size:10px;"><span style="font-weight:600;">$360K</span><span style="color:#555;">/ $500K</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;font-size:10px;">
+        <div style="display:flex;justify-content:space-between;"><span style="color:#555;">Hard cap</span><span>$500,000</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:#555;">Min invest</span><span>$100</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:#555;">Max (you)</span><span style="color:#E8AD2A;">$1,200</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:#555;">Token price</span><span>$0.05</span></div>
+      </div>
+      <div style="padding:10px;background:rgba(232,173,42,0.05);border:1px solid rgba(232,173,42,0.15);border-radius:7px;margin-bottom:8px;text-align:center;"><div style="font-size:9px;color:#E8AD2A;margin-bottom:6px;">Phase 1 · closes 14h 22m</div><div style="padding:8px;background:#E8AD2A;color:#0A0A0A;border-radius:5px;font-size:12px;font-weight:700;">Invest now</div></div>
+      <div style="font-size:9px;color:#444;text-align:center;">You're eligible · Rank #124</div>
+    </div>
+  </div>
+</div>`,
+
+'screen-profile': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><span style="font-size:12px;font-weight:600;">Profile</span><span style="font-size:10px;color:#34B27B;background:rgba(52,178,123,0.08);padding:3px 8px;border-radius:4px;">KYC Verified ✓</span></div>
+  <div style="padding:20px 28px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Access Status</div>
+      <div style="background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+          <div><div style="font-size:9px;color:#444;margin-bottom:2px;">Vault total</div><div style="font-size:14px;font-weight:700;">12,500</div><div style="font-size:9px;color:#444;">BLOCK</div></div>
+          <div><div style="font-size:9px;color:#444;margin-bottom:2px;">Points</div><div style="font-size:14px;font-weight:700;">80,000</div><div style="font-size:9px;color:#444;">vault pts</div></div>
+          <div><div style="font-size:9px;color:#444;margin-bottom:2px;">Multiplier</div><div style="font-size:14px;font-weight:700;color:#E8AD2A;">6.4×</div><div style="font-size:9px;color:#444;">365 days</div></div>
+          <div><div style="font-size:9px;color:#444;margin-bottom:2px;">Rank</div><div style="font-size:14px;font-weight:700;">#124</div><div style="font-size:9px;color:#444;">global</div></div>
+        </div>
+        <div style="padding:8px 12px;background:rgba(52,178,123,0.06);border:1px solid rgba(52,178,123,0.15);border-radius:6px;display:flex;justify-content:space-between;"><span style="font-size:11px;color:#34B27B;font-weight:600;">Phase 1 eligible</span><span style="color:#34B27B;">✓</span></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Wallets</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:8px;padding:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:11px;font-weight:600;">Main wallet</span><span style="font-size:9px;color:#34B27B;background:rgba(52,178,123,0.08);padding:2px 6px;border-radius:3px;">EVM</span></div><div style="font-size:10px;color:#555;font-family:monospace;">0xAF3d...C49</div></div>
+        <div style="background:#141414;border:1px solid rgba(232,173,42,0.1);border-radius:8px;padding:12px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;color:#888;margin-bottom:2px;">Solana wallet</div><div style="font-size:10px;color:#444;">Optional · required for Solana pools</div></div><div style="font-size:11px;color:#E8AD2A;font-weight:600;">+ Add</div></div>
+      </div>
+    </div>
+    <div style="grid-column:1/-1;">
+      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Activity</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div><div style="font-size:11px;font-weight:500;">Vault created</div><div style="font-size:10px;color:#444;margin-top:1px;">12,500 BLOCK · 365 days · 6.4×</div></div><span style="font-size:10px;color:#333;">2d ago</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div><div style="font-size:11px;font-weight:500;">Invested</div><div style="font-size:10px;color:#444;margin-top:1px;">Project Alpha · $800 USDT</div></div><span style="font-size:10px;color:#333;">5d ago</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div><div style="font-size:11px;font-weight:500;">Claim processed</div><div style="font-size:10px;color:#444;margin-top:1px;">Project Delta · 1,200 TKN</div></div><span style="font-size:10px;color:#333;">12d ago</span></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
+'screen-token-claims': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;font-size:12px;font-weight:600;">Token Claims</div>
+  <div style="padding:18px 24px;display:flex;flex-direction:column;gap:10px;">
+    <div style="padding:16px;background:#141414;border:1px solid rgba(52,178,123,0.2);border-radius:10px;display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;background:#1A1A1B;border-radius:6px;"></div><div><div style="font-size:12px;font-weight:600;margin-bottom:3px;">Project Delta</div><div style="font-size:10px;color:#34B27B;font-weight:500;">Claim ready · 1,200 TKN unlocked</div></div></div><div style="padding:8px 18px;background:#34B27B;color:#0A0A0A;border-radius:6px;font-size:12px;font-weight:700;">Claim</div></div>
+    <div style="padding:16px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:10px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;background:#1A1A1B;border-radius:6px;"></div><div><div style="font-size:12px;font-weight:600;margin-bottom:3px;">Project Alpha</div><div style="font-size:10px;color:#666;">Not ready · TGE pending</div></div></div><div style="padding:8px 18px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.06);color:#444;border-radius:6px;font-size:12px;">Claim</div></div>
+      <div style="padding:10px;background:rgba(255,255,255,0.02);border-radius:6px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:9px;color:#555;"><span>Vesting schedule</span><span>25% TGE · 12mo cliff · 24mo linear</span></div><div style="height:3px;background:rgba(255,255,255,0.05);border-radius:2px;position:relative;"><div style="position:absolute;left:25%;top:-3px;width:1px;height:9px;background:rgba(255,255,255,0.15);"></div></div><div style="display:flex;justify-content:space-between;margin-top:5px;font-size:9px;color:#444;"><span>TGE: May 12</span><span>Next unlock: May 12 · 25%</span></div></div>
+    </div>
+    <div style="padding:16px;background:#141414;border:1px solid rgba(229,57,57,0.12);border-radius:10px;display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;background:#1A1A1B;border-radius:6px;"></div><div><div style="font-size:12px;font-weight:600;margin-bottom:3px;">Project Zeta</div><div style="font-size:10px;color:#E05555;">Refund available · Soft cap not reached</div></div></div><div style="padding:8px 16px;background:rgba(229,57,57,0.08);border:1px solid rgba(229,57,57,0.18);color:#E05555;border-radius:6px;font-size:12px;font-weight:600;">Refund</div></div>
+  </div>
+</div>`,
+
+'screen-investments': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;font-size:12px;font-weight:600;">Active Investments</div>
+  <div style="padding:16px 22px;">
+    <div style="display:flex;gap:6px;margin-bottom:16px;">
+      <div style="padding:5px 10px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:5px;font-size:10px;color:#888;display:flex;align-items:center;gap:5px;">All <span style="background:rgba(255,255,255,0.05);padding:1px 5px;border-radius:3px;font-size:9px;">4</span></div>
+      <div style="padding:5px 10px;background:rgba(232,173,42,0.08);border:1px solid rgba(232,173,42,0.2);border-radius:5px;font-size:10px;font-weight:600;color:#E8AD2A;display:flex;align-items:center;gap:5px;">Active <span style="background:rgba(232,173,42,0.15);padding:1px 5px;border-radius:3px;font-size:9px;">2</span></div>
+      <div style="padding:5px 10px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:5px;font-size:10px;color:#888;display:flex;align-items:center;gap:5px;">Claim Tokens <span style="background:rgba(52,178,123,0.1);padding:1px 5px;border-radius:3px;font-size:9px;color:#34B27B;">1</span></div>
+      <div style="padding:5px 10px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:5px;font-size:10px;color:#888;display:flex;align-items:center;gap:5px;">Claim Refund <span style="background:rgba(229,57,57,0.08);padding:1px 5px;border-radius:3px;font-size:9px;color:#E05555;">1</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="padding:14px;background:#141414;border:1px solid rgba(232,173,42,0.12);border-radius:8px;display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;background:#1A1A1B;border-radius:6px;flex-shrink:0;"></div><div style="flex:1;"><div style="font-size:12px;font-weight:600;margin-bottom:2px;">Project Alpha</div><div style="font-size:10px;color:#888;">Phase 1 · Active · EVM</div></div><div style="text-align:right;"><div style="font-size:12px;font-weight:600;">$980</div><div style="font-size:10px;color:#34B27B;">+22.5%</div></div><div style="padding:6px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.07);border-radius:5px;font-size:11px;color:#888;">View</div></div>
+      <div style="padding:14px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:8px;display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;background:#1A1A1B;border-radius:6px;flex-shrink:0;"></div><div style="flex:1;"><div style="font-size:12px;font-weight:600;margin-bottom:2px;">Project Beta</div><div style="font-size:10px;color:#888;">Phase 2 · Active · Solana</div></div><div style="text-align:right;"><div style="font-size:12px;font-weight:600;">$520</div><div style="font-size:10px;color:#34B27B;">+4.0%</div></div><div style="padding:6px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.07);border-radius:5px;font-size:11px;color:#888;">View</div></div>
+      <div style="padding:14px;background:#141414;border:1px solid rgba(255,255,255,0.05);border-radius:8px;display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;background:#1A1A1B;border-radius:6px;flex-shrink:0;"></div><div style="flex:1;"><div style="font-size:12px;font-weight:600;margin-bottom:2px;">Project Gamma</div><div style="font-size:10px;color:#888;">Sold Out · Not invested</div></div><div style="text-align:right;margin-right:4px;"><div style="font-size:10px;color:#555;">Missed</div></div><div style="padding:6px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.07);border-radius:5px;font-size:11px;color:#888;white-space:nowrap;">Buy on DEX</div></div>
+    </div>
+  </div>
+</div>`,
+
+'screen-dashboard': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Dashboard</span><span style="font-size:11px;color:#555;">Vaults</span><span style="font-size:11px;color:#555;">Portfolio</span><span style="font-size:11px;color:#555;">Profile</span></div><span style="font-size:11px;color:#555;">0xAF3...C49</span></div>
+  <div style="display:grid;grid-template-columns:185px 1fr 155px;min-height:320px;">
+    <div style="border-right:1px solid rgba(255,255,255,0.05);padding:14px 12px;">
+      <div style="font-size:9px;color:#444;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Access Overview</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:12px;">
+        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:5px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Points</div><div style="font-size:13px;font-weight:700;">80K</div></div>
+        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:5px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Rank</div><div style="font-size:13px;font-weight:700;">#124</div></div>
+        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:5px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Multi</div><div style="font-size:13px;font-weight:700;color:#E8AD2A;">6.4×</div></div>
+        <div style="padding:8px;background:#141414;border:1px solid rgba(52,178,123,0.12);border-radius:5px;"><div style="font-size:9px;color:#34B27B;margin-bottom:2px;">Phase 1</div><div style="font-size:12px;font-weight:700;color:#34B27B;">✓</div></div>
+      </div>
+      <div style="font-size:9px;color:#444;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Wallet</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;border:1px solid rgba(255,255,255,0.04);font-size:10px;"><span style="color:#888;">EVM</span><span style="color:#34B27B;font-weight:600;">✓</span></div>
+        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;border:1px solid rgba(232,173,42,0.08);font-size:10px;"><span style="color:#888;">Solana</span><span style="color:#E8AD2A;font-weight:600;">+ Add</span></div>
+      </div>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font-size:11px;font-weight:600;">Pools</span><div style="display:flex;gap:5px;"><span style="padding:3px 8px;background:rgba(232,173,42,0.1);color:#E8AD2A;border-radius:4px;font-size:9px;font-weight:600;">Phase 1</span><span style="padding:3px 8px;background:#141414;color:#444;border-radius:4px;font-size:9px;">All</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(232,173,42,0.15);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;">Project Alpha</div><div style="font-size:10px;color:#888;margin-top:1px;">Phase 1 · EVM · 8h left</div></div><div style="padding:5px 12px;background:#E8AD2A;color:#0A0A0A;border-radius:5px;font-size:11px;font-weight:700;">Invest</div></div>
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;">Project Beta</div><div style="font-size:10px;color:#888;margin-top:1px;">Phase 2 · Solana</div></div><div style="padding:5px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.07);color:#E8E8E8;border-radius:5px;font-size:11px;">Invest</div></div>
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;color:#666;">Project Gamma</div><div style="font-size:10px;color:#444;margin-top:1px;">Scheduled · Apr 28</div></div><div style="padding:5px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.05);color:#444;border-radius:5px;font-size:11px;">Notify</div></div>
+      </div>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,0.05);padding:12px 11px;">
+      <div style="font-size:9px;color:#444;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Notifications</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:8px;background:#141414;border-radius:5px;border-left:2px solid #E8AD2A;"><div style="font-size:10px;font-weight:600;margin-bottom:2px;">Phase 1 open</div><div style="font-size:9px;color:#444;">Project Alpha</div></div>
+        <div style="padding:8px;background:#141414;border-radius:5px;border-left:2px solid #34B27B;"><div style="font-size:10px;font-weight:600;margin-bottom:2px;">Claim ready</div><div style="font-size:9px;color:#444;">Project Delta</div></div>
+        <div style="padding:8px;background:#141414;border-radius:5px;border-left:2px solid #444;"><div style="font-size:10px;font-weight:600;color:#666;margin-bottom:2px;">Vault expiring</div><div style="font-size:9px;color:#333;">14 days</div></div>
+        <div style="padding:8px;background:#141414;border-radius:5px;border-left:2px solid #4A9EFF;"><div style="font-size:10px;font-weight:600;margin-bottom:2px;">KYC needed</div><div style="font-size:9px;color:#444;">Complete to invest</div></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+    };
+
+    const AUDIT_WF_MAP = {
+      'vault-language':'vault-language','tier-removal':'tier-removal',
+      'phase-labels pool-states':'phase-labels','dashboard':'dashboard',
+      'founder-flow':'founder-flow','scheduled-cta cta-guidance':'scheduled-cta',
+    };
+    const SCREEN_WF_MAP = {
+      'vault-language':'screen-homepage','pool-states cta-guidance phase-labels':'screen-pool-detail',
+      'tier-removal wallet-readiness access-module':'screen-profile','claim-messaging':'screen-token-claims',
+      'pool-states':'screen-investments','dashboard':'screen-dashboard',
+    };
+
+    function createExampleBtn(wfId) {
+      const btn = document.createElement('button');
+      btn.className = 'example-btn';
+      btn.innerHTML = '<span class="ebf"></span>Example';
+      btn.dataset.wf = wfId;
+      let timer, filling = false;
+      btn.addEventListener('pointerdown', e => {
+        e.stopPropagation();
+        btn.classList.add('pressing');
+        filling = true;
+        timer = setTimeout(() => { if (filling) openWF(wfId); }, 620);
+      });
+      const cancel = () => { clearTimeout(timer); filling = false; btn.classList.remove('pressing'); };
+      btn.addEventListener('pointerup', cancel);
+      btn.addEventListener('pointerleave', cancel);
+      btn.addEventListener('contextmenu', e => e.preventDefault());
+      return btn;
+    }
+
+    // Inject into audit cards
+    document.querySelectorAll('.card[data-related]').forEach(card => {
+      const key = card.getAttribute('data-related');
+      const wfId = AUDIT_WF_MAP[key];
+      if (!wfId) return;
+      const tag = card.querySelector('.tag');
+      if (!tag) return;
+      const row = document.createElement('div');
+      row.className = 'card-bottom';
+      tag.parentNode.insertBefore(row, tag);
+      tag.style.margin = '0';
+      row.appendChild(tag);
+      row.appendChild(createExampleBtn(wfId));
+    });
+
+    // Inject into screen card headers
+    document.querySelectorAll('.screen-card[data-related]').forEach(card => {
+      const key = card.getAttribute('data-related');
+      const wfId = SCREEN_WF_MAP[key];
+      if (!wfId) return;
+      const rightDiv = card.querySelector('.screen-card-header > div:last-child');
+      if (!rightDiv) return;
+      const chevron = rightDiv.querySelector('.chevron');
+      const btn = createExampleBtn(wfId);
+      if (chevron) rightDiv.insertBefore(btn, chevron);
+      else rightDiv.appendChild(btn);
+    });
+
+    // Modal logic
+    const wfOverlay = document.getElementById('wf-overlay');
+    function openWF(id) {
+      const html = WF[id];
+      if (!html) return;
+      document.getElementById('wf-section').textContent = id.startsWith('screen-') ? 'Screen' : 'Suggestion';
+      document.getElementById('wf-title').textContent = WF_TITLES[id] || id;
+      document.getElementById('wf-body').innerHTML = html + '<p class="wf-hint">Visual wireframe — representative layout, not pixel-perfect spec</p>';
+      wfOverlay.classList.add('wf-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeWF() {
+      wfOverlay.classList.remove('wf-open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeWF(); });
 
     // ── Init: load state from JSONBin ───────────────────────────────────────
     (async () => {
