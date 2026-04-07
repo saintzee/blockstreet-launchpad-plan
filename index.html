@@ -786,7 +786,7 @@
       </div>
 
       <!-- Open questions -->
-      <div style="margin-top:48px;">
+      <div id="questions" style="margin-top:48px;">
         <div class="section-label">Decisions Needed</div>
         <h2 style="font-size:22px; margin-bottom:8px;">Open Questions</h2>
         <p class="section-desc" style="margin-bottom:20px;">Design and dev cannot finalize these areas without stakeholder input.</p>
@@ -957,7 +957,10 @@
     const sectionFallback = {
       'vault-language': '#audit', 'tier-removal': '#audit', 'pool-states': '#states',
       'cta-guidance': '#audit', 'dashboard': '#architecture', 'founder-flow': '#founder',
-      'wallet-readiness': '#architecture', 'navigation': '#architecture', 'claim-messaging': '#architecture'
+      'wallet-readiness': '#architecture', 'navigation': '#architecture', 'claim-messaging': '#architecture',
+      'phase-labels': '#states', 'scheduled-cta': '#states', 'allocation-ui': '#access',
+      'solana-flow': '#chains', 'access-module': '#access', 'open-questions': '#questions',
+      'cta-validation': '#states'
     };
     document.querySelectorAll('.priority-item[data-action]').forEach(item => {
       const action = item.dataset.action;
@@ -979,6 +982,29 @@
         target.addEventListener('animationend', () => target.classList.remove('flash-ref'), { once: true });
       });
       h4.appendChild(btn);
+    });
+
+    // ── Info buttons — Deliverables ─────────────────────────────────────────
+    document.querySelectorAll('.del-item[data-del]').forEach(item => {
+      const key = item.dataset.del;
+      const related = getRelated(key);
+      const target = related.length > 0 ? related[0] : document.querySelector(sectionFallback[key]);
+      if (!target) return;
+      const nameEl = item.querySelector('.del-name');
+      if (!nameEl) return;
+      const btn = document.createElement('i');
+      btn.className = 'priority-info-btn';
+      btn.textContent = 'i';
+      btn.title = 'View detail';
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.remove('flash-ref');
+        void target.offsetWidth;
+        target.classList.add('flash-ref');
+        target.addEventListener('animationend', () => target.classList.remove('flash-ref'), { once: true });
+      });
+      nameEl.after(btn);
     });
 
     // ── Init: load state from JSONBin ───────────────────────────────────────
