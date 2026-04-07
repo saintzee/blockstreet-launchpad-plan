@@ -404,8 +404,7 @@
         <div style="padding: 6px 0 6px 72px;"><span style="font-size: 14px; color: var(--muted-2);">↓</span></div>
         <div class="nav-row">
           <div class="nav-row-label">New</div>
-          <span class="nav-item nav-merge">Pools</span>
-          <span class="nav-item nav-new">Best Performers</span>
+          <span class="nav-item nav-new">Home</span>
           <span class="nav-item nav-keep">How It Works</span>
           <span class="nav-item nav-new" style="border-left:1px solid rgba(255,255,255,0.06);margin-left:8px;padding-left:12px;">Dashboard</span>
           <span class="nav-item nav-keep">Vaults</span>
@@ -561,14 +560,14 @@ AUTHENTICATED APP
 
         <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
           <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Nav links</span></div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Pools · Best Performers · How It Works. Dashboard/Vaults/Portfolio/Profile hidden.</div></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Home · How It Works. Dashboard/Vaults/Portfolio/Profile hidden.</div></div>
           <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Full nav. Dashboard is default landing, replaces homepage redirect.</div></div>
         </div>
 
         <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Pools page</span></div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">All pool cards visible. CTAs say "Connect to invest" / "Connect to notify". No eligibility shown.</div></div>
-          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">State-aware CTAs (Invest / Notify / Waitlist / Buy on DEX). Eligibility badge on Phase 1 pools.</div></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Home</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Marketing page — hero, vault pitch, how-it-works teaser. Primary connect CTA.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Redirect to Dashboard. No standalone content for logged-in users.</div></div>
         </div>
 
         <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
@@ -585,14 +584,8 @@ AUTHENTICATED APP
 
         <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
           <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Vaults / Portfolio / Profile</span></div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Not in nav. If URL accessed directly → redirect to /pools.</div></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Not in nav. If URL accessed directly → redirect to home.</div></div>
           <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Fully accessible. Personal data scoped to wallet.</div></div>
-        </div>
-
-        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Best Performers</span></div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Identical. Fully public. No gating. Pure social proof page.</div></div>
-          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Identical. Could optionally highlight pools the user participated in.</div></div>
         </div>
 
       </div>
@@ -1527,7 +1520,7 @@ AUTHENTICATED APP
 
 'dashboard-gate': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;">
-    <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Pools</span><span style="font-size:11px;color:#555;">Best Performers</span><span style="font-size:11px;color:#555;">How It Works</span></div>
+    <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Home</span><span style="font-size:11px;color:#555;">How It Works</span></div>
     <div style="padding:6px 14px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;">Connect Wallet</div>
   </div>
   <div style="display:grid;grid-template-columns:185px 1fr 155px;min-height:310px;">
