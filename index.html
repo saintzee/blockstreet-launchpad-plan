@@ -390,8 +390,9 @@
       <div class="panel" style="margin-top:16px;">
         <div style="font-size:10px; font-weight:500; color:var(--muted-2); letter-spacing:0.8px; text-transform:uppercase; margin-bottom:16px;">Product map</div>
         <pre class="diagram">BLOCKSTREET
-├─ Dashboard ─── Access Overview · Wallet Readiness · Open Pools · Actions
-├─ Pools ──────── All · Scheduled · Phase 1 · Phase 2 · Closed → Pool Detail
+├─ Dashboard ──── [Left] Access Overview · Wallet Readiness
+│                 [Main] Pools (All · Scheduled · Phase 1 · Phase 2 · Closed → Pool Detail)
+│                 [Right sidebar] Notifications
 ├─ Vaults ─────── Create · Duration · Multiplier · Points · History
 ├─ Portfolio
 │  ├─ Investor ── Active Investments · Token Claims
@@ -464,9 +465,10 @@
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-new">Add</span><span class="chevron">▾</span></div>
             </div>
             <div class="screen-card-body"><div class="change-list">
-              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Access overview</strong> — vault totals, points, multiplier, rank, access status.</div></div>
-              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Wallet readiness</strong> — main wallet, chain readiness, Solana requirement.</div></div>
-              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Open pools + actions required</strong> — what can the user do now.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Left column — Access Overview:</strong> vault totals, points, multiplier, rank, phase access status. Persistent, scannable at a glance.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Left column — Wallet Readiness:</strong> main wallet status, chain readiness, Solana requirement. Inline below access — surfaces only what needs attention.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Main area — Pools:</strong> replaces standalone Pools nav. All · Scheduled · Phase 1 · Phase 2 · Closed. Pool Detail opens from here.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Right sidebar — Notifications:</strong> vault expiry alerts, phase open/close events, claim ready, KYC reminders. Bell-style feed, dismissible.</div></div>
             </div></div>
           </div>
         </div>
@@ -757,7 +759,7 @@
         </div>
         <div class="priority-item upcoming" data-action="navigation">
           <h4>Restructure navigation</h4>
-          <p>Dashboard, Pools, Vaults, Portfolio, How It Works, Profile.</p>
+          <p>Dashboard (with Pools + Notifications sidebar), Vaults, Portfolio, How It Works, Profile.</p>
         </div>
         <div class="priority-item upcoming" data-action="claim-messaging">
           <div class="priority-phase">Phase 3 — Polish</div>
