@@ -242,6 +242,10 @@
     .completed-item { opacity: 0.3; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
     .completed-item h3, .completed-item h4 { text-decoration: line-through; color: var(--muted-2); }
     .priority-item .connection-count { display: inline-block; font-size: 9px; font-weight: 500; color: var(--muted-2); margin-left: 6px; }
+    .priority-info-btn { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--muted-2); font-size: 9px; font-weight: 600; font-style: normal; cursor: pointer; margin-left: 7px; vertical-align: middle; line-height: 1; transition: border-color 0.15s, color 0.15s; text-decoration: none; position: relative; top: -1px; }
+    .priority-info-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+    @keyframes flash-ref { 0%,100% { box-shadow: none; } 20%,60% { box-shadow: 0 0 0 3px rgba(232,173,42,0.35); } }
+    .flash-ref { animation: flash-ref 1.2s ease; }
 
     /* Diagram */
     pre.diagram { margin: 0; white-space: pre-wrap; color: var(--muted); font: 12px/1.8 'SF Mono', 'Fira Code', 'Consolas', monospace; }
@@ -945,6 +949,34 @@
           h4.appendChild(badge);
         }
       }
+    });
+
+    // ── Info buttons ────────────────────────────────────────────────────────
+    const sectionFallback = {
+      'vault-language': '#audit', 'tier-removal': '#audit', 'pool-states': '#states',
+      'cta-guidance': '#audit', 'dashboard': '#architecture', 'founder-flow': '#founder',
+      'wallet-readiness': '#architecture', 'navigation': '#architecture', 'claim-messaging': '#architecture'
+    };
+    document.querySelectorAll('.priority-item[data-action]').forEach(item => {
+      const action = item.dataset.action;
+      const related = getRelated(action);
+      const target = related.length > 0 ? related[0] : document.querySelector(sectionFallback[action]);
+      if (!target) return;
+      const h4 = item.querySelector('h4');
+      if (!h4) return;
+      const btn = document.createElement('i');
+      btn.className = 'priority-info-btn';
+      btn.textContent = 'i';
+      btn.title = 'View detail';
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.remove('flash-ref');
+        void target.offsetWidth;
+        target.classList.add('flash-ref');
+        target.addEventListener('animationend', () => target.classList.remove('flash-ref'), { once: true });
+      });
+      h4.appendChild(btn);
     });
 
     // ── Init: load state from JSONBin ───────────────────────────────────────
