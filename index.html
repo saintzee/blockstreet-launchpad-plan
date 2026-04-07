@@ -427,8 +427,7 @@
 └─ How It Works
 
 AUTHENTICATED APP
-├─ Dashboard ──── [Left] Access Overview · Wallet Readiness
-│                 [Main] Pools (All · Scheduled · Phase 1 · Phase 2 · Closed → Pool Detail)
+├─ Dashboard ──── [Main] Pools (All · Scheduled · Phase 1 · Phase 2 · Closed → Pool Detail)
 │                 [Right sidebar] Notifications
 ├─ Vaults ─────── Create · Duration · Multiplier · Points · History
 ├─ Portfolio
@@ -502,9 +501,7 @@ AUTHENTICATED APP
               <div style="display:flex;align-items:center;gap:10px;"><span class="pill p-new">Add</span><span class="chevron">▾</span></div>
             </div>
             <div class="screen-card-body"><div class="change-list">
-              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Left column — Access Overview:</strong> vault totals, points, multiplier, rank, phase access status. Persistent, scannable at a glance.</div></div>
-              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Left column — Wallet Readiness:</strong> main wallet status, chain readiness, Solana requirement. Inline below access — surfaces only what needs attention.</div></div>
-              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Main area — Pools:</strong> replaces standalone Pools nav. All · Scheduled · Phase 1 · Phase 2 · Closed. Pool Detail opens from here.</div></div>
+              <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Main area — Pools:</strong> All · Scheduled · Phase 1 · Phase 2 · Closed. Pool Detail opens from here. CTAs are state-aware when connected.</div></div>
               <div class="change-item"><div class="change-icon ci-add">+</div><div><strong style="color:var(--text)">Right sidebar — Notifications:</strong> vault expiry alerts, phase open/close events, claim ready, KYC reminders. Bell-style feed, dismissible.</div></div>
             </div></div>
           </div>
@@ -578,8 +575,8 @@ AUTHENTICATED APP
 
         <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid rgba(232,173,42,0.15);border-radius:10px;overflow:hidden;">
           <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Dashboard</span></div>
-          <div style="padding:12px 14px;border-right:1px solid var(--border);background:rgba(232,173,42,0.02);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Gate screen. Shows the 3-col layout shell — left and right columns blurred/locked. Center shows public pools. Single "Connect Wallet" CTA explains what you unlock.</div></div>
-          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Full 3-column layout. Real rank, points, wallet readiness, personalized pool list, live notifications.</div></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);background:rgba(232,173,42,0.02);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Gate screen. Shows 2-col layout — right (Notifications) blurred/locked. Pools visible in main column. Single "Connect Wallet" CTA explains what you unlock.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Full 2-column layout. Personalized pool list with state-aware CTAs, live notifications.</div></div>
         </div>
 
         <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
@@ -608,7 +605,7 @@ AUTHENTICATED APP
           <div>
             <div style="font-size:9px;font-weight:600;color:var(--green);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Gate screen in-place — better</div>
             <div style="display:flex;flex-direction:column;gap:6px;">
-              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>User sees exactly what connects — rank, vault, notifications</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>User sees exactly what connects — personalized pool CTAs and notifications</div>
               <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>Public pools visible in main column — still useful without login</div>
               <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>Single clear CTA — "Connect wallet to unlock your dashboard"</div>
               <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>After connect: page loads in-place, no navigation jump</div>
@@ -891,7 +888,7 @@ AUTHENTICATED APP
         <div class="priority-item upcoming" data-action="dashboard">
           <div class="priority-phase">Phase 2 — Add Missing Layers</div>
           <h4>Build dashboard page</h4>
-          <p>Authenticated overview: access status, open pools, wallet readiness, action required.</p>
+          <p>2-column layout: main Pools area (state-aware CTAs) + right Notifications sidebar.</p>
         </div>
         <div class="priority-item upcoming" data-action="founder-flow">
           <h4>Founder onboarding workflow</h4>
@@ -1272,21 +1269,7 @@ AUTHENTICATED APP
     <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Dashboard</span><span style="font-size:11px;color:#555;">Vaults</span><span style="font-size:11px;color:#555;">Portfolio</span><span style="font-size:11px;color:#555;">Profile</span></div>
     <span style="font-size:11px;color:#555;">0xAF3...C49</span>
   </div>
-  <div style="display:grid;grid-template-columns:185px 1fr 155px;min-height:310px;">
-    <div style="border-right:1px solid rgba(255,255,255,0.05);padding:14px 12px;">
-      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Access Overview</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
-        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Points</div><div style="font-size:13px;font-weight:700;">80K</div></div>
-        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Rank</div><div style="font-size:13px;font-weight:700;">#124</div></div>
-        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:6px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Multi</div><div style="font-size:13px;font-weight:700;color:#E8AD2A;">6.4×</div></div>
-        <div style="padding:8px;background:#141414;border:1px solid rgba(52,178,123,0.12);border-radius:6px;"><div style="font-size:9px;color:#34B27B;margin-bottom:2px;">Phase 1</div><div style="font-size:12px;font-weight:700;color:#34B27B;">✓</div></div>
-      </div>
-      <div style="font-size:9px;color:#555;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Wallet</div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;font-size:10px;border:1px solid rgba(255,255,255,0.04);"><span style="color:#888;">EVM</span><span style="color:#34B27B;font-weight:600;">✓ Ready</span></div>
-        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;font-size:10px;border:1px solid rgba(232,173,42,0.08);"><span style="color:#888;">Solana</span><span style="color:#E8AD2A;font-weight:600;">+ Add</span></div>
-      </div>
-    </div>
+  <div style="display:grid;grid-template-columns:1fr 155px;min-height:310px;">
     <div style="padding:12px 14px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font-size:11px;font-weight:600;">Pools</span><div style="display:flex;gap:5px;"><span style="padding:3px 8px;background:rgba(232,173,42,0.1);color:#E8AD2A;border-radius:4px;font-size:9px;font-weight:600;">Phase 1</span><span style="padding:3px 8px;background:#141414;color:#555;border-radius:4px;font-size:9px;">All</span><span style="padding:3px 8px;background:#141414;color:#555;border-radius:4px;font-size:9px;">Scheduled</span></div></div>
       <div style="display:flex;flex-direction:column;gap:5px;">
@@ -1483,21 +1466,7 @@ AUTHENTICATED APP
 
 'screen-dashboard': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Dashboard</span><span style="font-size:11px;color:#555;">Vaults</span><span style="font-size:11px;color:#555;">Portfolio</span><span style="font-size:11px;color:#555;">Profile</span></div><span style="font-size:11px;color:#555;">0xAF3...C49</span></div>
-  <div style="display:grid;grid-template-columns:185px 1fr 155px;min-height:320px;">
-    <div style="border-right:1px solid rgba(255,255,255,0.05);padding:14px 12px;">
-      <div style="font-size:9px;color:#444;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Access Overview</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:12px;">
-        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:5px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Points</div><div style="font-size:13px;font-weight:700;">80K</div></div>
-        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:5px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Rank</div><div style="font-size:13px;font-weight:700;">#124</div></div>
-        <div style="padding:8px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:5px;"><div style="font-size:9px;color:#444;margin-bottom:2px;">Multi</div><div style="font-size:13px;font-weight:700;color:#E8AD2A;">6.4×</div></div>
-        <div style="padding:8px;background:#141414;border:1px solid rgba(52,178,123,0.12);border-radius:5px;"><div style="font-size:9px;color:#34B27B;margin-bottom:2px;">Phase 1</div><div style="font-size:12px;font-weight:700;color:#34B27B;">✓</div></div>
-      </div>
-      <div style="font-size:9px;color:#444;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Wallet</div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;border:1px solid rgba(255,255,255,0.04);font-size:10px;"><span style="color:#888;">EVM</span><span style="color:#34B27B;font-weight:600;">✓</span></div>
-        <div style="display:flex;justify-content:space-between;padding:6px 8px;background:#141414;border-radius:5px;border:1px solid rgba(232,173,42,0.08);font-size:10px;"><span style="color:#888;">Solana</span><span style="color:#E8AD2A;font-weight:600;">+ Add</span></div>
-      </div>
-    </div>
+  <div style="display:grid;grid-template-columns:1fr 155px;min-height:320px;">
     <div style="padding:12px 14px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font-size:11px;font-weight:600;">Pools</span><div style="display:flex;gap:5px;"><span style="padding:3px 8px;background:rgba(232,173,42,0.1);color:#E8AD2A;border-radius:4px;font-size:9px;font-weight:600;">Phase 1</span><span style="padding:3px 8px;background:#141414;color:#444;border-radius:4px;font-size:9px;">All</span></div></div>
       <div style="display:flex;flex-direction:column;gap:5px;">
@@ -1523,22 +1492,7 @@ AUTHENTICATED APP
     <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Home</span><span style="font-size:11px;color:#555;">How It Works</span></div>
     <div style="padding:6px 14px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;">Connect Wallet</div>
   </div>
-  <div style="display:grid;grid-template-columns:185px 1fr 155px;min-height:310px;">
-    <div style="border-right:1px solid rgba(255,255,255,0.04);padding:14px 12px;position:relative;overflow:hidden;">
-      <div style="position:absolute;inset:0;backdrop-filter:blur(4px);background:rgba(10,10,10,0.55);z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px;text-align:center;">
-        <div style="font-size:18px;margin-bottom:2px;">🔒</div>
-        <div style="font-size:10px;font-weight:600;color:#E8E8E8;">Access Overview</div>
-        <div style="font-size:9px;color:#555;line-height:1.5;">Connect wallet to see your rank, points, and vault status</div>
-      </div>
-      <div style="filter:blur(3px);pointer-events:none;opacity:0.3;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:12px;">
-          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Points</div><div style="font-size:13px;font-weight:700;color:#333;">—</div></div>
-          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Rank</div><div style="font-size:13px;font-weight:700;color:#333;">—</div></div>
-          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Multi</div><div style="font-size:13px;font-weight:700;color:#333;">—</div></div>
-          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Phase 1</div><div style="font-size:12px;font-weight:700;color:#333;">—</div></div>
-        </div>
-      </div>
-    </div>
+  <div style="display:grid;grid-template-columns:1fr 155px;min-height:310px;">
     <div style="padding:12px 14px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font-size:11px;font-weight:600;">Pools</span><div style="display:flex;gap:5px;"><span style="padding:3px 8px;background:rgba(232,173,42,0.1);color:#E8AD2A;border-radius:4px;font-size:9px;font-weight:600;">Phase 1</span><span style="padding:3px 8px;background:#141414;color:#444;border-radius:4px;font-size:9px;">All</span></div></div>
       <div style="display:flex;flex-direction:column;gap:5px;">
@@ -1548,7 +1502,7 @@ AUTHENTICATED APP
       </div>
       <div style="margin-top:14px;padding:12px;background:rgba(232,173,42,0.04);border:1px solid rgba(232,173,42,0.12);border-radius:8px;text-align:center;">
         <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Connect wallet to unlock your dashboard</div>
-        <div style="font-size:10px;color:#666;margin-bottom:10px;">See your rank, vault status, and Phase 1 eligibility</div>
+        <div style="font-size:10px;color:#666;margin-bottom:10px;">Unlock Phase 1 eligibility, personalized CTAs, and notifications</div>
         <div style="padding:8px 20px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:12px;font-weight:700;display:inline-block;">Connect Wallet</div>
       </div>
     </div>
