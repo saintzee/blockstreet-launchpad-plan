@@ -360,6 +360,7 @@
       <div class="section-nav-inner">
         <a class="section-link" href="#audit">Audit</a>
         <a class="section-link" href="#architecture">Architecture</a>
+        <a class="section-link" href="#authstates">Auth States</a>
         <a class="section-link" href="#states">States</a>
         <a class="section-link" href="#access">Access</a>
         <a class="section-link" href="#chains">Chains</a>
@@ -524,6 +525,106 @@ AUTHENTICATED APP
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ═══════════════════ AUTH STATES ═══════════════════ -->
+    <section class="section" id="authstates">
+      <div class="section-label">Access Model</div>
+      <h2>Connected vs Not Connected</h2>
+      <p class="section-desc">Two distinct app states. The split determines routing, CTAs, and what data loads.</p>
+
+      <!-- The core principle -->
+      <div class="panel" style="margin-bottom:24px;">
+        <div style="font-size:10px;font-weight:500;color:var(--muted-2);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:14px;">Core rule</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="padding:16px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;">
+            <div style="font-size:9px;font-weight:600;color:var(--muted-2);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Not connected</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px;">Browse freely.<br>Can't act.</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">Pools, Best Performers, and How It Works are fully visible. Nothing is hidden. But every action — invest, notify, create vault — requires a connected wallet. CTAs reflect this without being aggressive.</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-card);border:1px solid rgba(52,178,123,0.1);border-radius:10px;">
+            <div style="font-size:9px;font-weight:600;color:var(--green);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Connected</div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:8px;">Full app.<br>Personalized state.</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.65;">Dashboard loads with real vault data, rank, and notifications. Pool CTAs become state-aware per user eligibility. Portfolio, Vaults, and Profile are accessible.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page-by-page breakdown -->
+      <div style="margin-bottom:8px;font-size:11px;font-weight:600;letter-spacing:-0.2px;">What changes on each page</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:28px;">
+
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Topbar</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">"Connect Wallet" button — prominent, yellow.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Truncated address + avatar. No CTA.</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Nav links</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Pools · Best Performers · How It Works. Dashboard/Vaults/Portfolio/Profile hidden.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Full nav. Dashboard is default landing, replaces homepage redirect.</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Pools page</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">All pool cards visible. CTAs say "Connect to invest" / "Connect to notify". No eligibility shown.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">State-aware CTAs (Invest / Notify / Waitlist / Buy on DEX). Eligibility badge on Phase 1 pools.</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Pool Detail</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Full project info visible. CTA area shows "Connect wallet to invest". No allocation figure.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">CTA reflects exact state (invest / waitlist / refund / claim). Personal max allocation shown.</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid rgba(232,173,42,0.15);border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Dashboard</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);background:rgba(232,173,42,0.02);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Gate screen. Shows the 3-col layout shell — left and right columns blurred/locked. Center shows public pools. Single "Connect Wallet" CTA explains what you unlock.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Full 3-column layout. Real rank, points, wallet readiness, personalized pool list, live notifications.</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Vaults / Portfolio / Profile</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Not in nav. If URL accessed directly → redirect to /pools.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Fully accessible. Personal data scoped to wallet.</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:140px 1fr 1fr;gap:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 14px;border-right:1px solid var(--border);display:flex;align-items:center;"><span style="font-size:12px;font-weight:600;">Best Performers</span></div>
+          <div style="padding:12px 14px;border-right:1px solid var(--border);"><div style="font-size:9px;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Not connected</div><div style="font-size:12px;color:var(--muted);">Identical. Fully public. No gating. Pure social proof page.</div></div>
+          <div style="padding:12px 14px;"><div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Connected</div><div style="font-size:12px;color:var(--muted);">Identical. Could optionally highlight pools the user participated in.</div></div>
+        </div>
+
+      </div>
+
+      <!-- Dashboard gate detail -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:-0.2px;">Dashboard gate — why not a hard redirect?</span>
+        <button class="example-btn" id="gate-example-btn"><span class="ebf"></span>Example</button>
+      </div>
+      <div class="panel">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div style="font-size:9px;font-weight:600;color:var(--red);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Hard redirect to homepage — worse</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--red);flex-shrink:0;">✕</span>User loses URL intent — they wanted the dashboard</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--red);flex-shrink:0;">✕</span>No explanation of what they'd get after connecting</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--red);flex-shrink:0;">✕</span>Worse conversion — they land on a marketing page not a value moment</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:600;color:var(--green);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Gate screen in-place — better</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>User sees exactly what connects — rank, vault, notifications</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>Public pools visible in main column — still useful without login</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>Single clear CTA — "Connect wallet to unlock your dashboard"</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>After connect: page loads in-place, no navigation jump</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ═══════════════════ 3. STATES ═══════════════════ -->
@@ -1062,6 +1163,7 @@ AUTHENTICATED APP
     // ── Wireframe modal ─────────────────────────────────────────────────────
     const WF_TITLES = {
       'screen-best-performers':'Best Performers Page',
+      'dashboard-gate':'Dashboard — Not Connected',
       'vault-language':'Vault Language Fix','tier-removal':'Access Status (replaces Tier)',
       'phase-labels':'Phase Timeline','dashboard':'Dashboard Layout',
       'founder-flow':'Founder 7-State Lifecycle','scheduled-cta':'Scheduled Pool CTA',
@@ -1420,6 +1522,54 @@ AUTHENTICATED APP
   </div>
 </div>`,
 
+'dashboard-gate': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;">
+    <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Pools</span><span style="font-size:11px;color:#555;">Best Performers</span><span style="font-size:11px;color:#555;">How It Works</span></div>
+    <div style="padding:6px 14px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;">Connect Wallet</div>
+  </div>
+  <div style="display:grid;grid-template-columns:185px 1fr 155px;min-height:310px;">
+    <div style="border-right:1px solid rgba(255,255,255,0.04);padding:14px 12px;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;backdrop-filter:blur(4px);background:rgba(10,10,10,0.55);z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px;text-align:center;">
+        <div style="font-size:18px;margin-bottom:2px;">🔒</div>
+        <div style="font-size:10px;font-weight:600;color:#E8E8E8;">Access Overview</div>
+        <div style="font-size:9px;color:#555;line-height:1.5;">Connect wallet to see your rank, points, and vault status</div>
+      </div>
+      <div style="filter:blur(3px);pointer-events:none;opacity:0.3;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:12px;">
+          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Points</div><div style="font-size:13px;font-weight:700;color:#333;">—</div></div>
+          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Rank</div><div style="font-size:13px;font-weight:700;color:#333;">—</div></div>
+          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Multi</div><div style="font-size:13px;font-weight:700;color:#333;">—</div></div>
+          <div style="padding:8px;background:#141414;border-radius:5px;"><div style="font-size:9px;color:#333;margin-bottom:2px;">Phase 1</div><div style="font-size:12px;font-weight:700;color:#333;">—</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font-size:11px;font-weight:600;">Pools</span><div style="display:flex;gap:5px;"><span style="padding:3px 8px;background:rgba(232,173,42,0.1);color:#E8AD2A;border-radius:4px;font-size:9px;font-weight:600;">Phase 1</span><span style="padding:3px 8px;background:#141414;color:#444;border-radius:4px;font-size:9px;">All</span></div></div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(232,173,42,0.15);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;">Project Alpha</div><div style="font-size:10px;color:#888;margin-top:1px;">Phase 1 · EVM · 8h left</div></div><div style="padding:5px 12px;background:#1A1A1B;border:1px solid rgba(232,173,42,0.2);color:#E8AD2A;border-radius:5px;font-size:10px;font-weight:600;">Connect to invest</div></div>
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;">Project Beta</div><div style="font-size:10px;color:#888;margin-top:1px;">Phase 2 · Solana</div></div><div style="padding:5px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.06);color:#555;border-radius:5px;font-size:10px;">Connect to invest</div></div>
+        <div style="padding:11px 12px;background:#141414;border:1px solid rgba(255,255,255,0.04);border-radius:7px;display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:11px;font-weight:600;color:#666;">Project Gamma</div><div style="font-size:10px;color:#444;margin-top:1px;">Scheduled · Apr 28</div></div><div style="padding:5px 12px;background:#1A1A1B;border:1px solid rgba(255,255,255,0.05);color:#555;border-radius:5px;font-size:10px;">Connect to notify</div></div>
+      </div>
+      <div style="margin-top:14px;padding:12px;background:rgba(232,173,42,0.04);border:1px solid rgba(232,173,42,0.12);border-radius:8px;text-align:center;">
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Connect wallet to unlock your dashboard</div>
+        <div style="font-size:10px;color:#666;margin-bottom:10px;">See your rank, vault status, and Phase 1 eligibility</div>
+        <div style="padding:8px 20px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:12px;font-weight:700;display:inline-block;">Connect Wallet</div>
+      </div>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,0.04);padding:12px 11px;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;backdrop-filter:blur(4px);background:rgba(10,10,10,0.55);z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px;text-align:center;">
+        <div style="font-size:18px;margin-bottom:2px;">🔔</div>
+        <div style="font-size:10px;font-weight:600;color:#E8E8E8;">Notifications</div>
+        <div style="font-size:9px;color:#555;line-height:1.5;">Connect to receive phase alerts and claim reminders</div>
+      </div>
+      <div style="filter:blur(3px);pointer-events:none;opacity:0.3;display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:8px;background:#141414;border-radius:5px;border-left:2px solid #333;"><div style="font-size:10px;font-weight:600;color:#333;margin-bottom:2px;">———</div><div style="font-size:9px;color:#222;">———</div></div>
+        <div style="padding:8px;background:#141414;border-radius:5px;border-left:2px solid #222;"><div style="font-size:10px;color:#222;margin-bottom:2px;">———</div></div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
 'screen-best-performers': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Pools</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Best Performers</span><span style="font-size:11px;color:#555;">How It Works</span></div><div style="padding:6px 14px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;">Launch app</div></div>
   <div style="padding:28px 28px 16px;border-bottom:1px solid rgba(255,255,255,0.06);">
@@ -1511,6 +1661,18 @@ AUTHENTICATED APP
       if (chevron) rightDiv.insertBefore(btn, chevron);
       else rightDiv.appendChild(btn);
     });
+
+    // Gate example button
+    (function() {
+      const btn = document.getElementById('gate-example-btn');
+      if (!btn) return;
+      btn.dataset.wf = 'dashboard-gate';
+      let timer, filling = false;
+      btn.addEventListener('pointerdown', e => { e.stopPropagation(); btn.classList.add('pressing'); filling = true; timer = setTimeout(() => { if (filling) openWF('dashboard-gate'); }, 620); });
+      const cancel = () => { clearTimeout(timer); filling = false; btn.classList.remove('pressing'); };
+      btn.addEventListener('pointerup', cancel); btn.addEventListener('pointerleave', cancel);
+      btn.addEventListener('contextmenu', e => e.preventDefault());
+    })();
 
     // Inject into Best Performers card (no data-related)
     document.querySelectorAll('.screen-card').forEach(card => {
