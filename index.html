@@ -365,6 +365,7 @@
         <a class="section-link" href="#access">Access</a>
         <a class="section-link" href="#chains">Chains</a>
         <a class="section-link" href="#founder">Founder</a>
+        <a class="section-link" href="#submission">Submission Form</a>
         <a class="section-link" href="#decisions">Decisions</a>
         <a class="section-link" href="#roadmap">Roadmap</a>
       </div>
@@ -827,7 +828,125 @@ AUTHENTICATED APP
       </div>
     </section>
 
-    <!-- ═══════════════════ 7. DECISIONS ═══════════════════ -->
+    <!-- ═══════════════════ 7. SUBMISSION FORM ═══════════════════ -->
+    <section class="section" id="submission">
+      <div class="section-label">UI Design</div>
+      <h2>Founder Submission Form</h2>
+      <p class="section-desc">How the 7-step workflow maps to a UI. Split into two zones: founder-controlled input (steps 1–4) and async process states (steps 5–7).</p>
+
+      <!-- Why left-rail, not horizontal wizard -->
+      <div class="panel" style="margin-bottom:16px;">
+        <div style="font-size:10px;font-weight:500;color:var(--muted-2);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:14px;">Layout decision — left-rail stepper</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="padding:14px 16px;background:var(--bg-card);border:1px solid rgba(229,57,57,0.1);border-radius:10px;">
+            <div style="font-size:9px;font-weight:600;color:var(--red);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Horizontal wizard — worse</div>
+            <div style="display:flex;flex-direction:column;gap:7px;">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--red);flex-shrink:0;">✕</span>7 pills in a row is too wide — breaks at smaller viewports</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--red);flex-shrink:0;">✕</span>Async review steps (5–7) look identical to form steps — misleads founder</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--red);flex-shrink:0;">✕</span>Full journey not visible — founder doesn't know what's coming</div>
+            </div>
+          </div>
+          <div style="padding:14px 16px;background:var(--bg-card);border:1px solid rgba(52,178,123,0.1);border-radius:10px;">
+            <div style="font-size:9px;font-weight:600;color:var(--green);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:10px;">Left-rail stepper — better</div>
+            <div style="display:flex;flex-direction:column;gap:7px;">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>All 7 steps visible — founder sees the full journey upfront</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>Visual break between input steps and async states — sets expectations</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>Autosave indicator in rail footer — no Save button clutter</div>
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--muted);"><span style="color:var(--green);flex-shrink:0;">✓</span>Revision from Blockstreet deep-links back to specific step — rail shows exactly where to go</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone A — Founder input -->
+      <div style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:-0.2px;">Zone A — Founder-controlled</span>
+        <span class="pill" style="background:rgba(139,124,246,0.08);color:var(--purple);border-color:rgba(139,124,246,0.15);font-size:9px;">Editable · Autosaved · Can return anytime</span>
+        <button class="example-btn" id="submission-example-btn"><span class="ebf"></span>Example</button>
+      </div>
+      <div class="panel" style="margin-bottom:16px;">
+        <div class="workflow-steps">
+          <div class="workflow-step" data-step="1">
+            <h4>Project + Team</h4>
+            <p>Project name, token ticker, target chain (EVM / Solana), category, description, website. Social links: X, Discord, Telegram. Team members: name, role, LinkedIn/X. KYC consent checkbox per member.</p>
+            <div class="step-note">Saved as Draft on first save — founder can exit and return freely. Token mint address not required here.</div>
+          </div>
+          <div class="workflow-step" data-step="2">
+            <h4>Token Economics</h4>
+            <p>Total supply, tokens offered for sale, hard cap, soft cap, token price (USD), vesting schedule, TGE %, cliff periods. Fee summary sidebar appears and updates live from this step onwards.</p>
+            <div class="step-note">Fee summary: raise target × 7.5% platform fee + 5% token allocation. All inputs dynamic — no hard-coded values.</div>
+          </div>
+          <div class="workflow-step" data-step="3">
+            <h4>Pool Configuration</h4>
+            <p>Phase 1 timing window, Phase 2 timing window, minimum contribution, maximum contribution, target raise amount. Fee summary stays visible and updates.</p>
+            <div class="step-note">Future V2: wallet analyzer weighting customization per pool. Not V1.</div>
+          </div>
+          <div class="workflow-step review" data-step="4">
+            <h4>Submit for KYB</h4>
+            <p>Upload entity verification documents, team identity (per member listed in step 1), smart contract audit PDF if available. Submitting this triggers the KYB review process.</p>
+            <div class="step-note">This is the handoff point. Steps 1–3 lock for editing after submission — founder must request unlock for revisions at this stage.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone B — Async states -->
+      <div style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:11px;font-weight:600;letter-spacing:-0.2px;">Zone B — Async process</span>
+        <span class="pill" style="background:rgba(232,173,42,0.08);color:var(--yellow);border-color:rgba(232,173,42,0.15);font-size:9px;">Read-only · Status cards · No form fields</span>
+      </div>
+      <div class="panel" style="margin-bottom:16px;">
+        <div class="workflow-steps">
+          <div class="workflow-step review" data-step="5">
+            <h4>KYB / Due Diligence</h4>
+            <p>Founder sees: submission timestamp, checklist of items under review (entity, team IDs, audit), estimated timeline, and a contact channel for follow-up. Not a form — a status page.</p>
+            <div class="step-note">KYB provider TBD. Parallel to investor KYC process. Manual review is acceptable at 1–2 projects/month volume.</div>
+          </div>
+          <div class="workflow-step review" data-step="6">
+            <h4>Blockstreet Review</h4>
+            <p>Internal compliance and quality check. Status badge: Under Review / Approved / Revisions Needed. If revisions are requested, founder sees specific notes and a deep-link back to the relevant step — always step 3 (pool config). Basics and tokenomics are preserved.</p>
+            <div class="step-note">Revision → step 3 is confirmed spec behavior. The rail should highlight the flagged step in yellow.</div>
+          </div>
+          <div class="workflow-step deploy" data-step="7">
+            <h4>Contract Deployment + Launch</h4>
+            <p>Founder confirms token mint address, reviews fee breakdown (7.5% stablecoin + 5% token allocation), pays platform fee. On confirmation: project status transitions Approved → Pre-Launch → Scheduled pool visible to users.</p>
+            <div class="step-note">Token mint address is entered here, not step 1. Single confirmation action — not a multi-field form.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fee summary behaviour -->
+      <div class="panel" style="margin-bottom:16px;">
+        <div style="font-size:10px;font-weight:500;color:var(--muted-2);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:14px;">Fee summary sidebar — persistent on steps 2–4</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div style="padding:12px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;">
+            <div style="font-size:9px;color:var(--muted-2);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Raise Target</div>
+            <div style="font-size:18px;font-weight:700;">$500,000</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px;">From hard cap input</div>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-card);border:1px solid rgba(232,173,42,0.12);border-radius:8px;">
+            <div style="font-size:9px;color:var(--yellow);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Platform Fee</div>
+            <div style="font-size:18px;font-weight:700;color:var(--yellow);">$37,500</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px;">7.5% of raise</div>
+          </div>
+          <div style="padding:12px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;">
+            <div style="font-size:9px;color:var(--muted-2);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">Token Allocation</div>
+            <div style="font-size:18px;font-weight:700;">5%</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px;">Negotiated per project</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--muted-2);line-height:1.6;">Updates in real time as founder enters numbers in steps 2–3. Visible at all times so founders never get surprised by fees at the end. Shown again as a confirmation summary in step 7 before payment.</div>
+      </div>
+
+      <!-- Open question flag -->
+      <div class="question-card" style="border-color:rgba(232,173,42,0.15);">
+        <div class="card-label" style="color:var(--blue)">Q5</div>
+        <h3 style="font-size:14px;">Submission: self-serve or gated?</h3>
+        <p>The form above assumes self-serve: founder fills steps 1–4, submits, triggers KYB. If gated, a Blockstreet team member must approve before the founder can start. This changes step 4 entirely — from "upload docs" to "request to submit." Spec assumes self-serve. Needs stakeholder sign-off before building step 4.</p>
+      </div>
+
+    </section>
+
+    <!-- ═══════════════════ 8. DECISIONS ═══════════════════ -->
     <section class="section" id="decisions">
       <div class="section-label">Rationale</div>
       <h2>Key Decisions</h2>
@@ -861,7 +980,7 @@ AUTHENTICATED APP
       <div style="margin-top:16px; font-size:12px; color:var(--muted-2);">Full decisions log: 28 confirmed decisions, 10 open items across 6 team calls. See blockstreet-decisions-log.docx for complete document.</div>
     </section>
 
-    <!-- ═══════════════════ 8. ROADMAP ═══════════════════ -->
+    <!-- ═══════════════════ 9. ROADMAP ═══════════════════ -->
     <section class="section" id="roadmap">
       <div class="section-label">Execution</div>
       <h2>Roadmap</h2>
@@ -1163,6 +1282,7 @@ AUTHENTICATED APP
       'screen-homepage':'Homepage','screen-pool-detail':'Pool Detail Page',
       'screen-profile':'Profile Page','screen-token-claims':'Token Claims',
       'screen-investments':'Active Investments','screen-dashboard':'Dashboard',
+      'submission-form':'Founder Submission Form',
     };
 
     const WF = {
@@ -1520,6 +1640,99 @@ AUTHENTICATED APP
   </div>
 </div>`,
 
+'submission-form': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;">
+    <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Dashboard</span><span style="font-size:11px;color:#555;">Vaults</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Portfolio</span><span style="font-size:11px;color:#555;">Profile</span></div>
+    <span style="font-size:11px;color:#555;">0xAF3...C49</span>
+  </div>
+  <div style="display:grid;grid-template-columns:200px 1fr;min-height:360px;">
+    <div style="border-right:1px solid rgba(255,255,255,0.05);padding:16px 14px;display:flex;flex-direction:column;">
+      <div style="font-size:10px;color:#555;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.04);">← My Projects</div>
+      <div style="display:flex;flex-direction:column;gap:2px;flex:1;">
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;background:rgba(255,255,255,0.03);">
+          <div style="width:20px;height:20px;border-radius:5px;background:rgba(52,178,123,0.15);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#34B27B;flex-shrink:0;">✓</div>
+          <span style="font-size:11px;color:#555;text-decoration:line-through;">1 Project + Team</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;background:rgba(232,173,42,0.04);border:1px solid rgba(232,173,42,0.12);">
+          <div style="width:20px;height:20px;border-radius:5px;background:rgba(139,124,246,0.15);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#8B7CF6;flex-shrink:0;">2</div>
+          <span style="font-size:11px;font-weight:600;color:#E8E8E8;">Token Economics</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;">
+          <div style="width:20px;height:20px;border-radius:5px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#444;flex-shrink:0;">3</div>
+          <span style="font-size:11px;color:#555;">Pool Config</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;">
+          <div style="width:20px;height:20px;border-radius:5px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#444;flex-shrink:0;">4</div>
+          <span style="font-size:11px;color:#555;">Submit for KYB</span>
+        </div>
+        <div style="margin:8px 0;border-top:1px dashed rgba(255,255,255,0.06);padding-top:8px;">
+          <div style="font-size:9px;color:#333;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Blockstreet process</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;">
+          <div style="width:20px;height:20px;border-radius:5px;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;flex-shrink:0;">5</div>
+          <span style="font-size:11px;color:#333;">KYB Review</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;">
+          <div style="width:20px;height:20px;border-radius:5px;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;flex-shrink:0;">6</div>
+          <span style="font-size:11px;color:#333;">BS Review</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:6px;">
+          <div style="width:20px;height:20px;border-radius:5px;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;flex-shrink:0;">7</div>
+          <span style="font-size:11px;color:#333;">Deploy</span>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#333;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.04);">● Autosaved</div>
+    </div>
+    <div style="display:grid;grid-template-rows:1fr auto;padding:0;">
+      <div style="padding:16px 18px;">
+        <div style="font-size:10px;font-weight:600;color:#8B7CF6;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:12px;">Step 2 — Token Economics</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">Total Supply</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:11px;color:#888;">1,000,000,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">Tokens for Sale</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:11px;color:#888;">50,000,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">Hard Cap (USDT)</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(232,173,42,0.2);border-radius:6px;font-size:11px;color:#E8E8E8;">500,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">Soft Cap (USDT)</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:11px;color:#888;">200,000</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">Token Price (USD)</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:11px;color:#888;">0.01</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">TGE %</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:11px;color:#888;">20%</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">Vesting Schedule</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:11px;color:#888;">12 months linear</div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#555;margin-bottom:4px;">Cliff Period</div>
+            <div style="padding:7px 10px;background:#141414;border:1px solid rgba(255,255,255,0.06);border-radius:6px;font-size:11px;color:#888;">3 months</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:12px 18px;background:#0C0C0D;border-top:1px solid rgba(255,255,255,0.05);display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:center;">
+        <div><div style="font-size:9px;color:#555;margin-bottom:2px;">Raise target</div><div style="font-size:13px;font-weight:700;">$500,000</div></div>
+        <div><div style="font-size:9px;color:#E8AD2A;margin-bottom:2px;">Platform fee</div><div style="font-size:13px;font-weight:700;color:#E8AD2A;">$37,500</div></div>
+        <div><div style="font-size:9px;color:#555;margin-bottom:2px;">Token alloc</div><div style="font-size:13px;font-weight:700;">5% negot.</div></div>
+        <div style="padding:8px 18px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;">Next →</div>
+      </div>
+    </div>
+  </div>
+</div>`,
+
 'screen-best-performers': `<div style="background:#0A0A0A;border-radius:10px;overflow:hidden;font-size:13px;color:#E8E8E8;">
   <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);background:#0C0C0D;"><div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12px;font-weight:700;">BLOCKSTREET</span><span style="font-size:11px;color:#555;">Pools</span><span style="font-size:11px;color:#E8AD2A;font-weight:600;">Best Performers</span><span style="font-size:11px;color:#555;">How It Works</span></div><div style="padding:6px 14px;background:#E8AD2A;color:#0A0A0A;border-radius:6px;font-size:11px;font-weight:700;">Launch app</div></div>
   <div style="padding:28px 28px 16px;border-bottom:1px solid rgba(255,255,255,0.06);">
@@ -1611,6 +1824,18 @@ AUTHENTICATED APP
       if (chevron) rightDiv.insertBefore(btn, chevron);
       else rightDiv.appendChild(btn);
     });
+
+    // Submission form example button
+    (function() {
+      const btn = document.getElementById('submission-example-btn');
+      if (!btn) return;
+      btn.dataset.wf = 'submission-form';
+      let timer, filling = false;
+      btn.addEventListener('pointerdown', e => { e.stopPropagation(); btn.classList.add('pressing'); filling = true; timer = setTimeout(() => { if (filling) openWF('submission-form'); }, 620); });
+      const cancel = () => { clearTimeout(timer); filling = false; btn.classList.remove('pressing'); };
+      btn.addEventListener('pointerup', cancel); btn.addEventListener('pointerleave', cancel);
+      btn.addEventListener('contextmenu', e => e.preventDefault());
+    })();
 
     // Gate example button
     (function() {
